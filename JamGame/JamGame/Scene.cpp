@@ -29,12 +29,30 @@ void Scene::titleTransaction() {
 	// 更新処理
 	
 	// 描画処理
+	//ペットボトルのサイズ
 	const int sizeX = 64;
 	const int sizeY = 128;
+    //隙間の幅
+	const int crevice_width = 30;
+	const int crevice_height = 10;
+	//ペットボトルのX座標
+	int posX;
+	//隙間カウンター
+	int crevice_count = 0;
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
+		//隙間カウンターを0に
+		crevice_count = 0;
 		for (int j = 0; j < MAXPET_X; j++) {
-			DrawGraph(x + j * sizeX + 15 * j, y + i * sizeY + 10 * i, petGh[i][j], TRUE);
+			//ペットボトルのX個を5で割った時余りが0の場合
+			if (j % 5 == 0 && j != 0)
+			{
+				crevice_count++;
+			}
+
+			posX = x + j * sizeX + crevice_width * crevice_count;
+
+			DrawGraph(posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
 		}
 	}
 	
