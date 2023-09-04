@@ -2,7 +2,7 @@
 #include "GameSystem.h"
 
 
-GameSystem::GameSystem() : WIN_WIDTH(1500), WIN_HEIGHT(800) {
+GameSystem::GameSystem() : WIN_WIDTH(1270), WIN_HEIGHT(720) {
 	ChangeWindowMode(TRUE); //ウィンドウモードに設定
 
 	//ウィンドウサイズを手動では変更できず、かつウィンドウサイズに合わせて拡大できないようにする
@@ -14,7 +14,7 @@ GameSystem::GameSystem() : WIN_WIDTH(1500), WIN_HEIGHT(800) {
 
 	SetWindowSizeExtendRate(1.0); //画面サイズを設定（解像度との比率で設定）
 	
-	SetBackgroundColor(0x00, 0x00, 0x00); // 画面の背景色を設定する
+	SetBackgroundColor(0x50, 0x50, 0x50); // 画面の背景色を設定する
 
 	//（ダブルバッファ）描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);
