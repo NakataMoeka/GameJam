@@ -7,7 +7,13 @@ Scene::Scene(int sceneNo) {
 
 void Scene::init() {
 	// Load Graph Handle
-
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			petGh[i][j] = LoadGraph("pet.png");
+		}
+	}
+	
 	// Load Sound
 
 	//variable
@@ -16,21 +22,22 @@ void Scene::init() {
 }
 
 void Scene::sceneManager() {
-	if (sceneNo == 0) {
-		titleTransaction();
-		
-	}else if(sceneNo == 1) {
-		
-	}
-	else if (sceneNo == 98) {
-		endingTransaction();
-	}
+	titleTransaction();
 }
 
 void Scene::titleTransaction() {
 	// XVˆ—
 	
 	// •`‰æˆ—
+	const int sizeX = 64;
+	const int sizeY = 128;
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			DrawGraph(x + j * sizeX + 15 * j, y + i * sizeY + 10 * i, petGh[i][j], TRUE);
+		}
+	}
+	
 }
 
 
@@ -50,6 +57,8 @@ void Scene::playSound(int soundMemory) {
 }
 
 void Scene::drawTitle() {
+	
+
 	
 }
 
