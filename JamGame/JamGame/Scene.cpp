@@ -13,7 +13,8 @@ void Scene::init() {
 			petGh[i][j] = LoadGraph("pet.png");
 		}
 	}
-	
+	timer = new Timer();
+	timer->Initialize();
 	// Load Sound
 
 	//variable
@@ -23,6 +24,12 @@ void Scene::init() {
 
 void Scene::sceneManager() {
 	titleTransaction();
+	Update();
+}
+
+void Scene::Update()
+{
+	timer->Update();
 }
 
 void Scene::titleTransaction() {
@@ -78,6 +85,11 @@ void Scene::drawTitle() {
 	
 
 	
+}
+
+void Scene::Draw()
+{
+	timer->Draw();
 }
 
 int Scene::getSceneNo() { return sceneNo; }
