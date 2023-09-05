@@ -93,8 +93,6 @@ void Scene::BackMove()
 
 void Scene::DisappearPet()
 {
-	
-	
 	const int maxTime = 3;
 	double sum = timer->GetMaxTime() - timer->GetDt();
 	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
