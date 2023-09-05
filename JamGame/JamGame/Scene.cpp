@@ -21,6 +21,9 @@ void Scene::init() {
 
 	timer = new Timer();
 	timer->Initialize();
+	score = new Score();
+	score->Initialize();
+	sc = 0;
 	// Load Sound
 
 	//variable
@@ -43,6 +46,7 @@ void Scene::sceneManager() {
 void Scene::Update()
 {
 	timer->Update();
+	score->Update();
 }
 
 float Scene::Ease(float start, float end, float flame)
@@ -108,12 +112,14 @@ void Scene::DisappearPet()
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
+
 	}
 	else
 	{
 		randX = GetRand(MAXPET_X - 1);
 		randY = GetRand(MAXPET_Y - 1);
 	}
+	score->SetSc(sc);
 }
 
 void Scene::titleTransaction() {
@@ -195,6 +201,7 @@ void Scene::drawTitle() {
 void Scene::Draw()
 {
 	timer->Draw();
+	score->Draw();
 }
 
 int Scene::getSceneNo() { return sceneNo; }

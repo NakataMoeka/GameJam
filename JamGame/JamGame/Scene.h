@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
 #include"Timer.h"
+#include"Score.h"
 
 class Scene 
 {
@@ -35,6 +36,8 @@ private:
 	int randX = 0, randY = 0;
 
 	Timer* timer;
+	Score* score;
+	int sc;
 	// Game object Instance
 
 	//Sound
