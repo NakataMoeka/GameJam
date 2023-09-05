@@ -13,8 +13,13 @@ void Scene::init() {
 			petGh[i][j] = LoadGraph("pet.png");
 		}
 	}
+	sellGh = LoadGraph("sell.png");
+
 	timer = new Timer();
 	timer->Initialize();
+
+	hitBottles = new HitBottles();
+	hitBottles->Init();
 	// Load Sound
 
 	//variable
@@ -29,21 +34,37 @@ void Scene::sceneManager() {
 
 void Scene::Update()
 {
+	MousePre = Mouse;
+	Mouse = GetMouseInput();
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			if (hitBottles->HitBottle(posX[i][j], posY[i][j], 60, 128))
+			{
+				if (((Mouse & MOUSE_INPUT_LEFT) == true) && ((MousePre & MOUSE_INPUT_LEFT) == false))
+				{
+					bottleHitFlag = true;
+					sellPosX = posX[i][j];
+					sellPosY = posY[i][j];
+				}
+				else
+				{
+					bottleHitFlag = false;
+					sellPosX = -1000;
+					sellPosY = -1000;
+				}
+			}
+		}
+	}
 	timer->Update();
+	hitBottles->Update();
 }
 
 void Scene::titleTransaction() {
 	// 更新処理
 	
 	// 描画処理
-	//ペットボトルのサイズ
-	const int sizeX = 64;
-	const int sizeY = 128;
-    //隙間の幅
-	const int crevice_width = 30;
-	const int crevice_height = 10;
-	//ペットボトルのX座標
-	int posX;
+	
 	//隙間カウンター
 	int crevice_count = 0;
 	for (int i = 0; i < MAXPET_Y; i++)
@@ -57,9 +78,10 @@ void Scene::titleTransaction() {
 				crevice_count++;
 			}
 
-			posX = x + j * sizeX + crevice_width * crevice_count;
+			posX[i][j] = x + j * sizeX + crevice_width * crevice_count;
+			posY[i][j] = y + i * sizeY + crevice_height * i;
 
-			DrawGraph(posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
+			DrawGraph(posX[i][j], posY[i][j], petGh[i][j], TRUE);
 		}
 	}
 	
@@ -90,6 +112,11 @@ void Scene::drawTitle() {
 void Scene::Draw()
 {
 	timer->Draw();
+	hitBottles->Draw();
+	if (bottleHitFlag)
+	{
+		DrawGraph(sellPosX, sellPosY, sellGh, TRUE);
+	}
 }
 
 int Scene::getSceneNo() { return sceneNo; }
