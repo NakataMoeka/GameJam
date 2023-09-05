@@ -44,7 +44,7 @@ void Scene::titleTransaction() {
 		//隙間カウンターを0に
 		crevice_count = 0;
 		for (int j = 0; j < MAXPET_X; j++) {
-			//ペットボトルのX個を5で割った時余りが0の場合
+			//ペットボトルのX個を5で割った時余りが0の場合、隙間カウンターを1足す
 			if (j % 5 == 0 && j != 0)
 			{
 				crevice_count++;
