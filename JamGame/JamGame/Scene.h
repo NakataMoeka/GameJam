@@ -28,6 +28,8 @@ private:
 	const float PI = 3.141592f;
 	float difference = 0;
 	float backFlame = 0;
+	//描画
+	bool isDraw[MAXPET_Y][MAXPET_X];
 
 	Timer* timer;
 	// Game object Instance
@@ -47,7 +49,10 @@ public:
 
 	void init();
 	void sceneManager();
-
+	//背景移動
+	void BackMove();
+	//ペットボトル消える処理
+	void DisappearPet();
 	//イージング
 	float Ease(float start, float end, float flame);
 

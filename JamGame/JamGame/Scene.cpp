@@ -26,6 +26,13 @@ void Scene::init() {
 	//variable
 
 	// Game Object 
+	//ペットボトル描画
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			isDraw[i][j] = true;
+		}
+	}
 }
 
 void Scene::sceneManager() {
@@ -46,12 +53,8 @@ float Scene::Ease(float start, float end, float flame)
 	return position;
 }
 
-void Scene::titleTransaction() {
-	// 更新処理
-	//マウスの更新
-	MouseInputOld = MouseInput;
-	MouseInput = GetMouseInput();
-	GetMousePoint(&MousePosX, &MousePosY);
+void Scene::BackMove()
+{
 	//押されたらフラグチェンジ
 	if (MouseInputOld != 1 && MouseInput == 1)
 	{
@@ -84,9 +87,23 @@ void Scene::titleTransaction() {
 		{
 			backFlame += 0.2f;
 		}
-		
-	}
 
+	}
+}
+
+void Scene::DisappearPet()
+{
+
+}
+
+void Scene::titleTransaction() {
+	// 更新処理
+	//マウスの更新
+	MouseInputOld = MouseInput;
+	MouseInput = GetMouseInput();
+	GetMousePoint(&MousePosX, &MousePosY);
+	//背景移動
+	BackMove();
 	
 	// 描画処理
 	const int WIN_WIDHT = 1280;
@@ -106,6 +123,7 @@ void Scene::titleTransaction() {
 	int posX;
 	//隙間カウンター
 	int crevice_count = 0;
+
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
 		//隙間カウンターを0に
@@ -119,7 +137,10 @@ void Scene::titleTransaction() {
 
 			posX = x + j * sizeX + crevice_width * crevice_count;
 
-			DrawGraph(backPos[0] + posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
+			if (isDraw[i][j])
+			{
+				DrawGraph(backPos[0] + posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
+			}
 		}
 	}
 }
