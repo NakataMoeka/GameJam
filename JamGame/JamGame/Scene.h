@@ -1,6 +1,7 @@
 #pragma once
 #include "DxLib.h"
 #include"Timer.h"
+#include"HitBottles.h"
 
 class Scene 
 {
@@ -15,6 +16,23 @@ private:
 	//ペットボトル最大
 	static const int MAXPET_X = 15;
 	static const int MAXPET_Y = 4;
+	//ペットボトルのサイズ
+	const int sizeX = 64;
+	const int sizeY = 128;
+	//隙間の幅
+	const int crevice_width = 30;
+	const int crevice_height = 10;
+	//ペットボトルの座標
+	int posX[MAXPET_Y][MAXPET_X];
+	int posY[MAXPET_Y][MAXPET_X];
+	//当たっているかの確認
+	bool bottleHitFlag;
+	int sellPosX;
+	int sellPosY;
+	//左クリック押されたか
+	int Mouse;
+	int MousePre;
+
 	//初期位置
 	const int x = 120;
 	const int y = 170;
@@ -37,12 +55,15 @@ private:
 	int arrowSize[2] = { 64, 720 };
 
 	Timer* timer;
+	HitBottles *hitBottles;
 	// Game object Instance
 
 	//Sound
 	
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
+	int sellGh;
+
 	int backgroundGh;
 	int clockGh;
 	int rightGh;

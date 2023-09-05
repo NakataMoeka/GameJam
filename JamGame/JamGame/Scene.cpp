@@ -14,6 +14,7 @@ void Scene::init() {
 			petGh[i][j] = LoadGraph("Resources/pet.png");
 		}
 	}
+	sellGh = LoadGraph("sell.png");
 	//背景
 	backgroundGh = LoadGraph("Resources/background.png");
 	//時計
@@ -24,6 +25,9 @@ void Scene::init() {
 
 	timer = new Timer();
 	timer->Initialize();
+
+	hitBottles = new HitBottles();
+	hitBottles->Init();
 	// Load Sound
 
 	//variable
@@ -45,7 +49,30 @@ void Scene::sceneManager() {
 
 void Scene::Update()
 {
+	MousePre = Mouse;
+	Mouse = GetMouseInput();
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			if (hitBottles->HitBottle(posX[i][j], posY[i][j], 60, 128))
+			{
+				if (((Mouse & MOUSE_INPUT_LEFT) == true) && ((MousePre & MOUSE_INPUT_LEFT) == false))
+				{
+					bottleHitFlag = true;
+					sellPosX = posX[i][j];
+					sellPosY = posY[i][j];
+				}
+				else
+				{
+					bottleHitFlag = false;
+					sellPosX = -1000;
+					sellPosY = -1000;
+				}
+			}
+		}
+	}
 	timer->Update();
+	hitBottles->Update();
 }
 
 float Scene::Ease(float start, float end, float flame)
@@ -144,14 +171,6 @@ void Scene::titleTransaction() {
 	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
-	//ペットボトルのサイズ
-	const int sizeX = 64;
-	const int sizeY = 128;
-	//隙間の幅
-	const int crevice_width = 30;
-	const int crevice_height = 10;
-	//ペットボトルのX座標
-	int posX;
 	//隙間カウンター
 	int crevice_count = 0;
 
@@ -166,11 +185,12 @@ void Scene::titleTransaction() {
 				crevice_count++;
 			}
 
-			posX = x + j * sizeX + crevice_width * crevice_count;
+			posX[i][j] = x + j * sizeX + crevice_width * crevice_count;
+			posY[i][j] = y + i * sizeY + crevice_height * i;
 
 			if (isDraw[i][j])
 			{
-				DrawGraph(backPos[0] + posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
+				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[i][j], TRUE);
 			}
 		}
 	}
@@ -201,6 +221,11 @@ void Scene::drawTitle() {
 void Scene::Draw()
 {
 	timer->Draw();
+	hitBottles->Draw();
+	if (bottleHitFlag)
+	{
+		DrawGraph(sellPosX, sellPosY, sellGh, TRUE);
+	}
 }
 
 int Scene::getSceneNo() { return sceneNo; }
