@@ -30,6 +30,9 @@ private:
 	float backFlame = 0;
 	//ï`âÊ
 	bool isDraw[MAXPET_Y][MAXPET_X];
+	//è¡ñ≈
+	bool isDis = false;
+	int randX = 0, randY = 0;
 
 	Timer* timer;
 	// Game object Instance

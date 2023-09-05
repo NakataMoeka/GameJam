@@ -93,7 +93,29 @@ void Scene::BackMove()
 
 void Scene::DisappearPet()
 {
+	
+	
+	const int maxTime = 3;
+	double sum = timer->GetMaxTime() - timer->GetDt();
+	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
+	if ((int)sum % maxTime == 0 && sum != 0)
+	{ 
+		isDis = true;
+	}
+	else
+	{
+		isDis = false;
+	}
 
+	if (isDis)
+	{
+		isDraw[randY][randX] = false;
+	}
+	else
+	{
+		randX = GetRand(MAXPET_X - 1);
+		randY = GetRand(MAXPET_Y - 1);
+	}
 }
 
 void Scene::titleTransaction() {
@@ -104,6 +126,8 @@ void Scene::titleTransaction() {
 	GetMousePoint(&MousePosX, &MousePosY);
 	//背景移動
 	BackMove();
+	//消滅処理
+	DisappearPet();
 	
 	// 描画処理
 	const int WIN_WIDHT = 1280;
@@ -112,6 +136,9 @@ void Scene::titleTransaction() {
 	//時計
 	int clockSize[2] = { 256, 90 };
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 20, clockGh, true);
+
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
+	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//ペットボトルのサイズ
 	const int sizeX = 64;
