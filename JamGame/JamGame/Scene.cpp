@@ -7,13 +7,16 @@ Scene::Scene(int sceneNo) {
 
 void Scene::init() {
 	// Load Graph Handle
+	//ペットボトル
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
 		for (int j = 0; j < MAXPET_X; j++) {
-			petGh[i][j] = LoadGraph("pet.png");
+			petGh[i][j] = LoadGraph("Resources/pet.png");
 		}
 	}
-	
+	//背景
+	backgroundGh = LoadGraph("Resources/background.png");
+
 	// Load Sound
 
 	//variable
@@ -25,14 +28,64 @@ void Scene::sceneManager() {
 	titleTransaction();
 }
 
+float Scene::Ease(float start, float end, float flame)
+{
+	difference = end - start;
+	time = flame / maxflame;
+	position = difference * time + start;
+	return position;
+}
+
 void Scene::titleTransaction() {
 	// 更新処理
+	//マウスの更新
+	MouseInputOld = MouseInput;
+	MouseInput = GetMouseInput();
+	GetMousePoint(&MousePosX, &MousePosY);
+	//押されたらフラグチェンジ
+	if (MouseInputOld != 1 && MouseInput == 1)
+	{
+		SetIsChange();
+		backFlame = 0;
+	}
+
+	if (isChange)
+	{
+		backPos[0] = Ease(0, -1280, backFlame);
+		if (backFlame >= 1.0f)
+		{
+
+			backFlame = 1.0f;
+		}
+		else
+		{
+			backFlame += 0.2f;
+		}
+	}
+	else
+	{
+		backPos[0] = Ease(-1280, 0, backFlame);
+		if (backFlame >= 1.0f)
+		{
+
+			backFlame = 1.0f;
+		}
+		else
+		{
+			backFlame += 0.2f;
+		}
+		
+	}
+
 	
 	// 描画処理
+	//背景
+	DrawGraph(backPos[0], backPos[1], backgroundGh, true);
+
 	//ペットボトルのサイズ
 	const int sizeX = 64;
 	const int sizeY = 128;
-    //隙間の幅
+	//隙間の幅
 	const int crevice_width = 30;
 	const int crevice_height = 10;
 	//ペットボトルのX座標
@@ -55,7 +108,6 @@ void Scene::titleTransaction() {
 			DrawGraph(posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
 		}
 	}
-	
 }
 
 

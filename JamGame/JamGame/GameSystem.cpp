@@ -2,7 +2,7 @@
 #include "GameSystem.h"
 
 
-GameSystem::GameSystem() : WIN_WIDTH(1270), WIN_HEIGHT(720) {
+GameSystem::GameSystem() : WIN_WIDTH(1280), WIN_HEIGHT(720) {
 	ChangeWindowMode(TRUE); //ウィンドウモードに設定
 
 	//ウィンドウサイズを手動では変更できず、かつウィンドウサイズに合わせて拡大できないようにする
