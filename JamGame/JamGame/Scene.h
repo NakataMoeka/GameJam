@@ -7,7 +7,7 @@ private:
 	int sceneNo;
 	static const int MAXPET_X = 15;
 	static const int MAXPET_Y = 4;
-	const int x = 150;
+	const int x = 120;
 	const int y = 170;
 
 	// Game object Instance
