@@ -18,6 +18,9 @@ void Scene::init() {
 	backgroundGh = LoadGraph("Resources/background.png");
 	//ŽžŒv
 	clockGh = LoadGraph("Resources/clock.png");
+	//–îˆó
+	rightGh = LoadGraph("Resources/right.png");
+	leftGh = LoadGraph("Resources/left.png");
 
 	timer = new Timer();
 	timer->Initialize();
@@ -134,6 +137,9 @@ void Scene::titleTransaction() {
 	//ŽžŒv
 	int clockSize[2] = { 256, 90 };
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 20, clockGh, true);
+	//–îˆó
+	DrawGraph(WIN_WIDHT - arrowSize[0] + backPos[0], 0, rightGh, true);
+	DrawGraph(WIN_WIDHT + backPos[0], 0, leftGh, true);
 
 	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);

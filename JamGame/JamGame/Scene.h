@@ -33,6 +33,8 @@ private:
 	//è¡ñ≈
 	bool isDis = false;
 	int randX = 0, randY = 0;
+	//ñÓàÛ
+	int arrowSize[2] = { 64, 720 };
 
 	Timer* timer;
 	// Game object Instance
@@ -43,6 +45,8 @@ private:
 	int petGh[MAXPET_Y][MAXPET_X];
 	int backgroundGh;
 	int clockGh;
+	int rightGh;
+	int leftGh;
 	// Animation Variable
 
 	
