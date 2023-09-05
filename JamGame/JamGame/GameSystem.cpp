@@ -14,7 +14,7 @@ GameSystem::GameSystem() : WIN_WIDTH(1280), WIN_HEIGHT(720) {
 
 	SetWindowSizeExtendRate(1.0); //画面サイズを設定（解像度との比率で設定）
 	
-	SetBackgroundColor(0x50, 0x50, 0x50); // 画面の背景色を設定する
+	SetBackgroundColor(0xE0, 0xE0, 0xE0); // 画面の背景色を設定する
 
 	//（ダブルバッファ）描画先グラフィック領域は裏面を指定
 	SetDrawScreen(DX_SCREEN_BACK);

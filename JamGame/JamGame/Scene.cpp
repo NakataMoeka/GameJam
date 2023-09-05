@@ -16,6 +16,8 @@ void Scene::init() {
 	}
 	//背景
 	backgroundGh = LoadGraph("Resources/background.png");
+	//時計
+	clockGh = LoadGraph("Resources/clock.png");
 
 	timer = new Timer();
 	timer->Initialize();
@@ -87,8 +89,12 @@ void Scene::titleTransaction() {
 
 	
 	// 描画処理
+	const int WIN_WIDHT = 1280;
 	//背景
 	DrawGraph(backPos[0], backPos[1], backgroundGh, true);
+	//時計
+	int clockSize[2] = { 256, 90 };
+	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 20, clockGh, true);
 
 	//ペットボトルのサイズ
 	const int sizeX = 64;

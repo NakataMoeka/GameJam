@@ -37,6 +37,7 @@ private:
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int backgroundGh;
+	int clockGh;
 	// Animation Variable
 
 	
