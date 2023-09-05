@@ -5,7 +5,7 @@ void Timer::Initialize()
 	start = (double)time(NULL);
 	start = clock() / CLOCKS_PER_SEC;
 	total = 0.0;
-	SetTime = 180;
+	SetTime = 3600;
 	dt = SetTime;
 	for (int i = 0; i < 4; i++)
 	{
@@ -31,7 +31,7 @@ void Timer::Update()
 
 void Timer::Draw()
 {
-	DrawRectExtendGraph(0 * 28 + 560, 0, 28 + 0 * 28 + 560, 38, 0, 110 * min2, 110, 150, timeGraph[0], TRUE);
+	DrawRectExtendGraph(0 * 28 + 560, 0, 28 + 0 * 28 + 560, 38, 110 * min2, 0, 110, 150, timeGraph[0], TRUE);
 	DrawRectExtendGraph(1 * 28 + 560, 0, 28 + 1 * 28 + 560, 38, 110 * min1, 0, 110, 150, timeGraph[1], TRUE);
 	DrawRectExtendGraph(2 * 28 + 588, 0, 28 + 2 * 28 + 588, 38, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);
 	DrawRectExtendGraph(3 * 28 + 588, 0, 28 + 3 * 28 + 588, 38, 110 * sec1, 0, 110, 150, timeGraph[3], TRUE);
