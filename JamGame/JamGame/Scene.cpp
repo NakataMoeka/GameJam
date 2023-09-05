@@ -113,7 +113,7 @@ void Scene::titleTransaction() {
 
 			posX = x + j * sizeX + crevice_width * crevice_count;
 
-			DrawGraph(posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
+			DrawGraph(backPos[0] + posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
 		}
 	}
 }
