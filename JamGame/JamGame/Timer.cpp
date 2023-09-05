@@ -31,9 +31,9 @@ void Timer::Update()
 
 void Timer::Draw()
 {
-	DrawRectExtendGraph(0 * 28, 0, 28 + 0 * 28, 38, 0, 110 * min2, 110, 150, timeGraph[0], TRUE);
-	DrawRectExtendGraph(1 * 28, 0, 28 + 1 * 28, 38, 110 * min1, 0, 110, 150, timeGraph[1], TRUE);
-	DrawRectExtendGraph(2 * 28 + 28, 0, 28 + 2 * 28 + 28, 38, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);
-	DrawRectExtendGraph(3 * 28 + 28, 0, 28 + 3 * 28 + 28, 38, 110 * sec1, 0, 110, 150, timeGraph[3], TRUE);
-	DrawExtendGraph(56, 0, 84, 38, colonGraph, TRUE);
+	DrawRectExtendGraph(0 * 28 + 560, 0, 28 + 0 * 28 + 560, 38, 0, 110 * min2, 110, 150, timeGraph[0], TRUE);
+	DrawRectExtendGraph(1 * 28 + 560, 0, 28 + 1 * 28 + 560, 38, 110 * min1, 0, 110, 150, timeGraph[1], TRUE);
+	DrawRectExtendGraph(2 * 28 + 588, 0, 28 + 2 * 28 + 588, 38, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);
+	DrawRectExtendGraph(3 * 28 + 588, 0, 28 + 3 * 28 + 588, 38, 110 * sec1, 0, 110, 150, timeGraph[3], TRUE);
+	DrawExtendGraph(616, 0, 644, 38, colonGraph, TRUE);
 }
