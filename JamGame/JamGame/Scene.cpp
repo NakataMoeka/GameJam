@@ -86,10 +86,16 @@ float Scene::Ease(float start, float end, float flame)
 void Scene::BackMove()
 {
 	//押されたらフラグチェンジ
-	if (MouseInputOld != 1 && MouseInput == 1)
+	for (int i = 0; i < 2; i++)
 	{
-		SetIsChange();
-		backFlame = 0;
+		if (hitBottles->HitBottle(arrowPosX[i], 35, 55, 650))
+		{
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				SetIsChange();
+				backFlame = 0;
+			}
+		}
 	}
 
 	if (isChange)
@@ -165,8 +171,10 @@ void Scene::titleTransaction() {
 	int clockSize[2] = { 256, 90 };
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 20, clockGh, true);
 	//矢印
-	DrawGraph(WIN_WIDHT - arrowSize[0] + backPos[0], 0, rightGh, true);
-	DrawGraph(WIN_WIDHT + backPos[0], 0, leftGh, true);
+	arrowPosX[0] = WIN_WIDHT - arrowSize[0] + backPos[0];
+	arrowPosX[1] = WIN_WIDHT + backPos[0];
+	DrawGraph(arrowPosX[0], 0, rightGh, true);
+	DrawGraph(arrowPosX[1], 0, leftGh, true);
 
 	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);

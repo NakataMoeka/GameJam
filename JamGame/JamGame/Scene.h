@@ -53,6 +53,7 @@ private:
 	int randX = 0, randY = 0;
 	//–îˆó
 	int arrowSize[2] = { 64, 720 };
+	int arrowPosX[2];
 
 	Timer* timer;
 	HitBottles *hitBottles;
