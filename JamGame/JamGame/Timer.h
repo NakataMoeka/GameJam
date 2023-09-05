@@ -12,5 +12,8 @@ private:
 	double dt;
 	double total;
 	double SetTime;
+
+	int sec;
+	int min;
 };
 
