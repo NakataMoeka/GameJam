@@ -15,5 +15,13 @@ private:
 
 	int sec;
 	int min;
+
+	int sec1;
+	int sec2;
+	int min1;
+	int min2;
+
+	int timeGraph[4];
+	int colonGraph;
 };
 
