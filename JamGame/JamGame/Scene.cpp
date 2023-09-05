@@ -165,14 +165,6 @@ void Scene::titleTransaction() {
 	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
-	//ペットボトルのサイズ
-	const int sizeX = 64;
-	const int sizeY = 128;
-	//隙間の幅
-	const int crevice_width = 30;
-	const int crevice_height = 10;
-	//ペットボトルのX座標
-	int posX;
 	//隙間カウンター
 	int crevice_count = 0;
 
@@ -190,10 +182,9 @@ void Scene::titleTransaction() {
 			posX[i][j] = x + j * sizeX + crevice_width * crevice_count;
 			posY[i][j] = y + i * sizeY + crevice_height * i;
 
-			DrawGraph(posX[i][j], posY[i][j], petGh[i][j], TRUE);
 			if (isDraw[i][j])
 			{
-				DrawGraph(backPos[0] + posX, y + i * sizeY + crevice_height * i, petGh[i][j], TRUE);
+				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[i][j], TRUE);
 			}
 		}
 	}

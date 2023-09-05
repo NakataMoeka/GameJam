@@ -16,7 +16,6 @@ private:
 	//ペットボトル最大
 	static const int MAXPET_X = 15;
 	static const int MAXPET_Y = 4;
-<<<<<<< HEAD
 	//ペットボトルのサイズ
 	const int sizeX = 64;
 	const int sizeY = 128;
@@ -34,11 +33,8 @@ private:
 	int Mouse;
 	int MousePre;
 
-	const int x = 150;
-=======
 	//初期位置
 	const int x = 120;
->>>>>>> master
 	const int y = 170;
 	//背景座標
 	float backPos[2] = { 0,0 };
@@ -64,13 +60,10 @@ private:
 	
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
-<<<<<<< HEAD
 	int sellGh;
 
-=======
 	int backgroundGh;
 	int clockGh;
->>>>>>> master
 	// Animation Variable
 
 	
