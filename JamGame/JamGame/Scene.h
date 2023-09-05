@@ -1,5 +1,6 @@
 #pragma once
 #include "DxLib.h"
+#include"Timer.h"
 
 class Scene 
 {
@@ -28,6 +29,7 @@ private:
 	float difference = 0;
 	float backFlame = 0;
 
+	Timer* timer;
 	// Game object Instance
 
 	//Sound
@@ -48,13 +50,15 @@ public:
 	//イージング
 	float Ease(float start, float end, float flame);
 
+	void Update();
 	void titleTransaction();
 	void endingTransaction();
 
 	void playSound(int soundMemory);
 	void drawTitle();
-
+	void Draw();
 	//getter
+	
 	int getSceneNo();
 
 	//setter

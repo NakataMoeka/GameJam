@@ -17,6 +17,8 @@ void Scene::init() {
 	//”wŒi
 	backgroundGh = LoadGraph("Resources/background.png");
 
+	timer = new Timer();
+	timer->Initialize();
 	// Load Sound
 
 	//variable
@@ -26,6 +28,12 @@ void Scene::init() {
 
 void Scene::sceneManager() {
 	titleTransaction();
+	Update();
+}
+
+void Scene::Update()
+{
+	timer->Update();
 }
 
 float Scene::Ease(float start, float end, float flame)
@@ -130,6 +138,11 @@ void Scene::drawTitle() {
 	
 
 	
+}
+
+void Scene::Draw()
+{
+	timer->Draw();
 }
 
 int Scene::getSceneNo() { return sceneNo; }

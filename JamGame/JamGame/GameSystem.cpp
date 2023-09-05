@@ -42,6 +42,7 @@ void GameSystem::gameLoopPre() {
 
 void GameSystem::gameLoop() {
 	scene->sceneManager();
+	scene->Draw();
 }
 
 void GameSystem::gameLoopPost() {
