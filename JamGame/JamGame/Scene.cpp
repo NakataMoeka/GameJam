@@ -236,15 +236,12 @@ void Scene::drawTitle() {
 void Scene::Draw()
 {
 	timer->Draw();
-<<<<<<< HEAD
 	score->Draw();
-=======
 	hitBottles->Draw();
 	if (bottleHitFlag)
 	{
 		DrawGraph(sellPosX, sellPosY, sellGh, TRUE);
 	}
->>>>>>> master
 }
 
 int Scene::getSceneNo() { return sceneNo; }
