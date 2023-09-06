@@ -14,6 +14,13 @@ void Scene::init() {
 			petGh[i][j] = LoadGraph("Resources/pet.png");
 		}
 	}
+
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			repPetGh[i][j] = LoadGraph("Resources/pet.png");
+		}
+	}
 	sellGh = LoadGraph("sell.png");
 	//”wŒi
 	backgroundGh = LoadGraph("Resources/background.png");
@@ -205,6 +212,16 @@ void Scene::titleTransaction() {
 			{
 				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[i][j], TRUE);
 			}
+		}
+	}
+
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			repPosX[i][j] = x + j * sizeX + crevice_width + WIN_WIDHT;
+			repPosY[i][j] = y + i * sizeY + crevice_height * i;
+
+			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[i][j], TRUE);
 		}
 	}
 }
