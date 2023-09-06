@@ -23,9 +23,12 @@ private:
 	//隙間の幅
 	const int crevice_width = 30;
 	const int crevice_height = 10;
-	//ペットボトルの座標
+	//陳列棚ペットボトルの座標
 	int posX[MAXPET_Y][MAXPET_X];
 	int posY[MAXPET_Y][MAXPET_X];
+	//補充棚ペットボトルの座標
+	int repPosX[MAXPET_Y][MAXPET_X];
+	int repPosY[MAXPET_Y][MAXPET_X];
 	//当たっているかの確認
 	bool bottleHitFlag;
 	int sellPosX;
@@ -66,6 +69,7 @@ private:
 	
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
+	int repPetGh[MAXPET_Y][MAXPET_X];
 	int sellGh;
 
 	int backgroundGh;
