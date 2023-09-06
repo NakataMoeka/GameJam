@@ -58,6 +58,7 @@ void Scene::Update()
 			{
 				if (((Mouse & MOUSE_INPUT_LEFT) == true) && ((MousePre & MOUSE_INPUT_LEFT) == false))
 				{
+					isDraw[i][j] = true;
 					bottleHitFlag = true;
 					sellPosX = posX[i][j];
 					sellPosY = posY[i][j];
@@ -144,6 +145,10 @@ void Scene::DisappearPet()
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
+		if (!isDraw[randY][randX])
+		{
+			isDis = false;
+		}
 	}
 	else
 	{

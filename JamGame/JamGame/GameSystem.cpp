@@ -8,7 +8,7 @@ GameSystem::GameSystem() : WIN_WIDTH(1280), WIN_HEIGHT(720) {
 	//ウィンドウサイズを手動では変更できず、かつウィンドウサイズに合わせて拡大できないようにする
 	SetWindowSizeChangeEnableFlag(FALSE, FALSE);
 	
-	SetMainWindowText("0000_タイトル"); // タイトルを変更
+	SetMainWindowText("4008_タイトル"); // タイトルを変更
 	
 	SetGraphMode(WIN_WIDTH, WIN_HEIGHT, 32); //画面サイズの最大サイズ、カラービット数を設定（モニターの解像度に合わせる）
 
