@@ -5,7 +5,6 @@ void Timer::Initialize()
 	start = (double)time(NULL);
 	start = clock() / CLOCKS_PER_SEC;
 	total = 18000;
-	start += total;
 	SetTime = 3600;
 	dt = start;
 	for (int i = 0; i < 4; i++)
@@ -19,12 +18,12 @@ void Timer::Update()
 {
 	start = clock() / CLOCKS_PER_SEC;
 	dt = start;
-	start *= 60;
+	start *= 600;
 	start += total;
 	if (start >= 35999) {
+		start = (double)time(NULL);
 		start = clock() / CLOCKS_PER_SEC;
-		start *= 60;
-		start += total;
+		start *= 600;
 	}
 	hour = (int)start / 3600;
 	min = (int)start % 3600 / 60;
