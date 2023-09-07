@@ -198,7 +198,7 @@ void Scene::titleTransaction() {
 	DrawGraph(arrowPosX[0], 0, rightGh, true);
 	DrawGraph(arrowPosX[1], 0, leftGh, true);
 
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f",timer->GetDt());
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
