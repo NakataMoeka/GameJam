@@ -11,6 +11,7 @@ public:
 	//getter
 	double GetDt() { return dt; }
 	double GetMaxTime() { return SetTime; }
+	double GetStart() { return start; }
 private:
 	double start;
 	double dt;
