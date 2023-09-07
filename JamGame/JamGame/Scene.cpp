@@ -21,7 +21,6 @@ void Scene::init() {
 			repPetGh[i][j] = LoadGraph("Resources/pet.png");
 		}
 	}
-	sellGh = LoadGraph("sell.png");
 	//”wŒi
 	backgroundGh = LoadGraph("Resources/background.png");
 	//ŽžŒv
@@ -51,6 +50,15 @@ void Scene::init() {
 			isDraw[i][j] = true;
 		}
 	}
+	
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			playerBottle[i][j] = 0;
+		}
+	}
+
+	playerHaveBottle = false;
 }
 
 void Scene::sceneManager() {
@@ -62,23 +70,38 @@ void Scene::Update()
 {
 	MousePre = Mouse;
 	Mouse = GetMouseInput();
+
+	if (CheckHitKey(KEY_INPUT_R))
+	{
+		playerHaveBottle = false;
+	}
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
 		for (int j = 0; j < MAXPET_X; j++) {
-			if (hitBottles->HitBottle(posX[i][j], posY[i][j], 60, 128))
+			if (hitBottles->HitBottle(posX[i][j], posY[i][j], 60, 128) && backPos[0] == 0)
 			{
-				if (((Mouse & MOUSE_INPUT_LEFT) == true) && ((MousePre & MOUSE_INPUT_LEFT) == false))
+				if (MouseInputOld != 1 && MouseInput == 1)
 				{
-					isDraw[i][j] = true;
-					bottleHitFlag = true;
-					sellPosX = posX[i][j];
-					sellPosY = posY[i][j];
+					if (isDraw[i][j] == false && playerBottle[i][j] == 1)
+					{
+						isDraw[i][j] = true;
+						playerBottle[i][j] = 0;
+						playerHaveBottle = false;
+					}
 				}
 				else
 				{
-					bottleHitFlag = false;
-					sellPosX = -1000;
-					sellPosY = -1000;
+				}
+			}
+			if (hitBottles->HitBottle(repPosX[i][j] - 1280, repPosY[i][j], 60, 128) && backPos[0] == -1280)
+			{
+				if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle == false)
+				{
+					playerBottle[i][j] = 1;
+					playerHaveBottle = true;
+				}
+				else
+				{
 				}
 			}
 		}
@@ -263,10 +286,6 @@ void Scene::Draw()
 	timer->Draw();
 	score->Draw();
 	hitBottles->Draw();
-	if (bottleHitFlag)
-	{
-		DrawGraph(sellPosX, sellPosY, sellGh, TRUE);
-	}
 }
 
 int Scene::getSceneNo() { return sceneNo; }

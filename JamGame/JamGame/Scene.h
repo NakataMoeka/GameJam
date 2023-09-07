@@ -29,10 +29,6 @@ private:
 	//補充棚ペットボトルの座標
 	int repPosX[MAXPET_Y][MAXPET_X];
 	int repPosY[MAXPET_Y][MAXPET_X];
-	//当たっているかの確認
-	bool bottleHitFlag;
-	int sellPosX;
-	int sellPosY;
 	//左クリック押されたか
 	int Mouse;
 	int MousePre;
@@ -71,7 +67,6 @@ private:
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int repPetGh[MAXPET_Y][MAXPET_X];
-	int sellGh;
 
 	int backgroundGh;
 	int clockGh;
@@ -79,6 +74,9 @@ private:
 	int leftGh;
 	// Animation Variable
 
+	//プレイヤーがペットボトルを持っている情報
+	int playerBottle[MAXPET_Y][MAXPET_X];
+	bool playerHaveBottle;
 
 public:
 	Scene(int sceneNo);
