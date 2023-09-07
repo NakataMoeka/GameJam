@@ -1,9 +1,10 @@
 #pragma once
 #include "DxLib.h"
 #include"Timer.h"
+#include"Score.h"
 #include"HitBottles.h"
 
-class Scene 
+class Scene
 {
 private:
 	//マウス変数
@@ -55,11 +56,14 @@ private:
 	int arrowPosX[2];
 
 	Timer* timer;
-	HitBottles *hitBottles;
+	Score* score;
+	int sc;//スコア
+	int scoreCount = 0;
+	HitBottles* hitBottles;
 	// Game object Instance
 
 	//Sound
-	
+
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int repPetGh[MAXPET_Y][MAXPET_X];
@@ -94,8 +98,9 @@ public:
 	void playSound(int soundMemory);
 	void drawTitle();
 	void Draw();
+	int maxTime = 3;
 	//getter
-	
+
 	int getSceneNo();
 
 	//setter

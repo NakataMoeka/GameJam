@@ -32,6 +32,10 @@ void Scene::init() {
 	timer = new Timer();
 	timer->Initialize();
 
+	score = new Score();
+	score->Initialize();
+	sc = 0;
+	scoreCount = 0;
 	hitBottles = new HitBottles();
 	hitBottles->Init();
 	// Load Sound
@@ -46,7 +50,7 @@ void Scene::init() {
 			isDraw[i][j] = true;
 		}
 	}
-	
+
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
 		for (int j = 0; j < MAXPET_X; j++) {
@@ -103,6 +107,7 @@ void Scene::Update()
 		}
 	}
 	timer->Update();
+	score->Update();
 	hitBottles->Update();
 }
 
@@ -160,18 +165,29 @@ void Scene::BackMove()
 
 void Scene::DisappearPet()
 {
-	const int maxTime = 3;
+
 	double sum = timer->GetMaxTime() - timer->GetDt();
 	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
+	if (timer->GetStart() >= 18000 && timer->GetStart() <= 25199
+		|| timer->GetStart() >= 28800 && timer->GetStart() <= 32399) {
+		maxTime = 2;
+	}
+	else if (timer->GetStart() >= 25200 && timer->GetStart() <= 28799 || timer->GetStart() >= 32400 && timer->GetStart() <= 35999) {
+		maxTime = 4;
+	}
 	if ((int)sum % maxTime == 0 && sum != 0)
-	{ 
+	{
 		isDis = true;
+		scoreCount++;
 	}
 	else
 	{
 		isDis = false;
+		scoreCount = 0;
 	}
-
+	if (scoreCount == 1) {
+		sc++;
+	}
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
@@ -185,6 +201,7 @@ void Scene::DisappearPet()
 		randX = GetRand(MAXPET_X - 1);
 		randY = GetRand(MAXPET_Y - 1);
 	}
+	score->SetSc(sc);
 }
 
 void Scene::titleTransaction() {
@@ -197,7 +214,7 @@ void Scene::titleTransaction() {
 	BackMove();
 	//消滅処理
 	DisappearPet();
-	
+
 	// 描画処理
 	const int WIN_WIDHT = 1280;
 	//背景
@@ -211,7 +228,7 @@ void Scene::titleTransaction() {
 	DrawGraph(arrowPosX[0], 0, rightGh, true);
 	DrawGraph(arrowPosX[1], 0, leftGh, true);
 
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "dt : %f", timer->GetMaxTime() - timer->GetDt());
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", maxTime);
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
@@ -266,14 +283,15 @@ void Scene::playSound(int soundMemory) {
 }
 
 void Scene::drawTitle() {
-	
 
-	
+
+
 }
 
 void Scene::Draw()
 {
 	timer->Draw();
+	score->Draw();
 	hitBottles->Draw();
 }
 
