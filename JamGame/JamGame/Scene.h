@@ -95,7 +95,6 @@ private:
 	//プレイヤーがペットボトルを持っている情報
 	int playerBottle[MAXPET_Y][MAXPET_X];
 
-	bool playerHaveBottle;
 	bool tFlag = false;
 
 	int playerHaveBottle;
