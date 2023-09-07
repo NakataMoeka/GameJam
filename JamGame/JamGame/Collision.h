@@ -2,9 +2,8 @@
 #include<DirectXMath.h>
 class Collision
 {
-private:
-	using XMFLOAT2 = DirectX::XMFLOAT2;
 public:
+	using XMFLOAT2 = DirectX::XMFLOAT2;
 	/// <summary>
 	/// ‹éŒ`“¯Žm‚Ì“–‚½‚è”»’è
 	/// </summary>
@@ -13,7 +12,7 @@ public:
 	/// <param name="size1">ˆê‚Â–Ú‚Ì‹éŒ`‚Ì‘å‚«‚³</param>
 	/// <param name="size2">“ñ‚Â–Ú‚Ì‹éŒ`‚Ì‘å‚«‚³</param>
 	/// <returns>“–‚½‚Á‚Ä‚¢‚½‚çtrue“–‚½‚Á‚Ä‚¢‚È‚©‚Á‚½‚çfalse</returns>
-	bool CubeToCubeCollision(const XMFLOAT2 &pos1, const XMFLOAT2 &pos2, const XMFLOAT2 &size1, const XMFLOAT2 &size2)
+	static bool CubeToCubeCollision(const XMFLOAT2 &pos1, const XMFLOAT2 &pos2, const XMFLOAT2 &size1, const XMFLOAT2 &size2)
 	{
 		if (pos1.x <= pos2.x + size2.x && pos2.x <= pos1.x + size1.x)
 		{
