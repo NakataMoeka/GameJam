@@ -21,6 +21,13 @@ void Scene::init() {
 			repPetGh[i][j] = LoadGraph("Resources/pet.png");
 		}
 	}
+
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			sellGh[i][j] = LoadGraph("Resources/sell.png");
+		}
+	}
 	//背景
 	backgroundGh = LoadGraph("Resources/background.png");
 	//時計
@@ -75,6 +82,19 @@ void Scene::Update()
 	{
 		playerHaveBottle = false;
 	}
+	
+	//売のマークの位置を決める
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			if (isDraw[i][j] == false)
+			{
+				sellPosX[i][j] = posX[i][j];
+				sellPosY[i][j] = posY[i][j];
+			}
+		}
+	}
+
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
 		for (int j = 0; j < MAXPET_X; j++) {
@@ -244,6 +264,10 @@ void Scene::titleTransaction() {
 			if (isDraw[i][j])
 			{
 				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[i][j], TRUE);
+			}
+			else
+			{
+				DrawGraph(backPos[0] + sellPosX[i][j], sellPosY[i][j] + sellSizeY / 2 , sellGh[i][j], TRUE);
 			}
 		}
 	}
