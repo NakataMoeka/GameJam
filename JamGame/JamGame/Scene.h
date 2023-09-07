@@ -3,6 +3,7 @@
 #include"Timer.h"
 #include"Score.h"
 #include"HitBottles.h"
+#include"Title.h"
 
 class Scene
 {
@@ -17,7 +18,7 @@ private:
 	//シーン番号
 	int sceneNo;
 	//ペットボトル最大
-	static const int MAXPET_X = 15;
+	static const int MAXPET_X = 12;
 	static const int MAXPET_Y = 4;
 	//ペットボトルのサイズ
 	const int sizeX = 64;
@@ -66,6 +67,7 @@ private:
 	int arrowSize[2] = { 64, 720 };
 	int arrowPosX[2];
 
+	Title* title;
 	Timer* timer;
 	Score* score;
 	int sc;//スコア
@@ -76,7 +78,8 @@ private:
 	//Sound
 
 	//GraphHandle
-	int petGh[MAXPET_Y][MAXPET_X];
+	static const int MAXPETGRAHIC = 24;
+	int petGh[MAXPETGRAHIC];
 	int repPetGh[MAXPET_Y][MAXPET_X];
 	int sellGh[MAXPET_Y][MAXPET_X];
 

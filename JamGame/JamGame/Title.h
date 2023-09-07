@@ -1,4 +1,5 @@
 #pragma once
+#include "DxLib.h"
 
 class Title
 {
@@ -7,4 +8,5 @@ private:
 
 public:
 	void Init();
+	void Draw();
 };

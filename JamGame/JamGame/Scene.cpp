@@ -8,12 +8,7 @@ Scene::Scene(int sceneNo) {
 void Scene::init() {
 	// Load Graph Handle
 	//ペットボトル
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			petGh[i][j] = LoadGraph("Resources/pet.png");
-		}
-	}
+	LoadDivGraph("Resources/petBottle.png", 24, 5, 5, 64, 128, petGh);
 
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
@@ -279,6 +274,7 @@ void Scene::titleTransaction() {
 
 	//隙間カウンター
 	int crevice_count = 0;
+	int petCount = 0;
 
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
@@ -286,17 +282,19 @@ void Scene::titleTransaction() {
 		crevice_count = 0;
 		for (int j = 0; j < MAXPET_X; j++) {
 			//ペットボトルのX個を5で割った時余りが0の場合、隙間カウンターを1足す
-			if (j % 5 == 0 && j != 0)
+			if (j % 4 == 0 && j != 0)
 			{
 				crevice_count++;
 			}
+
+			petCount = i * MAXPET_Y + j * MAXPET_X;
 
 			posX[i][j] = x + j * sizeX + crevice_width * crevice_count;
 			posY[i][j] = y + i * sizeY + crevice_height * i;
 
 			if (isDraw[i][j])
 			{
-				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[i][j], TRUE);
+				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[petCount], TRUE);
 			}
 			else
 			{
