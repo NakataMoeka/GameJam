@@ -45,6 +45,9 @@ void Scene::init() {
 	scoreCount = 0;
 	hitBottles = new HitBottles();
 	hitBottles->Init();
+	//ƒ^ƒCƒgƒ‹
+	title = new Title();
+	title->Init();
 	// Load Sound
 
 	//variable
@@ -173,6 +176,25 @@ void Scene::BackMove()
 			backFlame += speed;
 		}
 
+	}
+
+	switch (playerHaveBottle)
+	{
+	case 1:
+		speed = 0.2;
+		break;
+	case 2:
+		speed = 0.15;
+		break;
+	case 3:
+		speed = 0.1;
+		break;
+	case 4:
+		speed = 0.05;
+		break;
+	default:
+		speed = 0.25;
+		break;
 	}
 }
 
@@ -313,7 +335,7 @@ void Scene::playSound(int soundMemory) {
 
 void Scene::drawTitle() {
 
-
+	title->Draw();
 
 }
 

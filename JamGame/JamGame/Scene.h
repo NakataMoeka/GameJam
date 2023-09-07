@@ -88,6 +88,7 @@ private:
 
 	//プレイヤーがペットボトルを持っている情報
 	int playerBottle[MAXPET_Y][MAXPET_X];
+	//プレイヤーが持っているペットボトルの数
 	int playerHaveBottle;
 
 public:
