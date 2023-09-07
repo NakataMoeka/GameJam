@@ -104,6 +104,7 @@ public:
 	void playSound(int soundMemory);
 	void drawTitle();
 	void Draw();
+	int maxTime = 3;
 	//getter
 
 	int getSceneNo();
