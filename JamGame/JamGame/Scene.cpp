@@ -21,6 +21,13 @@ void Scene::init() {
 			repPetGh[i][j] = LoadGraph("Resources/pet.png");
 		}
 	}
+
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			sellGh[i][j] = LoadGraph("Resources/sell.png");
+		}
+	}
 	//背景
 	backgroundGh = LoadGraph("Resources/background.png");
 	//時計
@@ -32,6 +39,28 @@ void Scene::init() {
 	timer = new Timer();
 	score = new Score();
 	hitBottles = new HitBottles();
+
+
+	// Load Sound
+
+	//variable
+
+	// Game Object 
+	//ペットボトル描画
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			//ペットボトル描画フラグ
+			isDraw[i][j] = true;
+			//プレイヤーがペットボトルを持っている情報
+			playerBottle[i][j] = 0;
+			//補充棚の数
+			repCount[i][j] = MAX_REPLENISH;
+		}
+	}
+
+
+
 }
 
 void Scene::sceneManager() {
@@ -50,7 +79,6 @@ void Scene::Update()
 	if (sNum == TITLE) {
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
-
 			timer->Initialize();
 			score->Initialize();
 			sc = 0;
@@ -60,29 +88,30 @@ void Scene::Update()
 			for (int i = 0; i < MAXPET_Y; i++)
 			{
 				for (int j = 0; j < MAXPET_X; j++) {
+					//ペットボトル描画フラグ
 					isDraw[i][j] = true;
-				}
-			}
-
-			for (int i = 0; i < MAXPET_Y; i++)
-			{
-				for (int j = 0; j < MAXPET_X; j++) {
+					//プレイヤーがペットボトルを持っている情報
 					playerBottle[i][j] = 0;
+					//補充棚の数
+					repCount[i][j] = MAX_REPLENISH;
 				}
 			}
 
 			playerHaveBottle = false;
 			sNum = GAME;
+
 		}
 	}
 	else if (sNum == GAME) {
 		titleTransaction();
 		MousePre = Mouse;
 		Mouse = GetMouseInput();
+
 		if (CheckHitKey(KEY_INPUT_R))
 		{
 			playerHaveBottle = false;
 		}
+
 		for (int i = 0; i < MAXPET_Y; i++)
 		{
 			for (int j = 0; j < MAXPET_X; j++) {
@@ -90,11 +119,15 @@ void Scene::Update()
 				{
 					if (MouseInputOld != 1 && MouseInput == 1)
 					{
-						if (isDraw[i][j] == false && playerBottle[i][j] == 1)
+						if (isDraw[i][j] == false && playerBottle[i][j] == 1 && playerHaveBottle > 0)
 						{
 							isDraw[i][j] = true;
 							playerBottle[i][j] = 0;
-							playerHaveBottle = false;
+							playerHaveBottle--;
+						}
+						else
+						{
+							playerBottle[i][j] = 0;
 						}
 					}
 					else
@@ -103,10 +136,11 @@ void Scene::Update()
 				}
 				if (hitBottles->HitBottle(repPosX[i][j] - 1280, repPosY[i][j], 60, 128) && backPos[0] == -1280)
 				{
-					if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle == false)
+					if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle < haveBottleNum)
 					{
 						playerBottle[i][j] = 1;
-						playerHaveBottle = true;
+						repCount[i][j]--;
+						playerHaveBottle++;
 					}
 					else
 					{
@@ -153,7 +187,7 @@ void Scene::BackMove()
 		}
 		else
 		{
-			backFlame += 0.2f;
+			backFlame += speed;
 		}
 	}
 	else
@@ -166,7 +200,7 @@ void Scene::BackMove()
 		}
 		else
 		{
-			backFlame += 0.2f;
+			backFlame += speed;
 		}
 
 	}
@@ -199,6 +233,17 @@ void Scene::DisappearPet()
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
+		//売のマークの位置を決める
+		for (int i = 0; i < MAXPET_Y; i++)
+		{
+			for (int j = 0; j < MAXPET_X; j++) {
+				if (isDraw[i][j] == false)
+				{
+					sellPosX[i][j] = posX[i][j];
+					sellPosY[i][j] = posY[i][j];
+				}
+			}
+		}
 		if (!isDraw[randY][randX])
 		{
 			isDis = false;
@@ -260,6 +305,10 @@ void Scene::titleTransaction() {
 			{
 				DrawGraph(backPos[0] + posX[i][j], posY[i][j], petGh[i][j], TRUE);
 			}
+			else
+			{
+				DrawGraph(backPos[0] + sellPosX[i][j], sellPosY[i][j] + sellSizeY / 2, sellGh[i][j], TRUE);
+			}
 		}
 	}
 
@@ -270,6 +319,7 @@ void Scene::titleTransaction() {
 			repPosY[i][j] = y + i * sizeY + crevice_height * i;
 
 			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[i][j], TRUE);
+			DrawFormatString(backPos[0] + repPosX[i][j], repPosY[i][j], GetColor(0, 0, 0), "%d", repCount[i][j]);
 		}
 	}
 }

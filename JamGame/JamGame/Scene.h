@@ -7,8 +7,13 @@
 class Scene
 {
 private:
+
 	char keys[256] = { 0 }; //最新のキーボード情報用
 	char oldkeys[256] = { 0 };//1ループ（フレーム）前のキーボード情報
+
+	//補充棚から持ってこれる本数の上限
+	const int haveBottleNum = 4;
+
 	//マウス変数
 	int MousePosX;
 	int MousePosY;
@@ -31,6 +36,14 @@ private:
 	//補充棚ペットボトルの座標
 	int repPosX[MAXPET_Y][MAXPET_X];
 	int repPosY[MAXPET_Y][MAXPET_X];
+	//売れたマーク
+	int sellPosX[MAXPET_Y][MAXPET_X];
+	int sellPosY[MAXPET_Y][MAXPET_X];
+	int sellSizeX = 64;
+	int sellSizeY = 64;
+	//補充棚の数
+	const int MAX_REPLENISH = 7;
+	int repCount[MAXPET_Y][MAXPET_X];
 	//左クリック押されたか
 	int Mouse;
 	int MousePre;
@@ -48,6 +61,7 @@ private:
 	const float PI = 3.141592f;
 	float difference = 0;
 	float backFlame = 0;
+	float speed = 0.2f;
 	//描画
 	bool isDraw[MAXPET_Y][MAXPET_X];
 	//消滅
@@ -70,6 +84,7 @@ private:
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int repPetGh[MAXPET_Y][MAXPET_X];
+	int sellGh[MAXPET_Y][MAXPET_X];
 
 	int backgroundGh;
 	int clockGh;
@@ -79,8 +94,12 @@ private:
 
 	//プレイヤーがペットボトルを持っている情報
 	int playerBottle[MAXPET_Y][MAXPET_X];
+
 	bool playerHaveBottle;
 	bool tFlag = false;
+
+	int playerHaveBottle;
+
 
 public:
 	enum SceneNum { TITLE, GAME, RESULT };
