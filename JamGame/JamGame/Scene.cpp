@@ -144,7 +144,7 @@ void Scene::BackMove()
 		}
 		else
 		{
-			backFlame += 0.2f;
+			backFlame += speed;
 		}
 	}
 	else
@@ -157,7 +157,7 @@ void Scene::BackMove()
 		}
 		else
 		{
-			backFlame += 0.2f;
+			backFlame += speed;
 		}
 
 	}
