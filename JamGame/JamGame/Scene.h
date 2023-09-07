@@ -1,9 +1,10 @@
 #pragma once
 #include "DxLib.h"
 #include"Timer.h"
+#include"Score.h"
 #include"HitBottles.h"
 
-class Scene 
+class Scene
 {
 private:
 	//マウス変数
@@ -28,6 +29,11 @@ private:
 	//補充棚ペットボトルの座標
 	int repPosX[MAXPET_Y][MAXPET_X];
 	int repPosY[MAXPET_Y][MAXPET_X];
+	//売れたマーク
+	int sellPosX[MAXPET_Y][MAXPET_X];
+	int sellPosY[MAXPET_Y][MAXPET_X];
+	int sellSizeX = 64;
+	int sellSizeY = 64;
 	//左クリック押されたか
 	int Mouse;
 	int MousePre;
@@ -45,6 +51,7 @@ private:
 	const float PI = 3.141592f;
 	float difference = 0;
 	float backFlame = 0;
+	float speed = 0.2f;
 	//描画
 	bool isDraw[MAXPET_Y][MAXPET_X];
 	//消滅
@@ -55,14 +62,18 @@ private:
 	int arrowPosX[2];
 
 	Timer* timer;
-	HitBottles *hitBottles;
+	Score* score;
+	int sc;//スコア
+	int scoreCount = 0;
+	HitBottles* hitBottles;
 	// Game object Instance
 
 	//Sound
-	
+
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int repPetGh[MAXPET_Y][MAXPET_X];
+	int sellGh[MAXPET_Y][MAXPET_X];
 
 	int backgroundGh;
 	int clockGh;
@@ -94,8 +105,9 @@ public:
 	void playSound(int soundMemory);
 	void drawTitle();
 	void Draw();
+	int maxTime = 3;
 	//getter
-	
+
 	int getSceneNo();
 
 	//setter

@@ -137,6 +137,7 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="HitBottles.h" />
     <ClInclude Include="Scene.h" />
