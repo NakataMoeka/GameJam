@@ -1,6 +1,5 @@
 #pragma once
 #include "DxLib.h"
-#include<time.h>
 class Timer
 {
 public:
@@ -10,25 +9,25 @@ public:
 
 	//getter
 	double GetDt() { return dt; }
+	double GetDt2() { return dt2; }
 	double GetMaxTime() { return SetTime; }
-	double GetStart() { return start; }
 private:
 	double start;
+	double end;
 	double dt;
+	double dt2;
 	double total;
+	double total2;
 	double SetTime;
-
-	//clock_t start, end;
-
-	int hour;
+	double tTime;
+	int sec;
 	int min;
 
-	int hour1;
-	int hour2;
+	int sec1;
+	int sec2;
 	int min1;
 	int min2;
 
 	int timeGraph[4];
 	int colonGraph;
 };
-

@@ -8,8 +8,13 @@
 class Scene
 {
 private:
+
+	char keys[256] = { 0 }; //最新のキーボード情報用
+	char oldkeys[256] = { 0 };//1ループ（フレーム）前のキーボード情報
+
 	//補充棚から持ってこれる本数の上限
 	const int haveBottleNum = 4;
+
 	//マウス変数
 	int MousePosX;
 	int MousePosY;
@@ -72,6 +77,7 @@ private:
 	Score* score;
 	int sc;//スコア
 	int scoreCount = 0;
+	int maxTime = 3;
 	HitBottles* hitBottles;
 	// Game object Instance
 
@@ -94,7 +100,12 @@ private:
 	//プレイヤーが持っているペットボトルの数
 	int playerHaveBottle;
 
+	bool tFlag = false;
+	
+
+
 public:
+	enum SceneNum { TITLE, GAME, RESULT };
 	Scene(int sceneNo);
 	~Scene();
 
@@ -114,14 +125,15 @@ public:
 	void playSound(int soundMemory);
 	void drawTitle();
 	void Draw();
-	int maxTime = 3;
+
 	//getter
 
 	int getSceneNo();
-
+	char GetKeys(int i) { return keys[i]; }
+	char GetOldKeys(int i) { return keys[i]; }
 	//setter
 	void SetIsChange() { isChange = !isChange; }
 
-
+	SceneNum sNum = TITLE;
 };
 

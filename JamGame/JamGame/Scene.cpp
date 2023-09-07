@@ -32,17 +32,13 @@ void Scene::init() {
 	leftGh = LoadGraph("Resources/left.png");
 
 	timer = new Timer();
-	timer->Initialize();
-
 	score = new Score();
-	score->Initialize();
-	sc = 0;
-	scoreCount = 0;
 	hitBottles = new HitBottles();
 	hitBottles->Init();
 	//タイトル
 	title = new Title();
 	title->Init();
+
 	// Load Sound
 
 	//variable
@@ -60,66 +56,100 @@ void Scene::init() {
 			repCount[i][j] = MAX_REPLENISH;
 		}
 	}
-	
-	
 
-	playerHaveBottle = false;
+
+
 }
 
 void Scene::sceneManager() {
-	titleTransaction();
+
 	Update();
 }
 
 void Scene::Update()
 {
-	MousePre = Mouse;
-	Mouse = GetMouseInput();
-
-	if (CheckHitKey(KEY_INPUT_R))
+	for (int i = 0; i < 256; ++i)
 	{
-		playerHaveBottle = false;
+		oldkeys[i] = keys[i];
 	}
+	//最新のキーボード情報を取得
+	GetHitKeyStateAll(keys);
+	if (sNum == TITLE) {
+		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		{
+			timer->Initialize();
+			score->Initialize();
+			sc = 0;
+			scoreCount = 0;
+			hitBottles->Init();
 
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			if (hitBottles->HitBottle(posX[i][j], posY[i][j], 60, 128) && backPos[0] == 0)
+			for (int i = 0; i < MAXPET_Y; i++)
 			{
-				if (MouseInputOld != 1 && MouseInput == 1)
+				for (int j = 0; j < MAXPET_X; j++) {
+					//ペットボトル描画フラグ
+					isDraw[i][j] = true;
+					//プレイヤーがペットボトルを持っている情報
+					playerBottle[i][j] = 0;
+					//補充棚の数
+					repCount[i][j] = MAX_REPLENISH;
+				}
+			}
+
+			playerHaveBottle = false;
+			sNum = GAME;
+
+		}
+	}
+	else if (sNum == GAME) {
+		titleTransaction();
+		MousePre = Mouse;
+		Mouse = GetMouseInput();
+
+		if (CheckHitKey(KEY_INPUT_R))
+		{
+			playerHaveBottle = false;
+		}
+
+		for (int i = 0; i < MAXPET_Y; i++)
+		{
+			for (int j = 0; j < MAXPET_X; j++) {
+				if (hitBottles->HitBottle(posX[i][j], posY[i][j], 60, 128) && backPos[0] == 0)
 				{
-					if (isDraw[i][j] == false && playerBottle[i][j] == 1 && playerHaveBottle > 0)
+					if (MouseInputOld != 1 && MouseInput == 1)
 					{
-						isDraw[i][j] = true;
-						playerBottle[i][j] = 0;
-						playerHaveBottle--;
+						if (isDraw[i][j] == false && playerBottle[i][j] == 1 && playerHaveBottle > 0)
+						{
+							isDraw[i][j] = true;
+							playerBottle[i][j] = 0;
+							playerHaveBottle--;
+						}
+						else
+						{
+							playerBottle[i][j] = 0;
+						}
 					}
 					else
 					{
-						playerBottle[i][j] = 0;
 					}
 				}
-				else
+				if (hitBottles->HitBottle(repPosX[i][j] - 1280, repPosY[i][j], 60, 128) && backPos[0] == -1280)
 				{
-				}
-			}
-			if (hitBottles->HitBottle(repPosX[i][j] - 1280, repPosY[i][j], 60, 128) && backPos[0] == -1280)
-			{
-				if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle < haveBottleNum)
-				{
-					playerBottle[i][j] = 1;
-					repCount[i][j]--;
-					playerHaveBottle++;
-				}
-				else
-				{
+					if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle < haveBottleNum)
+					{
+						playerBottle[i][j] = 1;
+						repCount[i][j]--;
+						playerHaveBottle++;
+					}
+					else
+					{
+					}
 				}
 			}
 		}
+		timer->Update();
+		score->Update();
+		hitBottles->Update();
 	}
-	timer->Update();
-	score->Update();
-	hitBottles->Update();
 }
 
 float Scene::Ease(float start, float end, float flame)
@@ -195,14 +225,13 @@ void Scene::BackMove()
 
 void Scene::DisappearPet()
 {
-
-	double sum = timer->GetMaxTime() - timer->GetDt();
+	double sum = timer->GetMaxTime() - timer->GetDt2();
 	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
-	if (timer->GetStart() >= 18000 && timer->GetStart() <= 25199
-		|| timer->GetStart() >= 28800 && timer->GetStart() <= 32399) {
+	if (timer->GetDt() >= 300 && timer->GetDt() <=419
+		|| timer->GetDt() >= 480 && timer->GetDt() <= 539) {
 		maxTime = 2;
 	}
-	else if (timer->GetStart() >= 25200 && timer->GetStart() <= 28799 || timer->GetStart() >= 32400 && timer->GetStart() <= 35999) {
+	else if (timer->GetDt() >= 420 && timer->GetDt() <= 479 || timer->GetDt() >= 540 && timer->GetDt() <= 599) {
 		maxTime = 4;
 	}
 	if ((int)sum % maxTime == 0 && sum != 0)
@@ -298,7 +327,7 @@ void Scene::titleTransaction() {
 			}
 			else
 			{
-				DrawGraph(backPos[0] + sellPosX[i][j], sellPosY[i][j] + sellSizeY / 2 , sellGh[i][j], TRUE);
+				DrawGraph(backPos[0] + sellPosX[i][j], sellPosY[i][j] + sellSizeY / 2, sellGh[i][j], TRUE);
 			}
 		}
 	}
@@ -339,9 +368,16 @@ void Scene::drawTitle() {
 
 void Scene::Draw()
 {
-	timer->Draw();
-	score->Draw();
-	hitBottles->Draw();
+	DrawFormatString(300, 300, GetColor(0, 0, 0), "%d", tFlag);
+	if (sNum == TITLE) {
+		DrawFormatString(500, 300, GetColor(0, 0, 0), "タイトル");
+		DrawFormatString(500, 500, GetColor(0, 0, 0), "SPACEでスタート");
+	}
+	else if (sNum == GAME) {
+		timer->Draw();
+		score->Draw();
+		hitBottles->Draw();
+	}
 }
 
 int Scene::getSceneNo() { return sceneNo; }
