@@ -11,5 +11,5 @@ void Score::Update()
 
 void Score::Draw()
 {
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "%d", sc);
+	DrawFormatString(1000, 0, GetColor(0, 0, 0), "%d", sc);
 }

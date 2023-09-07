@@ -4,7 +4,7 @@
 #include"Score.h"
 #include"HitBottles.h"
 
-class Scene 
+class Scene
 {
 private:
 	//マウス変数
@@ -61,12 +61,13 @@ private:
 
 	Timer* timer;
 	Score* score;
-	int sc;
-	HitBottles *hitBottles;
+	int sc;//スコア
+	int scoreCount = 0;
+	HitBottles* hitBottles;
 	// Game object Instance
 
 	//Sound
-	
+
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int repPetGh[MAXPET_Y][MAXPET_X];
@@ -78,7 +79,7 @@ private:
 	int leftGh;
 	// Animation Variable
 
-	
+
 public:
 	Scene(int sceneNo);
 	~Scene();
@@ -100,7 +101,7 @@ public:
 	void drawTitle();
 	void Draw();
 	//getter
-	
+
 	int getSceneNo();
 
 	//setter

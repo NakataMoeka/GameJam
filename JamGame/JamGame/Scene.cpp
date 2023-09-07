@@ -36,7 +36,7 @@ void Scene::init() {
 	score = new Score();
 	score->Initialize();
 	sc = 0;
-
+	scoreCount = 0;
 	hitBottles = new HitBottles();
 	hitBottles->Init();
 	// Load Sound
@@ -148,12 +148,16 @@ void Scene::DisappearPet()
 	if ((int)sum % maxTime == 0 && sum != 0)
 	{ 
 		isDis = true;
+		scoreCount++;
 	}
 	else
 	{
 		isDis = false;
+		scoreCount = 0;
 	}
-
+	if (scoreCount == 1) {
+		sc++;
+	}
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
