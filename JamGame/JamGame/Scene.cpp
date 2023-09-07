@@ -32,6 +32,10 @@ void Scene::init() {
 	timer = new Timer();
 	timer->Initialize();
 
+	score = new Score();
+	score->Initialize();
+	sc = 0;
+	scoreCount = 0;
 	hitBottles = new HitBottles();
 	hitBottles->Init();
 	// Load Sound
@@ -103,6 +107,7 @@ void Scene::Update()
 		}
 	}
 	timer->Update();
+	score->Update();
 	hitBottles->Update();
 }
 
@@ -166,12 +171,16 @@ void Scene::DisappearPet()
 	if ((int)sum % maxTime == 0 && sum != 0)
 	{ 
 		isDis = true;
+		scoreCount++;
 	}
 	else
 	{
 		isDis = false;
+		scoreCount = 0;
 	}
-
+	if (scoreCount == 1) {
+		sc++;
+	}
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
@@ -185,6 +194,7 @@ void Scene::DisappearPet()
 		randX = GetRand(MAXPET_X - 1);
 		randY = GetRand(MAXPET_Y - 1);
 	}
+	score->SetSc(sc);
 }
 
 void Scene::titleTransaction() {
@@ -274,6 +284,7 @@ void Scene::drawTitle() {
 void Scene::Draw()
 {
 	timer->Draw();
+	score->Draw();
 	hitBottles->Draw();
 }
 
