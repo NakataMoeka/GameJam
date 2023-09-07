@@ -34,6 +34,9 @@ private:
 	int sellPosY[MAXPET_Y][MAXPET_X];
 	int sellSizeX = 64;
 	int sellSizeY = 64;
+	//•â[’I‚Ì”
+	const int MAX_REPLENISH = 7;
+	int repCount[MAXPET_Y][MAXPET_X];
 	//¶ƒNƒŠƒbƒN‰Ÿ‚³‚ê‚½‚©
 	int Mouse;
 	int MousePre;

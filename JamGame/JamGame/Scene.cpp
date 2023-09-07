@@ -54,16 +54,16 @@ void Scene::init() {
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
 		for (int j = 0; j < MAXPET_X; j++) {
+			//ペットボトル描画フラグ
 			isDraw[i][j] = true;
-		}
-	}
-
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
+			//プレイヤーがペットボトルを持っている情報
 			playerBottle[i][j] = 0;
+			//補充棚の数
+			repCount[i][j] = MAX_REPLENISH;
 		}
 	}
+	
+	
 
 	playerHaveBottle = false;
 }
@@ -119,6 +119,7 @@ void Scene::Update()
 				{
 					playerBottle[i][j] = 1;
 					playerHaveBottle = true;
+					repCount[i][j]--;
 				}
 				else
 				{
@@ -286,6 +287,7 @@ void Scene::titleTransaction() {
 			repPosY[i][j] = y + i * sizeY + crevice_height * i;
 
 			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[i][j], TRUE);
+			DrawFormatString(backPos[0] + repPosX[i][j], repPosY[i][j], GetColor(0, 0, 0), "%d", repCount[i][j]);
 		}
 	}
 }
