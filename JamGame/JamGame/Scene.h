@@ -29,6 +29,11 @@ private:
 	//補充棚ペットボトルの座標
 	int repPosX[MAXPET_Y][MAXPET_X];
 	int repPosY[MAXPET_Y][MAXPET_X];
+	//売れたマーク
+	int sellPosX[MAXPET_Y][MAXPET_X];
+	int sellPosY[MAXPET_Y][MAXPET_X];
+	int sellSizeX = 64;
+	int sellSizeY = 64;
 	//左クリック押されたか
 	int Mouse;
 	int MousePre;
@@ -68,6 +73,7 @@ private:
 	//GraphHandle
 	int petGh[MAXPET_Y][MAXPET_X];
 	int repPetGh[MAXPET_Y][MAXPET_X];
+	int sellGh[MAXPET_Y][MAXPET_X];
 
 	int backgroundGh;
 	int clockGh;
