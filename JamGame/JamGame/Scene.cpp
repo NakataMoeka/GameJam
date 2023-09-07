@@ -208,13 +208,13 @@ void Scene::BackMove()
 
 void Scene::DisappearPet()
 {
-	double sum = timer->GetMaxTime() - timer->GetDt();
+	double sum = timer->GetMaxTime() - timer->GetDt2();
 	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
-	if (timer->GetStart() >= 18000 && timer->GetStart() <= 25199
-		|| timer->GetStart() >= 28800 && timer->GetStart() <= 32399) {
+	if (timer->GetDt() >= 300 && timer->GetDt() <=419
+		|| timer->GetDt() >= 480 && timer->GetDt() <= 539) {
 		maxTime = 2;
 	}
-	else if (timer->GetStart() >= 25200 && timer->GetStart() <= 28799 || timer->GetStart() >= 32400 && timer->GetStart() <= 35999) {
+	else if (timer->GetDt() >= 420 && timer->GetDt() <= 479 || timer->GetDt() >= 540 && timer->GetDt() <= 599) {
 		maxTime = 4;
 	}
 	if ((int)sum % maxTime == 0 && sum != 0)
