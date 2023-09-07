@@ -82,18 +82,6 @@ void Scene::Update()
 	{
 		playerHaveBottle = false;
 	}
-	
-	//売のマークの位置を決める
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			if (isDraw[i][j] == false)
-			{
-				sellPosX[i][j] = posX[i][j];
-				sellPosY[i][j] = posY[i][j];
-			}
-		}
-	}
 
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
@@ -102,11 +90,15 @@ void Scene::Update()
 			{
 				if (MouseInputOld != 1 && MouseInput == 1)
 				{
-					if (isDraw[i][j] == false && playerBottle[i][j] == 1)
+					if (isDraw[i][j] == false && playerBottle[i][j] == 1 && playerHaveBottle > 0)
 					{
 						isDraw[i][j] = true;
 						playerBottle[i][j] = 0;
-						playerHaveBottle = false;
+						playerHaveBottle--;
+					}
+					else
+					{
+						playerBottle[i][j] = 0;
 					}
 				}
 				else
@@ -115,11 +107,11 @@ void Scene::Update()
 			}
 			if (hitBottles->HitBottle(repPosX[i][j] - 1280, repPosY[i][j], 60, 128) && backPos[0] == -1280)
 			{
-				if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle == false)
+				if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle < haveBottleNum)
 				{
 					playerBottle[i][j] = 1;
-					playerHaveBottle = true;
 					repCount[i][j]--;
+					playerHaveBottle++;
 				}
 				else
 				{
@@ -212,6 +204,17 @@ void Scene::DisappearPet()
 	if (isDis)
 	{
 		isDraw[randY][randX] = false;
+		//売のマークの位置を決める
+		for (int i = 0; i < MAXPET_Y; i++)
+		{
+			for (int j = 0; j < MAXPET_X; j++) {
+				if (isDraw[i][j] == false)
+				{
+					sellPosX[i][j] = posX[i][j];
+					sellPosY[i][j] = posY[i][j];
+				}
+			}
+		}
 		if (!isDraw[randY][randX])
 		{
 			isDis = false;

@@ -7,6 +7,8 @@
 class Scene
 {
 private:
+	//補充棚から持ってこれる本数の上限
+	const int haveBottleNum = 4;
 	//マウス変数
 	int MousePosX;
 	int MousePosY;
@@ -86,7 +88,7 @@ private:
 
 	//プレイヤーがペットボトルを持っている情報
 	int playerBottle[MAXPET_Y][MAXPET_X];
-	bool playerHaveBottle;
+	int playerHaveBottle;
 
 public:
 	Scene(int sceneNo);
