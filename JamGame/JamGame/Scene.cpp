@@ -9,13 +9,8 @@ void Scene::init() {
 	// Load Graph Handle
 	//ペットボトル
 	LoadDivGraph("Resources/petBottle.png", 24, 5, 5, 64, 128, petGh);
-
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			repPetGh[i][j] = LoadGraph("Resources/pet.png");
-		}
-	}
+	//補充ペットボトル
+	LoadDivGraph("Resources/petBottle.png", 24, 5, 5, 64, 128, repPetGh);
 
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
@@ -74,8 +69,14 @@ void Scene::Update()
 	}
 	//最新のキーボード情報を取得
 	GetHitKeyStateAll(keys);
+	//マウスの更新
+	MouseInputOld = MouseInput;
+	MouseInput = GetMouseInput();
+	GetMousePoint(&MousePosX, &MousePosY);
 	if (sNum == TITLE) {
-		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		titleTransaction();
+
+		if (MouseInputOld != 1 && MouseInput == 1 && title->GetIsHit())
 		{
 			timer->Initialize();
 			score->Initialize();
@@ -97,11 +98,10 @@ void Scene::Update()
 
 			playerHaveBottle = false;
 			sNum = GAME;
-
 		}
 	}
 	else if (sNum == GAME) {
-		titleTransaction();
+		playTransaction();
 		MousePre = Mouse;
 		Mouse = GetMouseInput();
 
@@ -150,6 +150,14 @@ void Scene::Update()
 		score->Update();
 		hitBottles->Update();
 	}
+}
+
+void Scene::titleTransaction()
+{
+	//更新処理
+	title->Update();
+	//描画処理
+	drawTitle();
 }
 
 float Scene::Ease(float start, float end, float flame)
@@ -274,12 +282,9 @@ void Scene::DisappearPet()
 	score->SetSc(sc);
 }
 
-void Scene::titleTransaction() {
+void Scene::playTransaction() {
 	// 更新処理
-	//マウスの更新
-	MouseInputOld = MouseInput;
-	MouseInput = GetMouseInput();
-	GetMousePoint(&MousePosX, &MousePosY);
+	
 	//背景移動
 	BackMove();
 	//消滅処理
@@ -304,6 +309,7 @@ void Scene::titleTransaction() {
 	//隙間カウンター
 	int crevice_count = 0;
 	int petCount = 0;
+	int repPetCount = 0;
 
 	for (int i = 0; i < MAXPET_Y; i++)
 	{
@@ -316,7 +322,15 @@ void Scene::titleTransaction() {
 				crevice_count++;
 			}
 
-			petCount = i * MAXPET_Y + j * MAXPET_X;
+			if (j % 2 == 0)
+			{
+				petCount++;
+
+				if (i == 0 && j == 0)
+				{
+					petCount = 0;
+				}
+			}
 
 			posX[i][j] = x + j * sizeX + crevice_width * crevice_count;
 			posY[i][j] = y + i * sizeY + crevice_height * i;
@@ -338,7 +352,17 @@ void Scene::titleTransaction() {
 			repPosX[i][j] = x + j * sizeX + crevice_width + WIN_WIDHT;
 			repPosY[i][j] = y + i * sizeY + crevice_height * i;
 
-			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[i][j], TRUE);
+			if (j % 2 == 0)
+			{
+				repPetCount++;
+
+				if (i == 0 && j == 0)
+				{
+					repPetCount = 0;
+				}
+			}
+
+			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[repPetCount], TRUE);
 			DrawFormatString(backPos[0] + repPosX[i][j], repPosY[i][j], GetColor(0, 0, 0), "%d", repCount[i][j]);
 		}
 	}
@@ -363,17 +387,12 @@ void Scene::playSound(int soundMemory) {
 void Scene::drawTitle() {
 
 	title->Draw();
-
 }
 
 void Scene::Draw()
 {
 	DrawFormatString(300, 300, GetColor(0, 0, 0), "%d", tFlag);
-	if (sNum == TITLE) {
-		DrawFormatString(500, 300, GetColor(0, 0, 0), "タイトル");
-		DrawFormatString(500, 500, GetColor(0, 0, 0), "SPACEでスタート");
-	}
-	else if (sNum == GAME) {
+	if (sNum == GAME) {
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();

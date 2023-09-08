@@ -29,7 +29,7 @@ private:
 	const int sizeX = 64;
 	const int sizeY = 128;
 	//隙間の幅
-	const int crevice_width = 30;
+	const int crevice_width = 90;
 	const int crevice_height = 10;
 	//陳列棚ペットボトルの座標
 	int posX[MAXPET_Y][MAXPET_X];
@@ -50,7 +50,7 @@ private:
 	int MousePre;
 
 	//初期位置
-	const int x = 120;
+	const int x = 150;
 	const int y = 170;
 	//背景座標
 	float backPos[2] = { 0,0 };
@@ -86,7 +86,7 @@ private:
 	//GraphHandle
 	static const int MAXPETGRAHIC = 24;
 	int petGh[MAXPETGRAHIC];
-	int repPetGh[MAXPET_Y][MAXPET_X];
+	int repPetGh[MAXPETGRAHIC];
 	int sellGh[MAXPET_Y][MAXPET_X];
 
 	int backgroundGh;
@@ -120,6 +120,7 @@ public:
 
 	void Update();
 	void titleTransaction();
+	void playTransaction();
 	void endingTransaction();
 
 	void playSound(int soundMemory);
