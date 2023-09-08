@@ -22,7 +22,7 @@ void Timer::Update()
 	if (dt < 600 && dt2>0) {
 		end = clock() / CLOCKS_PER_SEC;
 		total = end - start;
-		total *= 10;
+		total *= 2;
 		dt = tTime + total;
 		total2 = end - start;
 		dt2 = SetTime - total2;

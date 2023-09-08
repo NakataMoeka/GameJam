@@ -98,7 +98,7 @@ private:
 	bool tFlag = false;
 
 	int playerHaveBottle;
-
+	int minNum;
 
 public:
 	enum SceneNum { TITLE, GAME, RESULT };
@@ -117,7 +117,7 @@ public:
 	void Update();
 	void titleTransaction();
 	void endingTransaction();
-
+	void RandomMin();//Œ¸‚éŽžŠÔƒ‰ƒ“ƒ_ƒ€
 	void playSound(int soundMemory);
 	void drawTitle();
 	void Draw();

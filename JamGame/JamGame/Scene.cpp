@@ -210,13 +210,8 @@ void Scene::DisappearPet()
 {
 	double sum = timer->GetMaxTime() - timer->GetDt2();
 	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
-	if (timer->GetDt() >= 300 && timer->GetDt() <=419
-		|| timer->GetDt() >= 480 && timer->GetDt() <= 539) {
-		maxTime = 2;
-	}
-	else if (timer->GetDt() >= 420 && timer->GetDt() <= 479 || timer->GetDt() >= 540 && timer->GetDt() <= 599) {
-		maxTime = 4;
-	}
+	minNum = 1;
+	RandomMin();
 	if ((int)sum % maxTime == 0 && sum != 0)
 	{
 		isDis = true;
@@ -332,6 +327,60 @@ void Scene::endingTransaction() {
 	//playSound(endingSound);
 }
 
+void Scene::RandomMin()
+{
+	if (minNum == 1) {
+		if (timer->GetDt() >= 300 && timer->GetDt() <= 320
+			|| timer->GetDt() >= 480 && timer->GetDt() <= 500
+			|| timer->GetDt() >= 530 && timer->GetDt() <= 550) {
+			maxTime = 2;
+		}
+		else if (timer->GetDt() >= 360 && timer->GetDt() <= 380 || timer->GetDt() >= 580 && timer->GetDt() <= 600) {
+			maxTime = 4;
+		}
+	}
+	else if (minNum == 2) {
+		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
+			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
+			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
+			maxTime = 4;
+		}
+		else if (timer->GetDt() >= 380 && timer->GetDt() <= 400 || timer->GetDt() >= 520 && timer->GetDt() <= 540) {
+			maxTime = 2;
+		}
+	}
+	else if (minNum == 3) {
+		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
+			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
+			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
+			maxTime = 4;
+		}
+		else if (timer->GetDt() >= 380 && timer->GetDt() <= 400 || timer->GetDt() >= 520 && timer->GetDt() <= 540) {
+			maxTime = 2;
+		}
+	}
+	else if (minNum == 4) {
+		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
+			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
+			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
+			maxTime = 4;
+		}
+		else if (timer->GetDt() >= 380 && timer->GetDt() <= 400 || timer->GetDt() >= 520 && timer->GetDt() <= 540) {
+			maxTime = 2;
+		}
+	}
+	else if (minNum == 5) {
+		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
+			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
+			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
+			maxTime = 4;
+		}
+		else if (timer->GetDt() >= 380 && timer->GetDt() <= 400 || timer->GetDt() >= 520 && timer->GetDt() <= 540) {
+			maxTime = 2;
+		}
+	}
+}
+
 void Scene::playSound(int soundMemory) {
 	if (CheckSoundMem(soundMemory) == 0)
 	{
@@ -348,7 +397,6 @@ void Scene::drawTitle() {
 
 void Scene::Draw()
 {
-	DrawFormatString(300, 300, GetColor(0, 0, 0), "%d", tFlag);
 	if (sNum == TITLE) {
 		DrawFormatString(500, 300, GetColor(0, 0, 0), "タイトル");
 		DrawFormatString(500, 500, GetColor(0, 0, 0), "SPACEでスタート");
