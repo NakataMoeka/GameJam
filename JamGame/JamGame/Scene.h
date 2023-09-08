@@ -56,7 +56,7 @@ private:
 	bool isChange = false;
 	//イージング
 	float position = 0;
-	float time = 0;
+	float etime = 0;
 	const float maxflame = 1.0f;
 	const float PI = 3.141592f;
 	float difference = 0;

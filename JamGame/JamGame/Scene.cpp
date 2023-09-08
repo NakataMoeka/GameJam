@@ -1,6 +1,6 @@
 #include "Scene.h"
 #include "math.h"
-
+#include<time.h>
 Scene::Scene(int sceneNo) {
 	this->sceneNo = sceneNo;
 }
@@ -96,7 +96,8 @@ void Scene::Update()
 					repCount[i][j] = MAX_REPLENISH;
 				}
 			}
-
+			srand((unsigned int)time(NULL));
+			minNum = rand() % 6;
 			playerHaveBottle = false;
 			sNum = GAME;
 
@@ -157,8 +158,8 @@ void Scene::Update()
 float Scene::Ease(float start, float end, float flame)
 {
 	difference = end - start;
-	time = flame / maxflame;
-	position = difference * time + start;
+	etime = flame / maxflame;
+	position = difference * etime + start;
 	return position;
 }
 
@@ -210,7 +211,6 @@ void Scene::DisappearPet()
 {
 	double sum = timer->GetMaxTime() - timer->GetDt2();
 	//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
-	minNum = 1;
 	RandomMin();
 	if ((int)sum % maxTime == 0 && sum != 0)
 	{
@@ -276,7 +276,7 @@ void Scene::titleTransaction() {
 	DrawGraph(arrowPosX[0], 0, rightGh, true);
 	DrawGraph(arrowPosX[1], 0, leftGh, true);
 
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", maxTime);
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", minNum);
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
@@ -350,18 +350,18 @@ void Scene::RandomMin()
 		}
 	}
 	else if (minNum == 3) {
-		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
-			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
-			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
-			maxTime = 4;
-		}
-		else if (timer->GetDt() >= 380 && timer->GetDt() <= 400 || timer->GetDt() >= 520 && timer->GetDt() <= 540) {
+		if (timer->GetDt() >= 310 && timer->GetDt() <= 330
+			|| timer->GetDt() >= 410 && timer->GetDt() <= 430
+			|| timer->GetDt() >= 570 && timer->GetDt() <= 590) {
 			maxTime = 2;
+		}
+		else if (timer->GetDt() >= 350 && timer->GetDt() <= 370 || timer->GetDt() >= 490 && timer->GetDt() <= 510) {
+			maxTime = 4;
 		}
 	}
 	else if (minNum == 4) {
 		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
-			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
+			|| timer->GetDt() >= 420 && timer->GetDt() <= 440
 			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
 			maxTime = 4;
 		}
@@ -370,13 +370,13 @@ void Scene::RandomMin()
 		}
 	}
 	else if (minNum == 5) {
-		if (timer->GetDt() >= 320 && timer->GetDt() <= 340
-			|| timer->GetDt() >= 440 && timer->GetDt() <= 460
-			|| timer->GetDt() >= 560 && timer->GetDt() <= 580) {
-			maxTime = 4;
-		}
-		else if (timer->GetDt() >= 380 && timer->GetDt() <= 400 || timer->GetDt() >= 520 && timer->GetDt() <= 540) {
+		if (timer->GetDt() >= 300 && timer->GetDt() <= 320
+			|| timer->GetDt() >= 470 && timer->GetDt() <= 490
+			|| timer->GetDt() >= 530 && timer->GetDt() <= 550) {
 			maxTime = 2;
+		}
+		else if (timer->GetDt() >= 340 && timer->GetDt() <= 360 || timer->GetDt() >= 420 && timer->GetDt() <= 440) {
+			maxTime = 4;
 		}
 	}
 }
