@@ -120,7 +120,6 @@ void Scene::Update()
 		{
 			playerHaveBottle = false;
 		}
-
 		if (orderFlag == false)
 		{
 			for (int i = 0; i < MAXPET_Y; i++)
@@ -217,10 +216,10 @@ void Scene::Update()
 					OrderNum = 0;
 				}
 			}
-			timer->Update();
-			score->Update();
-			hitBottles->Update();
 		}
+		timer->Update();
+		score->Update();
+		hitBottles->Update();
 	}
 }
 
