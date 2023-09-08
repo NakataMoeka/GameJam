@@ -51,21 +51,6 @@ void Scene::init() {
 	//variable
 
 	// Game Object 
-	//ペットボトル描画
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			//ペットボトル描画フラグ
-			isDraw[i][j] = true;
-			//プレイヤーがペットボトルを持っている情報
-			playerBottle[i][j] = 0;
-			//補充棚の数
-			repCount[i][j] = MAX_REPLENISH;
-		}
-	}
-
-
-
 }
 
 void Scene::sceneManager() {
@@ -228,9 +213,19 @@ void Scene::Update()
 				gaugeMoveFlag = false;
 			}
 		}
+		if (timer->GetDt() >= 600) {
+			sNum = RESULT;
+		}
 		timer->Update();
 		score->Update();
 		hitBottles->Update();
+	}
+	else if (sNum == RESULT) {
+		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		{
+			title->Init();
+			sNum = TITLE;
+		}
 	}
 }
 
@@ -592,5 +587,8 @@ void Scene::Draw()
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
+	}
+	else if (sNum == RESULT) {
+		result->Draw();
 	}
 }

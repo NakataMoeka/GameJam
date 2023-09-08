@@ -7,6 +7,7 @@ void Score::Initialize()
 
 void Score::Update()
 {
+    HighScore();
 }
 
 void Score::HighScore()

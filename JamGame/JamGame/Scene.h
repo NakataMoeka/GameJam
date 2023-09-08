@@ -4,7 +4,7 @@
 #include"Score.h"
 #include"HitBottles.h"
 #include"Title.h"
-
+#include"Result.h"
 class Scene
 {
 private:
@@ -125,6 +125,9 @@ private:
 	Title* title;
 	Timer* timer;
 	Score* score;
+
+	Result* result;
+
 	int sc;//ÉXÉRÉA
 	int scoreCount = 0;
 	int maxTime = 3;
