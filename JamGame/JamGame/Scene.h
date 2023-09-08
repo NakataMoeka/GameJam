@@ -14,7 +14,10 @@ private:
 
 	//補充棚から持ってこれる本数の上限
 	const int haveBottleNum = 4;
-
+	//PC画面に映るペットボトルの総数
+	static const int MAX_PCPET_Y = 2;
+	static const int MAX_PCPET_X = 12;
+	static const int MAX_PCPET_NUM = 24;
 	//マウス変数
 	int MousePosX;
 	int MousePosY;
@@ -71,6 +74,39 @@ private:
 	//矢印
 	int arrowSize[2] = { 64, 720 };
 	int arrowPosX[2];
+	//発注
+	float orderPosX;
+	float orderPosY;
+	float orderSizeX = 128;
+	float orderSizeY = 64;
+	bool orderFlag;
+	//発注画面
+	float pcPosX;
+	float pcPosY;
+	int pcSize[2] = { 1000,540 };
+	const int pcEdge = 50;
+	//発注画面のボトル
+	float pcPetPosX[MAX_PCPET_NUM];
+	float pcPetPosY[MAX_PCPET_NUM];
+	//1種類に対する最大注文本数
+	static const int ORDER_MAX_NUM = 4;
+	//最大注文種類
+	static const int ORDER_MAX_TYPE = 7;
+	//現在プレイヤーが注文している数
+	int playerOrderNum[MAX_PCPET_NUM];
+	//現在プレイヤーが注文している種類
+	int playerOrderType[MAX_PCPET_NUM];
+	//実際に発注するペットボトル
+	float playerOrderPetPosX[ORDER_MAX_NUM * ORDER_MAX_TYPE];
+	float playerOrderPetPosY[ORDER_MAX_NUM * ORDER_MAX_TYPE];
+	//注文ボタンの位置
+	float pickUpPosX;
+	float pickUpPosY;
+	static const int PICKUP_SIZE_X = 128;
+	static const int PICKUP_SIZE_Y = 64;
+
+	int OrderType;
+	int OrderNum;
 
 	Title* title;
 	Timer* timer;
@@ -93,6 +129,12 @@ private:
 	int clockGh;
 	int rightGh;
 	int leftGh;
+	int orderGh;
+	int pcGh;
+	int pcPetGh[MAX_PCPET_NUM];
+	int pcOrderGh[ORDER_MAX_NUM * ORDER_MAX_TYPE];
+	int pickUpGh;
+	int gaugeGh;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
@@ -133,7 +175,6 @@ public:
 	char GetOldKeys(int i) { return keys[i]; }
 	//setter
 	void SetIsChange() { isChange = !isChange; }
-
 	SceneNum sNum = TITLE;
 };
 
