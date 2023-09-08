@@ -104,6 +104,20 @@ private:
 	float pickUpPosY;
 	static const int PICKUP_SIZE_X = 128;
 	static const int PICKUP_SIZE_Y = 64;
+	//発注のゲージの位置
+	float gaugePosX;
+	float gaugePosY;
+	float gaugelength;
+	static const int GAUGE_SIZE_Y = 20;
+	bool gaugeMoveFlag;
+	//トラックの位置
+	float carPosX;
+	float carPosY;
+	static const int CAR_SIZE_X = 64;
+	static const int CAR_SIZE_Y = 32;
+	float carMoveLength;
+
+	static const int WAIT_MOVE_NUM = 2;
 
 	int OrderType;
 	int OrderNum;
@@ -135,6 +149,7 @@ private:
 	int pcOrderGh[ORDER_MAX_NUM * ORDER_MAX_TYPE];
 	int pickUpGh;
 	int gaugeGh;
+	int carGh;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報

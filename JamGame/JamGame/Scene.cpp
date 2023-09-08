@@ -30,12 +30,14 @@ void Scene::init() {
 	//発注画面
 	pcGh = LoadGraph("Resources/pc.png");
 	//発注画面のペットボトル
-	for (int j = 0; j < MAX_PCPET_NUM; j++) {
-		pcPetGh[j] = LoadGraph("Resources/pet.png");
-	}
+	LoadDivGraph("Resources/petBottle.png", 24, 5, 5, 64, 128, pcPetGh);
 	//注文ボタン
 	pickUpGh = LoadGraph("Resources/pickup.png");
+	//ゲージ
 	gaugeGh = LoadGraph("Resources/gauge.png");
+	//トラック
+	carGh = LoadGraph("Resources/car.png");
+
 	timer = new Timer();
 	score = new Score();
 	hitBottles = new HitBottles();
@@ -175,7 +177,7 @@ void Scene::Update()
 		{
 			for (int i = 0; i < MAX_PCPET_NUM; i++)
 			{
-				if (MouseInputOld != 1 && MouseInput == 1)
+				if (MouseInputOld != 1 && MouseInput == 1 && gaugeMoveFlag == false)
 				{
 					if (playerOrderType[i] == 1 && playerOrderNum[i] < ORDER_MAX_NUM)
 					{
@@ -202,19 +204,28 @@ void Scene::Update()
 			if (MouseInputOld != 1 && MouseInput == 1)
 			{
 				//注文ボタンの当たり判定
-				if (hitBottles->HitBottle(pickUpPosX + PICKUP_SIZE_X / 2, pickUpPosY + PICKUP_SIZE_Y / 2, PICKUP_SIZE_X, PICKUP_SIZE_Y))
+				if (hitBottles->HitBottle(pickUpPosX + PICKUP_SIZE_X / 2, pickUpPosY + PICKUP_SIZE_Y / 2, PICKUP_SIZE_X, PICKUP_SIZE_Y) && OrderNum > 0)
 				{
-					for (int i = 0; i < MAX_PCPET_NUM; i++)
+					if (gaugeMoveFlag == false)
 					{
-						playerOrderNum[i] = 0;
+						gaugeMoveFlag = true;
 					}
-					for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
-					{
-						pcOrderGh[i] = 0;
-					}
-					OrderType = 0;
-					OrderNum = 0;
 				}
+			}
+			if (Collision::CubeToCubeCollision({ gaugePosX,gaugePosY }, { pickUpPosX,pickUpPosY },
+				{ gaugelength , GAUGE_SIZE_Y }, { PICKUP_SIZE_X, PICKUP_SIZE_Y }))
+			{
+				for (int i = 0; i < MAX_PCPET_NUM; i++)
+				{
+					playerOrderNum[i] = 0;
+				}
+				for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
+				{
+					pcOrderGh[i] = 0;
+				}
+				OrderType = 0;
+				OrderNum = 0;
+				gaugeMoveFlag = false;
 			}
 		}
 		timer->Update();
@@ -470,6 +481,29 @@ void Scene::playTransaction() {
 
 			DrawGraph(playerOrderPetPosX[i], playerOrderPetPosY[i], pcOrderGh[i], TRUE);
 		}
+		//ゲージ
+		gaugePosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge;
+		gaugePosY = WIN_HEIGHT/2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 + 10;
+		if (gaugeMoveFlag == true)
+		{
+			gaugelength += WAIT_MOVE_NUM;
+			carMoveLength += WAIT_MOVE_NUM;
+		}
+		else
+		{
+			gaugelength = 20;
+			carMoveLength = 0;
+		}
+
+		DrawExtendGraph(gaugePosX,gaugePosY,gaugePosX + gaugelength, gaugePosY + GAUGE_SIZE_Y,gaugeGh,TRUE);
+		
+		//トラック
+		carPosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge - GAUGE_SIZE_Y;
+		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - GAUGE_SIZE_Y;
+
+		DrawExtendGraph(carPosX + carMoveLength, carPosY, carPosX + CAR_SIZE_X + carMoveLength, carPosY + CAR_SIZE_Y, carGh, TRUE);
+
+		//注文ボタン
 		pickUpPosX = WIN_WIDHT / 2 + pcSize[0] / 2 - PICKUP_SIZE_X - pcEdge;
 		pickUpPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 - PICKUP_SIZE_Y - pcEdge;
 
