@@ -16,9 +16,9 @@ void HitBottles::Draw()
 
 bool HitBottles::HitBottle(float bottleX, float bottleY, float bottleSizeX, float bottleSizeY)
 {
-	if (bottleX <= mouseX && bottleX + bottleSizeX >= mouseX)
+	if (bottleX - bottleSizeX / 2 <= mouseX && bottleX + bottleSizeX / 2 >= mouseX)
 	{
-		if (bottleY <= mouseY && bottleY + bottleSizeY >= mouseY)
+		if (bottleY - bottleSizeY / 2 <= mouseY && bottleY + bottleSizeY / 2 >= mouseY)
 		{
 			return true;
 		}
