@@ -38,6 +38,5 @@ void Title::Draw()
 		DrawGraph(0, 0, hitGh[1], true);
 	}
 
-	DrawGraph(MousePosX - 100, MousePosY - 25, barcodeReader, true);/*
-	DrawBox(MousePosX - 100, MousePosY - 25, MousePosX + 100, MousePosY + 25, GetColor(255, 0, 0), true);*/
+	DrawGraph(MousePosX - 100, MousePosY - 25, barcodeReader, true);
 }
