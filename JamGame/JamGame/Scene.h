@@ -100,9 +100,6 @@ private:
 	//プレイヤーが持っているペットボトルの数
 	int playerHaveBottle;
 
-	bool tFlag = false;
-
-	int playerHaveBottle;
 	int minNum;
 
 

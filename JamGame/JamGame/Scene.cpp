@@ -445,8 +445,6 @@ void Scene::Draw()
 		DrawFormatString(500, 500, GetColor(0, 0, 0), "SPACEでスタート");
 	}
 	else if (sNum == GAME) {
-	DrawFormatString(300, 300, GetColor(0, 0, 0), "%d", tFlag);
-	if (sNum == GAME) {
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
