@@ -440,11 +440,7 @@ void Scene::drawTitle() {
 
 void Scene::Draw()
 {
-	if (sNum == TITLE) {
-		DrawFormatString(500, 300, GetColor(0, 0, 0), "タイトル");
-		DrawFormatString(500, 500, GetColor(0, 0, 0), "SPACEでスタート");
-	}
-	else if (sNum == GAME) {
+	if (sNum == GAME) {
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();

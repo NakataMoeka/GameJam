@@ -5,6 +5,7 @@ void Title::Init()
 	titleGh = LoadGraph("Resources/title.png");
 	hitGh[0] = LoadGraph("Resources/title_1.png");
 	hitGh[1] = LoadGraph("Resources/title_2.png");
+	barcodeReader = LoadGraph("Resources/barcode_reader.png");
 }
 
 void Title::Update()
@@ -37,5 +38,6 @@ void Title::Draw()
 		DrawGraph(0, 0, hitGh[1], true);
 	}
 
-	DrawBox(MousePosX - 100, MousePosY - 25, MousePosX + 100, MousePosY + 25, GetColor(255, 0, 0), true);
+	DrawGraph(MousePosX - 100, MousePosY - 25, barcodeReader, true);/*
+	DrawBox(MousePosX - 100, MousePosY - 25, MousePosX + 100, MousePosY + 25, GetColor(255, 0, 0), true);*/
 }
