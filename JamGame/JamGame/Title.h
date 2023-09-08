@@ -9,6 +9,7 @@ private:
 	//グラフィック
 	int titleGh;
 	int hitGh[2];
+	int barcodeReader;
 
 	//座標
 	float barcodeX = 1280 / 2 - 150;
