@@ -6,6 +6,7 @@ void Title::Init()
 	hitGh[0] = LoadGraph("Resources/title_1.png");
 	hitGh[1] = LoadGraph("Resources/title_2.png");
 	barcodeReader = LoadGraph("Resources/barcode_reader.png");
+	code = LoadGraph("Resources/code.png");
 }
 
 void Title::Update()
@@ -39,4 +40,5 @@ void Title::Draw()
 	}
 
 	DrawGraph(MousePosX - 100, MousePosY - 25, barcodeReader, true);
+	DrawGraph(MousePosX - 100, MousePosY - 25 + 400, code, true);
 }
