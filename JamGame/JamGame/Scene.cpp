@@ -52,6 +52,7 @@ void Scene::init() {
 	hitBottles->Init();
 	//ƒ^ƒCƒgƒ‹
 	title = new Title();
+	result = new Result();
 	title->Init();
 
 	// Load Sound
@@ -231,7 +232,8 @@ void Scene::Update()
 				gaugeMoveFlag = false;
 			}
 		}
-		if (timer->GetDt() >= 600) {
+		if (timer->GetDt() >= 310) {
+			result->Init();
 			sNum = RESULT;
 		}
 		timer->Update();
@@ -244,6 +246,9 @@ void Scene::Update()
 			title->Init();
 			sNum = TITLE;
 		}
+		result->Update();
+		result->SetHightScore(score->GetHighetScore());
+		result->SetScore(sc);
 	}
 }
 

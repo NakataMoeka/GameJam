@@ -14,13 +14,6 @@ public:
 private:
 	int sc;
 	int scoreGraph[8];
-	int score1;
-	int score2;
-	int score3;
-	int score4;
-	int score5;
-	int score6;
-	int score7;
-	int score8;
+	int scoreNum[8];
 };
 
