@@ -30,7 +30,7 @@ void Score::HighScore()
 
 void Score::Draw()
 {
-	DrawFormatString(1000, 0, GetColor(0, 0, 0), "%d", sc);
+	//DrawFormatString(1000, 0, GetColor(0, 0, 0), "%d", sc);
 }
 
 int Score::GetHighetScore()
