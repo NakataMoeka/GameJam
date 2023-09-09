@@ -11,7 +11,7 @@ void HitBottles::Update()
 
 void HitBottles::Draw()
 {
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "座標Ｘ %d　　座標Ｙ %d", mouseX, mouseY);
+	//DrawFormatString(0, 0, GetColor(255, 255, 255), "座標Ｘ %d　　座標Ｙ %d", mouseX, mouseY);
 }
 
 bool HitBottles::HitBottle(float bottleX, float bottleY, float bottleSizeX, float bottleSizeY)

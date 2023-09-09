@@ -41,6 +41,10 @@ void Scene::init() {
 	typeGh[BUSY] = LoadGraph("Resources/busy.png");
 	typeGh[USUALLY] = LoadGraph("Resources/usually.png");
 	typeGh[SLOW] = LoadGraph("Resources/slow.png");
+	//枠
+	boxGh = LoadGraph("Resources/waku.png");
+	//在庫数
+	repGh = LoadGraph("Resources/rep.png");
 
 	timer = new Timer();
 	score = new Score();
@@ -405,6 +409,8 @@ void Scene::playTransaction() {
 	//タイプ
 	int typeSize = 64;
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2 - typeSize - 20, 40, typeGh[type], true);
+	//枠
+	DrawGraph(boxPos[0], boxPos[1], boxGh, true);
 	//発注ボタン
 	orderPosX = WIN_WIDHT / 2 - clockSize[0] - orderSizeX;
 	orderPosY = orderSizeY / 2;
@@ -418,8 +424,8 @@ void Scene::playTransaction() {
 		DrawGraph(arrowPosX[1], 0, leftGh, true);
 	}
 
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d",maxTime);
-	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
+	/*DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", scoreCount);
+	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);*/
 
 	//隙間カウンター
 	int crevice_count = 0;
@@ -476,9 +482,9 @@ void Scene::playTransaction() {
 				repPetCount++;
 			}
 
-
+			DrawGraph(backPos[0] + repPosX[i][j] + sizeX, repPosY[i][j], repGh, true);
 			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[repPetCount], TRUE);
-			DrawFormatString(backPos[0] + repPosX[i][j], repPosY[i][j], GetColor(0, 0, 0), "%d", repCount[i][j]);
+			DrawFormatString(backPos[0] + repPosX[i][j] + sizeX + 40, repPosY[i][j] + (sizeY / 4 * 3), GetColor(0, 0, 0), "%d", repCount[i][j]);
 		}
 	}
 
