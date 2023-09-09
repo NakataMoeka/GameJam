@@ -2,6 +2,10 @@
 #pragma warning(disable:4996)
 void Score::Initialize()
 {
+    for (int i = 0; i < 8; i++)
+    {
+       scoreGraph[i] = LoadGraph("Resources/Num.png");
+    }
 	sc = 0;
 }
 
