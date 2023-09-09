@@ -13,7 +13,11 @@ private:
 	char oldkeys[256] = { 0 };//1ループ（フレーム）前のキーボード情報
 
 	//補充棚から持ってこれる本数の上限
-	const int haveBottleNum = 4;
+	static const int haveBottleNum = 4;
+	//補充棚から持ってきたボトル
+	float havePlayerBottleX[haveBottleNum];
+	float havePlayerBottleY[haveBottleNum];
+
 	//PC画面に映るペットボトルの総数
 	static const int MAX_PCPET_Y = 2;
 	static const int MAX_PCPET_X = 12;
@@ -44,8 +48,10 @@ private:
 	int posX[MAXPET_Y][MAXPET_X];
 	int posY[MAXPET_Y][MAXPET_X];
 	//補充棚ペットボトルの座標
-	int repPosX[MAXPET_Y][MAXREP_X];
-	int repPosY[MAXPET_Y][MAXREP_X];
+	int repPosX[MAXREP_Y][MAXREP_X];
+	int repPosY[MAXREP_Y][MAXREP_X];
+	//補充棚から陳列棚に持ってくる時の変数
+	int repToPos;
 	//売れたマーク
 	int sellPosX[MAXPET_Y][MAXPET_X];
 	int sellPosY[MAXPET_Y][MAXPET_X];
@@ -171,10 +177,11 @@ private:
 	int carGh;
 	int typeGh[3];
 	int boxGh;
+	int havePlayerBottleGh[haveBottleNum];
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
-	int playerBottle[MAXPET_Y][MAXPET_X];
+	int playerBottle[MAXREP_Y][MAXREP_X];
 	//プレイヤーが持っているペットボトルの数
 	int playerHaveBottle;
 
