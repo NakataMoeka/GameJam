@@ -341,21 +341,21 @@ void Scene::playTransaction() {
 		}
 	}
 
-	for (int i = 0; i < MAXPET_Y; i++)
+	for (int i = 0; i < MAXREP_Y; i++)
 	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			repPosX[i][j] = x + j * sizeX + crevice_width + WIN_WIDHT;
-			repPosY[i][j] = y + i * sizeY + crevice_height * i;
+		for (int j = 0; j < MAXREP_X; j++) {
+			repPosX[i][j] = repX + j * sizeX + repCrevice_width * j + WIN_WIDHT;
+			repPosY[i][j] = repY + i * sizeY + repCrevice_height * i;
 
-			if (j % 2 == 0)
+			if (i == 0 && j == 0)
+			{
+				repPetCount = 0;
+			}
+			else
 			{
 				repPetCount++;
-
-				if (i == 0 && j == 0)
-				{
-					repPetCount = 0;
-				}
 			}
+			
 
 			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[repPetCount], TRUE);
 			DrawFormatString(backPos[0] + repPosX[i][j], repPosY[i][j], GetColor(0, 0, 0), "%d", repCount[i][j]);

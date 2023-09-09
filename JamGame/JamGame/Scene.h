@@ -25,18 +25,24 @@ private:
 	//ペットボトル最大
 	static const int MAXPET_X = 12;
 	static const int MAXPET_Y = 4;
+	//補充最大
+	static const int MAXREP_X = 6;
+	static const int MAXREP_Y = 4;
 	//ペットボトルのサイズ
 	const int sizeX = 64;
 	const int sizeY = 128;
 	//隙間の幅
 	const int crevice_width = 90;
 	const int crevice_height = 10;
+	//隙間の幅
+	const int repCrevice_width = 100;
+	const int repCrevice_height = 30;
 	//陳列棚ペットボトルの座標
 	int posX[MAXPET_Y][MAXPET_X];
 	int posY[MAXPET_Y][MAXPET_X];
 	//補充棚ペットボトルの座標
-	int repPosX[MAXPET_Y][MAXPET_X];
-	int repPosY[MAXPET_Y][MAXPET_X];
+	int repPosX[MAXPET_Y][MAXREP_X];
+	int repPosY[MAXPET_Y][MAXREP_Y];
 	//売れたマーク
 	int sellPosX[MAXPET_Y][MAXPET_X];
 	int sellPosY[MAXPET_Y][MAXPET_X];
@@ -44,7 +50,7 @@ private:
 	int sellSizeY = 64;
 	//補充棚の数
 	const int MAX_REPLENISH = 7;
-	int repCount[MAXPET_Y][MAXPET_X];
+	int repCount[MAXPET_X][MAXREP_Y];
 	//左クリック押されたか
 	int Mouse;
 	int MousePre;
@@ -52,6 +58,8 @@ private:
 	//初期位置
 	const int x = 150;
 	const int y = 170;
+	const int repX = 230;
+	const int repY = 120;
 	//背景座標
 	float backPos[2] = { 0,0 };
 	bool isChange = false;
