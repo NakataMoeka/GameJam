@@ -37,7 +37,7 @@ void Timer::Update()
 
 void Timer::Draw()
 {
-	DrawFormatString(500, 0, GetColor(0, 0, 0), "%d", (int)dt2);
+	DrawFormatString(500, 0, GetColor(0, 0, 0), "%d", (int)dt);
 	DrawRectExtendGraph(0 * 28 + 560, 50, 28 + 0 * 28 + 560, 88, 110 * min2, 0, 110, 150, timeGraph[0], TRUE);
 	DrawRectExtendGraph(1 * 28 + 560, 50, 28 + 1 * 28 + 560, 88, 110 * min1, 0, 110, 150, timeGraph[1], TRUE);
 	DrawRectExtendGraph(2 * 28 + 588, 50, 28 + 2 * 28 + 588, 88, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);

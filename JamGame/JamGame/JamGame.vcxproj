@@ -132,6 +132,7 @@
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="HitBottles.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="HitBottles.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Timer.h" />
