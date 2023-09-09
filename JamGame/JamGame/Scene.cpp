@@ -232,7 +232,7 @@ void Scene::Update()
 				gaugeMoveFlag = false;
 			}
 		}
-		if (timer->GetDt() >= 310) {
+		if (timer->GetDt() >= 600) {
 			result->Init();
 			sNum = RESULT;
 		}
