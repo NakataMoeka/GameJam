@@ -37,6 +37,10 @@ void Scene::init() {
 	gaugeGh = LoadGraph("Resources/gauge.png");
 	//トラック
 	carGh = LoadGraph("Resources/car.png");
+	//タイプ
+	typeGh[BUSY] = LoadGraph("Resources/busy.png");
+	typeGh[USUALLY] = LoadGraph("Resources/usually.png");
+	typeGh[SLOW] = LoadGraph("Resources/slow.png");
 
 	timer = new Timer();
 	score = new Score();
@@ -358,7 +362,20 @@ void Scene::DisappearPet()
 
 void Scene::playTransaction() {
 	// 更新処理
-	
+	switch (maxTime)
+	{
+	case 0:
+		type = USUALLY;
+		break;
+	case 2:
+		type = BUSY;
+		break;
+	case 4:
+		type = SLOW;
+		break;
+	default:
+		break;
+	}
 	//背景移動
 	BackMove();
 	//消滅処理
@@ -372,6 +389,9 @@ void Scene::playTransaction() {
 	//時計
 	int clockSize[2] = { 256, 90 };
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 20, clockGh, true);
+	//タイプ
+	int typeSize = 64;
+	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2 - typeSize - 20, 40, typeGh[type], true);
 	//発注ボタン
 	orderPosX = WIN_WIDHT / 2 - clockSize[0] - orderSizeX;
 	orderPosY = orderSizeY / 2;

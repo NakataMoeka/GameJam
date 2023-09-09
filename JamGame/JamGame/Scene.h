@@ -127,6 +127,10 @@ private:
 
 	static const int WAIT_MOVE_NUM = 2;
 
+	//タイプ
+	enum TYPE { BUSY, USUALLY, SLOW };
+	int type = USUALLY;
+
 	int OrderType;
 	int OrderNum;
 
@@ -161,6 +165,7 @@ private:
 	int pickUpGh;
 	int gaugeGh;
 	int carGh;
+	int typeGh[3];
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
