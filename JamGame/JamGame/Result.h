@@ -13,6 +13,7 @@ private:
 	int scoreNum[8];
 	int hightScoreGraph[8];
 	int hightScoreNum[8];
+	int PC;
 	int sc;
 	int hSc;
 };

@@ -7,6 +7,7 @@ void Result::Init()
 		scoreGraph[i] = LoadGraph("Resources/Num.png");
 		hightScoreGraph[i] = LoadGraph("Resources/Num.png");
 	}
+	PC = LoadGraph("Resources/Score.png");
 }
 
 void Result::Update()
@@ -33,9 +34,10 @@ void Result::Update()
 void Result::Draw()
 {
 	//DrawFormatString(720, 100, GetColor(0, 0, 0), "Result");
+	DrawGraph(0, 0, PC, TRUE);
 	for (int i = 0; i < 8; i++)
 	{
-		DrawRectExtendGraph(i * 28 + 200, 50 + 200, 28 + i * 28 + 200, 88 + 200, 110 * scoreNum[i], 0, 110, 150, scoreGraph[i], TRUE);
-		DrawRectExtendGraph(i * 28 + 800, 50 + 200, 28 + i * 28 + 800, 88 + 200, 110 * hightScoreNum[i], 0, 110, 150, hightScoreGraph[i], TRUE);
+		DrawRectExtendGraph(i * 28 + 540, 50 + 100, 28 + i * 28 + 540, 88 + 100, 110 * scoreNum[i], 0, 110, 150, scoreGraph[i], TRUE);
+		DrawRectExtendGraph(i * 28 + 540, 50 + 200, 28 + i * 28 + 540, 88 + 200, 110 * hightScoreNum[i], 0, 110, 150, hightScoreGraph[i], TRUE);
 	}
 }
