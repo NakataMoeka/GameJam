@@ -125,6 +125,9 @@ private:
 	static const int CAR_SIZE_Y = 32;
 	float carMoveLength;
 
+	//枠
+	int boxPos[2] = { 850, -20 };
+
 	static const int WAIT_MOVE_NUM = 2;
 
 	//タイプ
@@ -152,6 +155,7 @@ private:
 	static const int MAXPETGRAHIC = 24;
 	int petGh[MAXPETGRAHIC];
 	int repPetGh[MAXPETGRAHIC];
+	int repGh;
 	int sellGh[MAXPET_Y][MAXPET_X];
 
 	int backgroundGh;
@@ -166,6 +170,7 @@ private:
 	int gaugeGh;
 	int carGh;
 	int typeGh[3];
+	int boxGh;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
