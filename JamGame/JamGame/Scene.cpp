@@ -333,7 +333,6 @@ void Scene::DisappearPet()
 	if ((int)sum % maxTime == 0 && sum != 0)
 	{
 		isDis = true;
-		scoreCount++;
 	}
 	else
 	{
@@ -354,12 +353,16 @@ void Scene::DisappearPet()
 				{
 					sellPosX[i][j] = posX[i][j];
 					sellPosY[i][j] = posY[i][j];
+					isDis = false;
 				}
 			}
 		}
 		if (!isDraw[randY][randX])
 		{
 			isDis = false;
+		}
+		if (scoreCount < 10) {
+			scoreCount++;
 		}
 	}
 	else
@@ -405,7 +408,7 @@ void Scene::playTransaction() {
 	//発注ボタン
 	orderPosX = WIN_WIDHT / 2 - clockSize[0] - orderSizeX;
 	orderPosY = orderSizeY / 2;
-	DrawGraph(WIN_WIDHT / 2 - clockSize[0] - orderSizeX, orderSizeY /2, orderGh, true);
+	DrawGraph(WIN_WIDHT / 2 - clockSize[0] - orderSizeX, orderSizeY / 2, orderGh, true);
 	//矢印
 	arrowPosX[0] = WIN_WIDHT - arrowSize[0] + backPos[0];
 	arrowPosX[1] = WIN_WIDHT + backPos[0];
@@ -415,7 +418,7 @@ void Scene::playTransaction() {
 		DrawGraph(arrowPosX[1], 0, leftGh, true);
 	}
 
-	DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", minNum);
+	DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", scoreCount);
 	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
@@ -472,7 +475,7 @@ void Scene::playTransaction() {
 			{
 				repPetCount++;
 			}
-			
+
 
 			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[repPetCount], TRUE);
 			DrawFormatString(backPos[0] + repPosX[i][j], repPosY[i][j], GetColor(0, 0, 0), "%d", repCount[i][j]);
@@ -508,7 +511,7 @@ void Scene::playTransaction() {
 		}
 		//ゲージ
 		gaugePosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge;
-		gaugePosY = WIN_HEIGHT/2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 + 10;
+		gaugePosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 + 10;
 		if (gaugeMoveFlag == true)
 		{
 			gaugelength += WAIT_MOVE_NUM;
@@ -520,8 +523,8 @@ void Scene::playTransaction() {
 			carMoveLength = 0;
 		}
 
-		DrawExtendGraph(gaugePosX,gaugePosY,gaugePosX + gaugelength, gaugePosY + GAUGE_SIZE_Y,gaugeGh,TRUE);
-		
+		DrawExtendGraph(gaugePosX, gaugePosY, gaugePosX + gaugelength, gaugePosY + GAUGE_SIZE_Y, gaugeGh, TRUE);
+
 		//トラック
 		carPosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge - GAUGE_SIZE_Y;
 		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - GAUGE_SIZE_Y;
