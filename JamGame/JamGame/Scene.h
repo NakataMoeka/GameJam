@@ -45,7 +45,7 @@ private:
 	int posY[MAXPET_Y][MAXPET_X];
 	//補充棚ペットボトルの座標
 	int repPosX[MAXPET_Y][MAXREP_X];
-	int repPosY[MAXPET_Y][MAXREP_Y];
+	int repPosY[MAXPET_Y][MAXREP_X];
 	//売れたマーク
 	int sellPosX[MAXPET_Y][MAXPET_X];
 	int sellPosY[MAXPET_Y][MAXPET_X];
@@ -53,7 +53,7 @@ private:
 	int sellSizeY = 64;
 	//補充棚の数
 	const int MAX_REPLENISH = 7;
-	int repCount[MAXPET_X][MAXREP_Y];
+	int repCount[MAXPET_Y][MAXREP_X];
 	//左クリック押されたか
 	int Mouse;
 	int MousePre;

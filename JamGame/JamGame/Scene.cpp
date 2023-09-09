@@ -201,9 +201,19 @@ void Scene::Update()
 					}
 				}
 			}
+			//ÉQÅ[ÉWÇ∆íçï∂ÇÃìñÇΩÇËîªíË
 			if (Collision::CubeToCubeCollision({ gaugePosX,gaugePosY }, { pickUpPosX,pickUpPosY },
 				{ gaugelength , GAUGE_SIZE_Y }, { PICKUP_SIZE_X, PICKUP_SIZE_Y }))
 			{
+				for (int i = 0; i < MAXREP_Y; i++)
+				{
+					for (int j = 0; j < MAXREP_X; j++) {
+						if (repCount[i][j] < MAX_REPLENISH)
+						{
+							repCount[i][j] += playerOrderNum[(j + (i * MAXREP_X))];
+						}
+					}
+				}
 				for (int i = 0; i < MAX_PCPET_NUM; i++)
 				{
 					playerOrderNum[i] = 0;
@@ -434,8 +444,8 @@ void Scene::playTransaction() {
 				}
 			}
 
-			posX[i][j] = x + j * sizeX + crevice_width * crevice_count;
-			posY[i][j] = y + i * sizeY + crevice_height * i;
+			posX[i][j] = x + 150 + j * sizeX + crevice_width * crevice_count;
+			posY[i][j] = y + 160 + i * sizeY + crevice_height * i;
 
 			if (isDraw[i][j])
 			{
@@ -451,8 +461,8 @@ void Scene::playTransaction() {
 	for (int i = 0; i < MAXREP_Y; i++)
 	{
 		for (int j = 0; j < MAXREP_X; j++) {
-			repPosX[i][j] = repX + j * sizeX + repCrevice_width * j + WIN_WIDHT;
-			repPosY[i][j] = repY + i * sizeY + repCrevice_height * i;
+			repPosX[i][j] = repX + 160 + j * sizeX + repCrevice_width * j + WIN_WIDHT;
+			repPosY[i][j] = repY + 130 + i * (sizeY * 0.8f) + repCrevice_height * i;
 
 			if (i == 0 && j == 0)
 			{
