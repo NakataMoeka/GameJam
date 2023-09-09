@@ -45,7 +45,6 @@ void Scene::init() {
 	boxGh = LoadGraph("Resources/waku.png");
 	//在庫数
 	repGh = LoadGraph("Resources/rep.png");
-
 	timer = new Timer();
 	score = new Score();
 	hitBottles = new HitBottles();
@@ -100,9 +99,13 @@ void Scene::Update()
 					repCount[i][j] = MAX_REPLENISH;
 				}
 			}
+			for (int i = 0; i < haveBottleNum; i++)
+			{
+				havePlayerBottleGh[i] = 0;
+			}
 			srand((unsigned int)time(NULL));
 			minNum = rand() % 6;
-			playerHaveBottle = false;
+			playerHaveBottle = 0;
 			sNum = GAME;
 		}
 	}
@@ -113,7 +116,17 @@ void Scene::Update()
 
 		if (CheckHitKey(KEY_INPUT_R))
 		{
-			playerHaveBottle = false;
+			playerHaveBottle = 0;
+			for (int i = 0; i < haveBottleNum; i++)
+			{
+				havePlayerBottleGh[i] = 0;
+			}
+			for (int i = 0; i < MAXREP_Y; i++)
+			{
+				for (int j = 0; j < MAXREP_X; j++) {
+					playerBottle[i][j] = 0;
+				}
+			}
 		}
 		if (orderFlag == false)
 		{
@@ -125,29 +138,69 @@ void Scene::Update()
 					{
 						if (MouseInputOld != 1 && MouseInput == 1)
 						{
-							if (isDraw[i][j] == false && playerBottle[i][j] == 1 && playerHaveBottle > 0)
+							if ((j == 0 || j == 1))
+							{
+								repToPos = 0 + (i * MAXREP_X);
+							}
+							else if ((j == 2 || j == 3))
+							{
+								repToPos = 1 + (i * MAXREP_X);
+							}
+							else if ((j == 4 || j == 5))
+							{
+								repToPos = 2 + (i * MAXREP_X);
+							}
+							else if ((j == 6 || j == 7))
+							{
+								repToPos = 3 + (i * MAXREP_X);
+							}
+							else if ((j == 8 || j == 9))
+							{
+								repToPos = 4 + (i * MAXREP_X);
+							}
+							else if ((j == 10 || j == 11))
+							{
+								repToPos = 5 + (i * MAXREP_X);
+							}
+
+							if (isDraw[i][j] == false && playerBottle[i][repToPos - (i * MAXREP_X)] > 0 && playerHaveBottle > 0)
 							{
 								isDraw[i][j] = true;
-								playerBottle[i][j] = 0;
+								playerBottle[i][repToPos - (i * MAXREP_X)]--;
 								playerHaveBottle--;
+								for (int t = 0; t < haveBottleNum; t++)
+								{
+									if (havePlayerBottleGh[t] == repPetGh[repToPos])
+									{
+										havePlayerBottleGh[t] = 0;
+										break;
+									}
+								}
 							}
 							else
 							{
-								playerBottle[i][j] = 0;
+								//playerBottle[i][repToPos]--;
 							}
 						}
 						else
 						{
 						}
 					}
+				}
+			}
+			for (int i = 0; i < MAXREP_Y; i++)
+			{
+				for (int j = 0; j < MAXREP_X; j++) {
 					//陳列棚の当たり判定
 					if (hitBottles->HitBottle(repPosX[i][j] + sizeX / 2 - 1280, repPosY[i][j] + sizeY / 2, sizeX - 10, sizeY - 10) && backPos[0] == -1280)
 					{
-						if (MouseInputOld != 1 && MouseInput == 1 && playerHaveBottle < haveBottleNum)
+						if (MouseInputOld != 1 && MouseInput == 1 && (playerHaveBottle < haveBottleNum))
 						{
-							playerBottle[i][j] = 1;
+							playerBottle[i][j]++;
 							repCount[i][j]--;
+							//補充棚から持ってきたボトル
 							playerHaveBottle++;
+							havePlayerBottleGh[playerHaveBottle - 1] = repPetGh[(j + (i * MAXREP_X))];
 						}
 						else
 						{
@@ -205,32 +258,37 @@ void Scene::Update()
 					}
 				}
 			}
-			//ゲージと注文の当たり判定
-			if (Collision::CubeToCubeCollision({ gaugePosX,gaugePosY }, { pickUpPosX,pickUpPosY },
-				{ gaugelength , GAUGE_SIZE_Y }, { PICKUP_SIZE_X, PICKUP_SIZE_Y }))
+		}
+		//発注画面じゃなくてもあたり判定を取るようにする
+		if (Collision::CubeToCubeCollision({ gaugePosX,gaugePosY }, { pickUpPosX,pickUpPosY },
+			{ gaugelength , GAUGE_SIZE_Y }, { PICKUP_SIZE_X, PICKUP_SIZE_Y }))
+		{
+			for (int i = 0; i < MAXREP_Y; i++)
 			{
-				for (int i = 0; i < MAXREP_Y; i++)
-				{
-					for (int j = 0; j < MAXREP_X; j++) {
-						if (repCount[i][j] < MAX_REPLENISH)
-						{
-							repCount[i][j] += playerOrderNum[(j + (i * MAXREP_X))];
-						}
+				for (int j = 0; j < MAXREP_X; j++) {
+					if (repCount[i][j] + playerOrderNum[(j + (i * MAXREP_X))] <= MAX_REPLENISH)
+					{
+						repCount[i][j] += playerOrderNum[(j + (i * MAXREP_X))];
+					}
+					else if (repCount[i][j] + playerOrderNum[(j + (i * MAXREP_X))] > MAX_REPLENISH)
+					{
+						repCount[i][j] = MAX_REPLENISH;
 					}
 				}
-				for (int i = 0; i < MAX_PCPET_NUM; i++)
-				{
-					playerOrderNum[i] = 0;
-				}
-				for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
-				{
-					pcOrderGh[i] = 0;
-				}
-				OrderType = 0;
-				OrderNum = 0;
-				gaugeMoveFlag = false;
 			}
+			for (int i = 0; i < MAX_PCPET_NUM; i++)
+			{
+				playerOrderNum[i] = 0;
+			}
+			for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
+			{
+				pcOrderGh[i] = 0;
+			}
+			OrderType = 0;
+			OrderNum = 0;
+			gaugeMoveFlag = false;
 		}
+
 		if (timer->GetDt() >= 600) {
 			sNum = RESULT;
 		}
@@ -488,6 +546,24 @@ void Scene::playTransaction() {
 		}
 	}
 
+	//プレイヤーが持っているボトル
+	for (int i = 0; i < haveBottleNum; i++)
+	{
+		DrawGraph(boxPos[0] + (i * sizeX) , boxPos[1], havePlayerBottleGh[i], TRUE);
+	}
+
+	//注文画面じゃなくてもゲージは動かす
+	if (gaugeMoveFlag == true)
+	{
+		gaugelength += WAIT_MOVE_NUM;
+		carMoveLength += WAIT_MOVE_NUM;
+	}
+	else
+	{
+		gaugelength = 20;
+		carMoveLength = 0;
+	}
+
 	//注文画面
 	if (orderFlag == true)
 	{
@@ -518,16 +594,6 @@ void Scene::playTransaction() {
 		//ゲージ
 		gaugePosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge;
 		gaugePosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 + 10;
-		if (gaugeMoveFlag == true)
-		{
-			gaugelength += WAIT_MOVE_NUM;
-			carMoveLength += WAIT_MOVE_NUM;
-		}
-		else
-		{
-			gaugelength = 20;
-			carMoveLength = 0;
-		}
 
 		DrawExtendGraph(gaugePosX, gaugePosY, gaugePosX + gaugelength, gaugePosY + GAUGE_SIZE_Y, gaugeGh, TRUE);
 
