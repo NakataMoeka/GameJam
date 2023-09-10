@@ -5,6 +5,7 @@
 #include"HitBottles.h"
 #include"Title.h"
 #include"Result.h"
+#include"Human.h"
 class Scene
 {
 private:
@@ -43,7 +44,7 @@ private:
 	const int crevice_height = 10;
 	//隙間の幅
 	const int repCrevice_width = 100;
-	const int repCrevice_height = 30;
+	const int repCrevice_height = 45;
 	//陳列棚ペットボトルの座標
 	int posX[MAXPET_Y][MAXPET_X];
 	int posY[MAXPET_Y][MAXPET_X];
@@ -146,6 +147,7 @@ private:
 	Title* title;
 	Timer* timer;
 	Score* score;
+	Human* human;
 
 	Result* result;
 
@@ -178,6 +180,8 @@ private:
 	int typeGh[3];
 	int boxGh;
 	int havePlayerBottleGh[haveBottleNum];
+	int backGh;
+	
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報

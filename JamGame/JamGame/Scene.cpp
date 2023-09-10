@@ -19,6 +19,7 @@ void Scene::init() {
 		}
 	}
 	//背景
+	backGh = LoadGraph("Resources/back.png");
 	backgroundGh = LoadGraph("Resources/background.png");
 	//時計
 	clockGh = LoadGraph("Resources/clock.png");
@@ -53,6 +54,9 @@ void Scene::init() {
 	title = new Title();
 	result = new Result();
 	title->Init();
+	//人間
+	human = new Human();
+	human->Initialize();
 
 	// Load Sound
 	se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3"); 
@@ -94,6 +98,7 @@ void Scene::Update()
 			StopSoundMem(sound);
 			timer->Initialize();
 			score->Initialize();
+			human->Init();
 			sc = 0;
 			scoreCount = 0;
 			hitBottles->Init();
@@ -471,11 +476,17 @@ void Scene::playTransaction() {
 	BackMove();
 	//消滅処理
 	DisappearPet();
+	//人間処理
+	human->Update(maxTime, timer);
 
 	// 描画処理
 	const int WIN_WIDHT = 1280;
 	const int WIN_HEIGHT = 720;
 	//背景
+	DrawGraph(backPos[0], backPos[1], backGh, true);
+	//人間
+	human->Draw();
+	//陳列棚&補充棚
 	DrawGraph(backPos[0], backPos[1], backgroundGh, true);
 	//時計
 	int clockSize[2] = { 256, 90 };
@@ -490,8 +501,8 @@ void Scene::playTransaction() {
 	orderPosY = orderSizeY / 2;
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] - orderSizeX, orderSizeY / 2, orderGh, true);
 	//矢印
-	arrowPosX[0] = WIN_WIDHT - arrowSize[0] + backPos[0];
-	arrowPosX[1] = WIN_WIDHT + backPos[0];
+	arrowPosX[0] = WIN_WIDHT - arrowSize[0] + backPos[0] - 20;
+	arrowPosX[1] = WIN_WIDHT + backPos[0] + 20;
 	if (orderFlag == false)
 	{
 		DrawGraph(arrowPosX[0], 0, rightGh, true);
