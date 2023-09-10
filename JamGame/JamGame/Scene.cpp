@@ -509,8 +509,8 @@ void Scene::playTransaction() {
 		DrawGraph(arrowPosX[1], 0, leftGh, true);
 	}
 
-	/*DrawFormatString(0, 100, GetColor(0, 0, 0), "maxTime : %d", scoreCount);
-	DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);*/
+	//DrawFormatString(0, 200, GetColor(0, 0, 0), "maxTime : %d", maxTime);
+	//DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
 	int crevice_count = 0;
@@ -636,6 +636,8 @@ void Scene::playTransaction() {
 
 		DrawGraph(pickUpPosX, pickUpPosY, pickUpGh, TRUE);
 	}
+
+	//human->String();
 }
 
 

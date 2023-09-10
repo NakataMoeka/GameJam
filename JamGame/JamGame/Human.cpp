@@ -104,11 +104,11 @@ void Human::Update(int maxTime, Timer *timer)
 	//—ˆ“X‘¬“x
 	switch (maxTime)
 	{
-	case 0:	//•’Ê
+	case 3:	//•’Ê
 		max = 200;
 		break;
 	case 2:	//–Z‚µ‚¢
-		max = 100;
+		max = 50;
 		break;
 	case 4:	//‰É
 		max = 400;
