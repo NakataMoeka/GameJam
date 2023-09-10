@@ -55,7 +55,8 @@ void Scene::init() {
 	title->Init();
 
 	// Load Sound
-
+	se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3"); 
+	sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
 	//variable
 
 	// Game Object 
@@ -80,9 +81,17 @@ void Scene::Update()
 	GetMousePoint(&MousePosX, &MousePosY);
 	if (sNum == TITLE) {
 		titleTransaction();
-
+		if (CheckSoundMem(sound) == 0)
+		{
+			PlaySoundMem(sound, DX_PLAYTYPE_LOOP, TRUE);
+		}
 		if (MouseInputOld != 1 && MouseInput == 1 && title->GetIsHit())
 		{
+			if (CheckSoundMem(se) == 0)
+			{
+				PlaySoundMem(se, DX_PLAYTYPE_NORMAL, TRUE);
+			}
+			StopSoundMem(sound);
 			timer->Initialize();
 			score->Initialize();
 			sc = 0;
@@ -301,6 +310,8 @@ void Scene::Update()
 	else if (sNum == RESULT) {
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
+			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
+			sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
 			title->Init();
 			sNum = TITLE;
 		}

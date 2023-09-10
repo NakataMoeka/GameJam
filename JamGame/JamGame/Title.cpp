@@ -7,6 +7,7 @@ void Title::Init()
 	hitGh[1] = LoadGraph("Resources/title_2.png");
 	barcodeReader = LoadGraph("Resources/barcode_reader.png");
 	code = LoadGraph("Resources/code.png");
+	
 }
 
 void Title::Update()

@@ -187,7 +187,8 @@ private:
 
 	int minNum;
 
-
+	int se;
+	int sound;
 public:
 	enum SceneNum { TITLE, GAME, RESULT };
 	Scene(int sceneNo);
