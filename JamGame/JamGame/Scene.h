@@ -134,13 +134,15 @@ private:
 
 	//枠
 	int boxPos[2] = { 850, -20 };
-
 	static const int WAIT_MOVE_NUM = 2;
 
 	//タイプ
 	enum TYPE { BUSY, USUALLY, SLOW };
 	int type = USUALLY;
-
+	//チュートリアル
+	enum TUTORIAL{HAVE, REPLENISH, ORDER};
+	int tutorial = HAVE;
+	//発注
 	int OrderType;
 	int OrderNum;
 
@@ -194,7 +196,7 @@ private:
 	int se;
 	int sound;
 public:
-	enum SceneNum { TITLE, GAME, RESULT };
+	enum SceneNum { TITLE, TUTORIAL, GAME, RESULT };
 	Scene(int sceneNo);
 	~Scene();
 
@@ -208,13 +210,16 @@ public:
 	float Ease(float start, float end, float flame);
 
 	void Update();
+	void Collision();
 	void titleTransaction();
+	void tutorialTransaction();
 	void playTransaction();
 	void endingTransaction();
 	void RandomMin();//減る時間ランダム
 	void playSound(int soundMemory);
 	void drawTitle();
 	void Draw();
+	void playDraw();
 
 	//getter
 
