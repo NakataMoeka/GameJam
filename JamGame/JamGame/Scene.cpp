@@ -538,6 +538,44 @@ void Scene::tutorialTransaction()
 		}
 		break;
 	case ORDER:
+		//発注ボタンを押したら次のcaseへ
+		if (orderFlag)
+		{
+			tutorial = ORDERMENU;
+		}
+		break;
+	case ORDERMENU:
+		//ファンタぶどう？を選んだら次のcaseへ
+		for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
+		{
+			if (pcOrderGh[i] == pcPetGh[0])
+			{
+				tutorial = CHOOSE;
+			}
+		}
+		break;
+	case CHOOSE:
+		//注文ボタンを押したら次のcaseへ
+		if (gaugeMoveFlag)
+		{
+			tutorial = GAGEMOVE;
+		}
+		break;
+	case GAGEMOVE:
+		//発注画面でゲージが注文ボタンに触れたら発注完了
+		if (orderFlag && !gaugeMoveFlag)
+		{
+			tutorial = ORDEREND;
+		}
+		break;
+	case ORDEREND:
+		//補充棚のところに行かせて数を確認させたら終了
+		if (!orderFlag && backPos[0] == -1280)
+		{
+			tutorial = END;
+		}
+		break;
+	case END:
 		break;
 	default:
 		break;

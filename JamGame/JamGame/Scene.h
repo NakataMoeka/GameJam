@@ -140,7 +140,7 @@ private:
 	enum TYPE { BUSY, USUALLY, SLOW };
 	int type = USUALLY;
 	//チュートリアル
-	enum TUTORIAL{HAVE, REPLENISH, ORDER};
+	enum TUTORIAL{HAVE, REPLENISH, ORDER, ORDERMENU, CHOOSE,GAGEMOVE,ORDEREND,END};
 	int tutorial = HAVE;
 	//発注
 	int OrderType;
