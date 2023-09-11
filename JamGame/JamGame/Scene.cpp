@@ -49,7 +49,7 @@ void Scene::init() {
 	timer = new Timer();
 	score = new Score();
 	hitBottles = new HitBottles();
-	hitBottles->Init();
+	
 	//タイトル
 	title = new Title();
 	result = new Result();
@@ -57,7 +57,7 @@ void Scene::init() {
 	//人間
 	human = new Human();
 	human->Initialize();
-
+	hitBottles->Init();
 	// Load Sound
 	se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3"); 
 	sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
@@ -121,6 +121,10 @@ void Scene::Update()
 			srand((unsigned int)time(NULL));
 			minNum = rand() % 6;
 			playerHaveBottle = 0;
+			for (int i = 0; i < 3; i++) {
+				shose[i] = LoadSoundMem("Resources/Sound/革靴で歩く.mp3");
+			}
+			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
 			sNum = GAME;
 		}
 	}
@@ -306,6 +310,7 @@ void Scene::Update()
 
 		if (timer->GetDt() >= 600) {
 			result->Init();
+			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
 			sNum = RESULT;
 		}
 		timer->Update();
@@ -313,8 +318,12 @@ void Scene::Update()
 		hitBottles->Update();
 	}
 	else if (sNum == RESULT) {
-		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		if (MouseInputOld != 1 && MouseInput == 1 && result->GetIsHit())
 		{
+			if (CheckSoundMem(se) == 0)
+			{
+				PlaySoundMem(se, DX_PLAYTYPE_NORMAL, TRUE);
+			}
 			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
 			sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
 			title->Init();
@@ -478,7 +487,14 @@ void Scene::playTransaction() {
 	DisappearPet();
 	//人間処理
 	human->Update(maxTime, timer);
-
+	for (int i = 0; i < 4; i++) {
+		if (human->GetComing(i)) {
+			if (CheckSoundMem(shose[i]) == 0)
+			{
+				PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
+			}
+		}
+	}
 	// 描画処理
 	const int WIN_WIDHT = 1280;
 	const int WIN_HEIGHT = 720;

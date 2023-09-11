@@ -41,6 +41,7 @@ void Human::Init()
 	speed[1] = 4;
 	count = -1;
 	time = 0;
+
 }
 
 void Human::Update(int maxTime, Timer *timer)
@@ -86,7 +87,6 @@ void Human::Update(int maxTime, Timer *timer)
 					isComing[i] = false;
 				}
 			}
-
 		}
 		else
 		{

@@ -26,7 +26,7 @@ private:
 	bool isComing[MAXHUMAN];
 	//‰æ‘œ
 	int humanGh[MAXHUMAN];
-
+	
 public:
 	Human();
 	~Human();
@@ -37,5 +37,6 @@ public:
 	void Draw();
 	void String();
 
+	bool GetComing(int i) { return isComing[i]; }
 
 };

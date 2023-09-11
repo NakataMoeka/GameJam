@@ -193,6 +193,7 @@ private:
 
 	int se;
 	int sound;
+	int shose[4];
 public:
 	enum SceneNum { TITLE, GAME, RESULT };
 	Scene(int sceneNo);

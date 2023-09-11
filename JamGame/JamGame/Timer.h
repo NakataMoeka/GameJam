@@ -12,14 +12,14 @@ public:
 	double GetDt2() { return dt2; }
 	double GetMaxTime() { return SetTime; }
 private:
-	double start;
-	double end;
-	double dt;
-	double dt2;
-	double total;
+	double start;//スタート
+	double end;//エンド
+	double dt;//現在の時間(加算)
+	double dt2;//現在の時間(減算)
+	double total;//エンドとスタートを引いたやつ
 	double total2;
-	double SetTime;
-	double tTime;
+	double SetTime;//終了時間
+	double tTime;//スタート時の時間
 	int sec;
 	int min;
 
