@@ -140,8 +140,8 @@ private:
 	enum TYPE { BUSY, USUALLY, SLOW };
 	int type = USUALLY;
 	//チュートリアル
-	enum TUTORIAL{HAVE, REPLENISH, ORDER, ORDERMENU, CHOOSE,GAGEMOVE,ORDEREND,END};
-	int tutorial = HAVE;
+	enum TUTORIAL{START, HAVE, HAVEOK, REPLENISH, REPLENISHOK, ORDER, ORDERMENU, CHOOSE,GAGEMOVE,ORDEREND,END};
+	int tutorial = START;
 	//発注
 	int OrderType;
 	int OrderNum;
@@ -183,8 +183,9 @@ private:
 	int boxGh;
 	int havePlayerBottleGh[haveBottleNum];
 	int backGh;
-	static const int MAXTUTORIAL = 3;
+	static const int MAXTUTORIAL = 11;
 	int tutorialGh[MAXTUTORIAL];
+	int clickGh;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
