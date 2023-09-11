@@ -183,7 +183,8 @@ private:
 	int boxGh;
 	int havePlayerBottleGh[haveBottleNum];
 	int backGh;
-	
+	static const int MAXTUTORIAL = 3;
+	int tutorialGh[MAXTUTORIAL];
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
