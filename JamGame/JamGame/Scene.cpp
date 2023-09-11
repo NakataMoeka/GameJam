@@ -47,9 +47,13 @@ void Scene::init() {
 	//在庫数
 	repGh = LoadGraph("Resources/rep.png");
 	//チュートリアル画像
-	tutorialGh[0] = LoadGraph("Resources/have.png");
-	tutorialGh[1] = LoadGraph("Resources/replenish.png");
-	tutorialGh[2] = LoadGraph("Resources/order_tutorial.png");
+	clickGh = LoadGraph("Resources/tutorial/Click.png");
+	tutorialGh[START] = LoadGraph("Resources/tutorial/start.png");
+	tutorialGh[HAVE] = LoadGraph("Resources/tutorial/have.png");
+	tutorialGh[HAVEOK] = LoadGraph("Resources/tutorial/have_ok.png");
+	tutorialGh[REPLENISH] = LoadGraph("Resources/tutorial/replenish.png");
+	tutorialGh[REPLENISHOK] = LoadGraph("Resources/tutorial/replenish_ok.png");
+	tutorialGh[ORDER] = LoadGraph("Resources/tutorial/order_tutorial.png");
 
 	timer = new Timer();
 	score = new Score();
@@ -135,10 +139,12 @@ void Scene::Update()
 			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
 			//sceneChange->Init();
 			//if (sceneChange->GetFadeIn() == true) {
-				sNum = GAME;
+				//sNum = GAME;
 			//}
 			//sNum = TUTORIAL;
 
+			sNum = TUTORIAL;
+			tutorial = START;
 		}
 	}
 	else if (sNum == TUTORIAL)
@@ -154,7 +160,7 @@ void Scene::Update()
 			result->Init();
 			//sceneChange->Init();
 			//if (sceneChange->GetFadeIn() == true) {
-				//sNum = RESULT;
+				sNum = RESULT;
 			//}
 		}
 	}
@@ -166,7 +172,7 @@ void Scene::Update()
 			title->Init();
 			//sceneChange->Init();
 			//if (sceneChange->GetFadeIn() == true) {
-				//sNum = TITLE;
+				sNum = TITLE;
 			//}
 		}
 		result->Update();
@@ -537,10 +543,22 @@ void Scene::tutorialTransaction()
 	// 更新処理
 	switch (tutorial)
 	{
+	case START:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			tutorial = HAVE;
+		}
+		break;
 	case HAVE:
 		isDraw[0][0] = false;
 
 		if (playerBottle[0][0] != 0)
+		{
+			tutorial = HAVEOK;
+		}
+		break;
+	case HAVEOK:
+		if (MouseInputOld != 1 && MouseInput == 1)
 		{
 			tutorial = REPLENISH;
 		}
@@ -548,10 +566,54 @@ void Scene::tutorialTransaction()
 	case REPLENISH:
 		if (isDraw[0][0])
 		{
+			tutorial = REPLENISHOK;
+		}
+		break;
+	case REPLENISHOK:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
 			tutorial = ORDER;
 		}
 		break;
 	case ORDER:
+		//発注ボタンを押したら次のcaseへ
+		if (orderFlag)
+		{
+			tutorial = ORDERMENU;
+		}
+		break;
+	case ORDERMENU:
+		//ファンタぶどう？を選んだら次のcaseへ
+		for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
+		{
+			if (pcOrderGh[i] == pcPetGh[0])
+			{
+				tutorial = CHOOSE;
+			}
+		}
+		break;
+	case CHOOSE:
+		//注文ボタンを押したら次のcaseへ
+		if (gaugeMoveFlag)
+		{
+			tutorial = GAGEMOVE;
+		}
+		break;
+	case GAGEMOVE:
+		//発注画面でゲージが注文ボタンに触れたら発注完了
+		if (orderFlag && !gaugeMoveFlag)
+		{
+			tutorial = ORDEREND;
+		}
+		break;
+	case ORDEREND:
+		//補充棚のところに行かせて数を確認させたら終了
+		if (!orderFlag && backPos[0] == -1280)
+		{
+			tutorial = END;
+		}
+		break;
+	case END:
 		break;
 	default:
 		break;
@@ -574,6 +636,11 @@ void Scene::tutorialTransaction()
 	// 描画処理
 	playDraw();
 	DrawGraph(0, 0, tutorialGh[tutorial], true);
+	//クリック
+	if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == END)
+	{
+		DrawGraph(0, 0, clickGh, true);
+	}
 }
 
 void Scene::playTransaction() {
