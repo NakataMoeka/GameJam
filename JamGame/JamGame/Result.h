@@ -9,6 +9,7 @@ public:
 	void Draw();
 	void SetScore(int sc) { this->sc = sc; }
 	void SetHightScore(int hSc) { this->hSc = hSc; }
+
 	bool GetIsHit() { return isHit; }
 private:
 	int scoreGraph[8];
@@ -21,6 +22,7 @@ private:
 
 	int barcodeReader;
 	int code;
+
 
 	//ç¿ïW
 	float barcodeX = 1280 / 2 - 150;

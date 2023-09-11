@@ -31,8 +31,10 @@ void Result::Update()
 	hightScoreNum[2] = (hSc / 100000) % 10;
 	hightScoreNum[1] = (hSc/ 1000000) % 10;
 	hightScoreNum[0] = (hSc / 10000000) % 10;
+
 	//マウスの更新
 	GetMousePoint(&MousePosX, &MousePosY);
+
 
 	if (Collision::CubeToCubeCollision({ MousePosX - barcodeReader_sizeX, MousePosY - barcodeReader_sizeY },
 		{ barcodeX, barcodeY }, { barcodeReader_sizeX * 2, barcodeReader_sizeY * 2 }, { barcode_sizeX * 2, barcode_sizeY * 2 }))
@@ -54,6 +56,7 @@ void Result::Draw()
 		DrawRectExtendGraph(i * 28 + 540, 50 + 100, 28 + i * 28 + 540, 88 + 100, 110 * scoreNum[i], 0, 110, 150, scoreGraph[i], TRUE);
 		DrawRectExtendGraph(i * 28 + 540, 50 + 200, 28 + i * 28 + 540, 88 + 200, 110 * hightScoreNum[i], 0, 110, 150, hightScoreGraph[i], TRUE);
 	}
+
 	DrawGraph(MousePosX - 100, MousePosY - 25, barcodeReader, true);
 	DrawGraph(MousePosX - 100, MousePosY - 25 + 400, code, true);
 }
