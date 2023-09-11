@@ -6,6 +6,7 @@
 #include"Title.h"
 #include"Result.h"
 #include"Human.h"
+#include"SceneChange.h"
 class Scene
 {
 private:
@@ -152,6 +153,7 @@ private:
 	Human* human;
 
 	Result* result;
+	SceneChange* sceneChange;
 
 	int sc;//ÉXÉRÉA
 	int scoreCount = 0;

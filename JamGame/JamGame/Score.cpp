@@ -42,7 +42,7 @@ void Score::HighScore()
 
 void Score::Draw()
 {
-	//DrawFormatString(1000, 0, GetColor(0, 0, 0), "%d", sc);
+	
 	for (int i = 0; i < 8; i++)
 	{
 		//DrawRectExtendGraph(i * 28 + 100, 10 + 90, 28 + i * 28 + 100, 40 + 90, 110 * scoreNum[i], 0, 110, 150, scoreGraph[i], TRUE);

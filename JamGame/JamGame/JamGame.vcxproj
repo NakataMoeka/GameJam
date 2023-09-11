@@ -135,6 +135,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneChange.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Human.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneChange.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Title.h" />
