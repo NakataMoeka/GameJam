@@ -46,6 +46,11 @@ void Scene::init() {
 	boxGh = LoadGraph("Resources/waku.png");
 	//在庫数
 	repGh = LoadGraph("Resources/rep.png");
+	//チュートリアル画像
+	tutorialGh[0] = LoadGraph("Resources/have.png");
+	tutorialGh[1] = LoadGraph("Resources/replenish.png");
+	tutorialGh[2] = LoadGraph("Resources/order_tutorial.png");
+
 	timer = new Timer();
 	score = new Score();
 	hitBottles = new HitBottles();
@@ -526,8 +531,17 @@ void Scene::tutorialTransaction()
 	{
 	case HAVE:
 		isDraw[0][0] = false;
+
+		if (playerBottle[0][0] != 0)
+		{
+			tutorial = REPLENISH;
+		}
 		break;
 	case REPLENISH:
+		if (isDraw[0][0])
+		{
+			tutorial = ORDER;
+		}
 		break;
 	case ORDER:
 		break;
@@ -536,9 +550,22 @@ void Scene::tutorialTransaction()
 	}
 	//背景移動
 	BackMove();
+	//売画像位置
+	//売のマークの位置を決める
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			if (isDraw[i][j] == false)
+			{
+				sellPosX[i][j] = posX[i][j];
+				sellPosY[i][j] = posY[i][j];
+			}
+		}
+	}
 
 	// 描画処理
 	playDraw();
+	DrawGraph(0, 0, tutorialGh[tutorial], true);
 }
 
 void Scene::playTransaction() {
