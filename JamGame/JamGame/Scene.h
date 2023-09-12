@@ -135,7 +135,7 @@ private:
 	float carMoveLength;
 
 	//枠
-	int boxPos[2] = { 830, -50 };
+	int boxPos[2] = { 830, -35 };
 	static const int WAIT_MOVE_NUM = 2;
 
 	//タイプ
@@ -198,6 +198,7 @@ private:
 	int repCountGh[8];
 	int out;
 	int start_workGh;
+	int rightClickGh;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報
