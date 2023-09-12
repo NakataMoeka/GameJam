@@ -155,7 +155,6 @@ void Scene::Update()
 				sNum = TUTORIAL;
 				tutorial = START;
 				scRFlag = false;
-				timer->Initialize();
 				//sNum = GAME;
 			}
 		}
@@ -654,6 +653,7 @@ void Scene::tutorialTransaction()
 	case END:
 		if (MouseInputOld != 1 && MouseInput == 1)
 		{
+			timer->Initialize();
 			sNum = GAME;
 		}
 		break;
@@ -691,8 +691,7 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// XVˆ—
-	if (sceneChange->GetFadeIn() == false) {
-		//if (start->GetStartFlag() == true) {
+
 		switch (maxTime)
 		{
 		case 3:
@@ -723,9 +722,6 @@ void Scene::playTransaction() {
 		}
 		timer->Update();
 		score->Update();
-		//}
-		//start->Update();
-	}
 	// •`‰æˆ—
 	playDraw();
 }
