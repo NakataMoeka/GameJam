@@ -197,6 +197,7 @@ private:
 	int clickGh;
 	int repCountGh[8];
 	int out;
+	int start_workGh;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報

@@ -63,7 +63,8 @@ void Scene::init() {
 	LoadDivGraph("Resources/Num.png", 8, 8, 1, 110, 150, repCountGh);
 	//‘Þ‹ÎŽžŠÔ
 	out = LoadGraph("Resources/clocking_out.png");
-
+	//ŽdŽ–ŠJŽn
+	start_workGh = LoadGraph("Resources/start_work.png");
 
 	timer = new Timer();
 	score = new Score();
