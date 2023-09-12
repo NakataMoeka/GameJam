@@ -192,7 +192,7 @@ void Scene::Update()
 				havePlayerBottleGh[i] = 0;
 			}
 			srand((unsigned int)time(NULL));
-			minNum = rand() % 6;
+			minNum = rand() % 6 + 1;
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
@@ -719,7 +719,7 @@ void Scene::tutorialTransaction()
 				havePlayerBottleGh[i] = 0;
 			}
 			srand((unsigned int)time(NULL));
-			minNum = rand() % 6;
+			minNum = rand() % 6 + 1;
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
@@ -799,12 +799,12 @@ void Scene::playTransaction() {
 			}
 		}
 		score->Update();
-			timer->Update();
+		timer->Update();
 	}
 	else {
 		timer->Start();
 	}
-		start->Update();
+	start->Update();
 	// 描画処理
 	playDraw();
 }
@@ -879,7 +879,7 @@ void Scene::playDraw()
 		DrawGraph(arrowPosX[1], 0, leftGh, true);
 	}
 
-	//DrawFormatString(0, 200, GetColor(0, 0, 0), "maxTime : %d", maxTime);
+	DrawFormatString(0, 200, GetColor(0, 0, 0), "minNum : %d", minNum);
 	//DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
