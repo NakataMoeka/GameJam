@@ -207,6 +207,7 @@ private:
 	int playerHaveBottle;
 
 	int minNum;
+	int minRand;
 
 	int se;
 	int sound;

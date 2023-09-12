@@ -140,8 +140,6 @@ void Scene::Update()
 			{
 				havePlayerBottleGh[i] = 0;
 			}
-			srand((unsigned int)time(NULL));
-			minNum = rand() % 6;
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
@@ -191,8 +189,7 @@ void Scene::Update()
 			{
 				havePlayerBottleGh[i] = 0;
 			}
-			srand((unsigned int)time(NULL));
-			minNum = rand() % 6 + 1;
+			
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
@@ -200,10 +197,20 @@ void Scene::Update()
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
 			BGM = LoadSoundMem("Resources/Sound/Cat_life.mp3");
+			
+			
 		}
+		
 	}
 	else if (sNum == GAME) {
-
+		double sum = timer->GetMaxTime() - timer->GetDt2();
+		//マックス時間と現在の時間の差を10で割った時余りが0だったらフラグをtrue
+		if (sum < 1)
+		{
+			srand((unsigned)time(NULL));
+			minRand = (rand() % 4) + 1;
+		}
+		minNum = minRand;
 		playTransaction();
 		Collision();
 
@@ -719,8 +726,7 @@ void Scene::tutorialTransaction()
 			{
 				havePlayerBottleGh[i] = 0;
 			}
-			srand((unsigned int)time(NULL));
-			minNum = rand() % 6 + 1;
+			
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
@@ -891,8 +897,6 @@ void Scene::playDraw()
 		DrawGraph(arrowPosX[0], 0, rightGh, true);
 		DrawGraph(arrowPosX[1], 0, leftGh, true);
 	}
-
-	DrawFormatString(0, 200, GetColor(0, 0, 0), "minNum : %d", minNum);
 	//DrawFormatString(0, 150, GetColor(0, 0, 0), "rand x : %d y : %d", randX, randY);
 
 	//隙間カウンター
