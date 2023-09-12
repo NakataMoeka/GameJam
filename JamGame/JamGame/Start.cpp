@@ -25,5 +25,5 @@ void Start::Update()
 
 void Start::Draw()
 {
-	DrawRectExtendGraph(28 + 560, 50 + 300, 28 + 28 + 560, 88 + 300, 110 * sec, 0, 110, 150, countGraph, TRUE);
+	DrawRectExtendGraph(46 + 560, 200 + 100, 46 + 46 + 560, 302 + 100, 110 * sec, 0, 110, 150, countGraph, TRUE);
 }

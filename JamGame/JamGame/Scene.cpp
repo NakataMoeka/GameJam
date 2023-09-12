@@ -510,7 +510,7 @@ void Scene::DisappearPet()
 		scoreCount = 0;
 	}
 	if (scoreCount == 1) {
-		
+
 	}
 	if (isDis)
 	{
@@ -723,7 +723,7 @@ void Scene::tutorialTransaction()
 				shose[i] = LoadSoundMem("Resources/Sound/ävåCÇ≈ï‡Ç≠.mp3");
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ÉnÉCÉqÅ[ÉãÇ≈ï‡Ç≠.mp3");
-			
+
 		}
 		break;
 	default:
@@ -761,36 +761,36 @@ void Scene::tutorialTransaction()
 void Scene::playTransaction() {
 	// çXêVèàóù
 
-		switch (maxTime)
-		{
-		case 3:
-			type = USUALLY;
-			break;
-		case 2:
-			type = BUSY;
-			break;
-		case 4:
-			type = SLOW;
-			break;
-		default:
-			break;
-		}
-		//îwåià⁄ìÆ
-		BackMove();
-		//è¡ñ≈èàóù
-		DisappearPet();
-		//êlä‘èàóù
-		human->Update(maxTime, timer);
-		for (int i = 0; i < 4; i++) {
-			if (human->GetComing(i)) {
-				if (CheckSoundMem(shose[i]) == 0)
-				{
-					PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
-				}
+	switch (maxTime)
+	{
+	case 3:
+		type = USUALLY;
+		break;
+	case 2:
+		type = BUSY;
+		break;
+	case 4:
+		type = SLOW;
+		break;
+	default:
+		break;
+	}
+	//îwåià⁄ìÆ
+	BackMove();
+	//è¡ñ≈èàóù
+	DisappearPet();
+	//êlä‘èàóù
+	human->Update(maxTime, timer);
+	for (int i = 0; i < 4; i++) {
+		if (human->GetComing(i)) {
+			if (CheckSoundMem(shose[i]) == 0)
+			{
+				PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
 			}
 		}
-		timer->Update();
-		score->Update();
+	}
+	timer->Update();
+	score->Update();
 	// ï`âÊèàóù
 	playDraw();
 }
@@ -983,7 +983,7 @@ void Scene::playDraw()
 
 		//ÉgÉâÉbÉN
 		carPosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge - GAUGE_SIZE_Y + 30;
-		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - CAR_SIZE_Y /2 - GAUGE_SIZE_Y;
+		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - CAR_SIZE_Y / 2 - GAUGE_SIZE_Y;
 
 		DrawExtendGraph(carPosX + carMoveLength, carPosY, carPosX + CAR_SIZE_X + carMoveLength, carPosY + CAR_SIZE_Y, carGh, TRUE);
 
@@ -1004,4 +1004,3 @@ float Scene::Ease(float start, float end, float flame)
 	position = difference * etime + start;
 	return position;
 }
-
