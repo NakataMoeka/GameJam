@@ -199,6 +199,7 @@ void Scene::Update()
 				shose[i] = LoadSoundMem("Resources/Sound/ŠvŒC‚Å•à‚­.mp3");
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ƒnƒCƒq[ƒ‹‚Å•à‚­.mp3");
+			BGM = LoadSoundMem("Resources/Sound/Cat_life.mp3");
 		}
 	}
 	else if (sNum == GAME) {
@@ -725,7 +726,7 @@ void Scene::tutorialTransaction()
 				shose[i] = LoadSoundMem("Resources/Sound/ŠvŒC‚Å•à‚­.mp3");
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ƒnƒCƒq[ƒ‹‚Å•à‚­.mp3");
-
+			BGM = LoadSoundMem("Resources/Sound/Cat_life.mp3");
 		}
 		break;
 	default:
@@ -763,7 +764,12 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// XVˆ—
-	if (start->GetStartFlag() == true) {
+
+		if (CheckSoundMem(BGM) == 0)
+		{
+			PlaySoundMem(BGM, DX_PLAYTYPE_BACK, TRUE);
+			ChangeVolumeSoundMem(110, BGM);
+		}
 		switch (maxTime)
 		{
 		case 3:
@@ -792,8 +798,9 @@ void Scene::playTransaction() {
 				}
 			}
 		}
-		timer->Update();
 		score->Update();
+		if (start->GetStartFlag() == true) {
+			timer->Update();
 	}
 	else {
 		start->Update();
