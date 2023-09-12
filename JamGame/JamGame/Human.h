@@ -9,7 +9,7 @@ private:
 	static const int WIN_WIDTH = 1280;
 	static const int WIN_HEIGHT = 720;
 	//êlä‘ç≈ëÂêî
-	static const int MAXHUMAN = 4;
+	static const int MAXHUMAN = 6;
 	//ç¿ïW
 	int posX[MAXHUMAN];
 	int posY[MAXHUMAN];

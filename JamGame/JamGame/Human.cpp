@@ -15,7 +15,8 @@ void Human::Initialize()
 	humanGh[1] = LoadGraph("Resources/human_2.png");
 	humanGh[2] = LoadGraph("Resources/human_3.png");
 	humanGh[3] = LoadGraph("Resources/human_4.png");
-
+	humanGh[4] = LoadGraph("Resources/human_5.png");
+	humanGh[5] = LoadGraph("Resources/human_6.png");
 }
 
 void Human::Init()
@@ -71,10 +72,26 @@ void Human::Update(int maxTime, Timer *timer)
 	{
 		if (isComing[i])
 		{
-			if (i % 2 == 0)
+			if (i == 0 || i == 2)
 			{
 				posX[i] -= speed[0];
 				if (posX[i] <= -size[0])
+				{
+					isComing[i] = false;
+				}
+			}
+			else if (i == 4)
+			{
+				posX[i] -= speed[1];
+				if (posX[i] <= -size[0])
+				{
+					isComing[i] = false;
+				}
+			}
+			else if (i == 5)
+			{
+				posX[i] += 6;
+				if (posX[i] >= WIN_WIDTH)
 				{
 					isComing[i] = false;
 				}
@@ -111,7 +128,7 @@ void Human::Update(int maxTime, Timer *timer)
 		max = 50;
 		break;
 	case 4:	//‰É
-		max = 400;
+		max = 450;
 		break;
 	default:
 		break;

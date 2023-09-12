@@ -613,6 +613,7 @@ void Scene::tutorialTransaction()
 	switch (tutorial)
 	{
 	case START:
+		isDraw[0][0] = false;
 		if (MouseInputOld != 1 && MouseInput == 1)
 		{
 			tutorial = HAVE;
