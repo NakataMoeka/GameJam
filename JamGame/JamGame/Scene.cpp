@@ -53,7 +53,17 @@ void Scene::init() {
 	tutorialGh[HAVEOK] = LoadGraph("Resources/tutorial/have_ok.png");
 	tutorialGh[REPLENISH] = LoadGraph("Resources/tutorial/replenish.png");
 	tutorialGh[REPLENISHOK] = LoadGraph("Resources/tutorial/replenish_ok.png");
-	tutorialGh[ORDER] = LoadGraph("Resources/tutorial/order_tutorial.png");
+	tutorialGh[ORDER] = LoadGraph("Resources/tutorial/order.png");
+	tutorialGh[ORDERMENU] = LoadGraph("Resources/tutorial/ordermenu.png");
+	tutorialGh[CHOOSE] = LoadGraph("Resources/tutorial/choose.png");
+	tutorialGh[GAGEMOVE] = LoadGraph("Resources/tutorial/gamemove.png");
+	tutorialGh[ORDEREND] = LoadGraph("Resources/tutorial/orderend.png");
+	tutorialGh[END] = LoadGraph("Resources/tutorial/end.png");
+	//在庫数
+	LoadDivGraph("Resources/Num.png", 8, 8, 1, 110, 150, repCountGh);
+	//退勤時間
+	out = LoadGraph("Resources/clocking_out.png");
+
 
 	timer = new Timer();
 	score = new Score();
@@ -154,6 +164,12 @@ void Scene::Update()
 	{
 		tutorialTransaction();
 		Collision();
+		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		{
+			sNum = GAME;
+			tutorial = START;
+			timer->Initialize();
+		}
 	}
 	else if (sNum == GAME) {
 
@@ -249,6 +265,7 @@ void Scene::Collision()
 
 						if (isDraw[i][j] == false && playerBottle[i][repToPos - (i * MAXREP_X)] > 0 && playerHaveBottle > 0)
 						{
+							sc++;
 							isDraw[i][j] = true;
 							playerBottle[i][repToPos - (i * MAXREP_X)]--;
 							playerHaveBottle--;
@@ -456,7 +473,7 @@ void Scene::DisappearPet()
 		scoreCount = 0;
 	}
 	if (scoreCount == 1) {
-		sc++;
+		
 	}
 	if (isDis)
 	{
@@ -606,6 +623,10 @@ void Scene::tutorialTransaction()
 		}
 		break;
 	case CHOOSE:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			isDraw_tutorial = false;
+		}
 		//注文ボタンを押したら次のcaseへ
 		if (gaugeMoveFlag)
 		{
@@ -616,7 +637,11 @@ void Scene::tutorialTransaction()
 		//発注画面でゲージが注文ボタンに触れたら発注完了
 		if (orderFlag && !gaugeMoveFlag)
 		{
-			tutorial = ORDEREND;
+			isDraw_tutorial = true;
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				tutorial = ORDEREND;
+			}
 		}
 		break;
 	case ORDEREND:
@@ -627,6 +652,10 @@ void Scene::tutorialTransaction()
 		}
 		break;
 	case END:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			sNum = GAME;
+		}
 		break;
 	default:
 		break;
@@ -648,11 +677,15 @@ void Scene::tutorialTransaction()
 
 	// 描画処理
 	playDraw();
-	DrawGraph(0, 0, tutorialGh[tutorial], true);
-	//クリック
-	if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == END)
+
+	if (isDraw_tutorial)
 	{
-		DrawGraph(0, 0, clickGh, true);
+		DrawGraph(0, 0, tutorialGh[tutorial], true);
+		//クリック
+		if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
+		{
+			DrawGraph(0, 0, clickGh, true);
+		}
 	}
 }
 
@@ -743,8 +776,10 @@ void Scene::playDraw()
 	//陳列棚&補充棚
 	DrawGraph(backPos[0], backPos[1], backgroundGh, true);
 	//時計
-	int clockSize[2] = { 256, 90 };
-	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 20, clockGh, true);
+	int clockSize[2] = { 240, 86 };
+	DrawExtendGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 10, WIN_WIDHT / 2 - clockSize[0] / 2 + clockSize[0], 10 + clockSize[1], clockGh, true);
+	//退勤時間
+	DrawGraph(backPos[0], 0, out, true);
 	//タイプ
 	int typeSize = 64;
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2 - typeSize - 20, 40, typeGh[type], true);
@@ -823,14 +858,17 @@ void Scene::playDraw()
 
 			DrawGraph(backPos[0] + repPosX[i][j] + sizeX, repPosY[i][j], repGh, true);
 			DrawGraph(backPos[0] + repPosX[i][j], repPosY[i][j], repPetGh[repPetCount], TRUE);
-			DrawFormatString(backPos[0] + repPosX[i][j] + sizeX + 40, repPosY[i][j] + (sizeY / 4 * 3), GetColor(0, 0, 0), "%d", repCount[i][j]);
+			DrawExtendGraph(backPos[0] + repPosX[i][j] + sizeX - 10 + 40, repPosY[i][j] + (sizeY / 4 * 3) - 13, backPos[0] + repPosX[i][j] + sizeX - 10 + 40 + 20, repPosY[i][j] + (sizeY / 4 * 3) - 13 + 27, repCountGh[repCount[i][j]], true);
+			//DrawFormatString(backPos[0] + repPosX[i][j] + sizeX + 40, repPosY[i][j] + (sizeY / 4 * 3), GetColor(0, 0, 0), "%d", repCount[i][j]);
 		}
 	}
 
 	//プレイヤーが持っているボトル
 	for (int i = 0; i < haveBottleNum; i++)
 	{
-		DrawGraph(boxPos[0] + (i * sizeX), boxPos[1], havePlayerBottleGh[i], TRUE);
+		int sX = 32;
+		int sY = 64;
+		DrawExtendGraph(boxPos[0] + (i * sizeX) + 20, boxPos[1] + 60, boxPos[0] + (i * sizeX) + sX + 20, boxPos[1] + sY + 60, havePlayerBottleGh[i], TRUE);
 	}
 
 	//注文画面じゃなくてもゲージは動かす
@@ -850,43 +888,43 @@ void Scene::playDraw()
 	{
 		pcPosX = WIN_WIDHT / 2 - pcSize[0] / 2;
 		pcPosY = WIN_HEIGHT / 2 - pcSize[1] / 2;
-		DrawGraph(pcPosX, pcPosY, pcGh, true);
+		DrawExtendGraph(pcPosX, pcPosY, pcPosX + pcSize[0], pcPosY + pcSize[1], pcGh, true);
 
 		for (int j = 0; j < MAX_PCPET_NUM; j++) {
 			if (j < MAX_PCPET_NUM / 2)
 			{
-				pcPetPosX[j] = WIN_WIDHT / 2 - pcSize[0] / 2 + (j * sizeX) + pcEdge;
-				pcPetPosY[j] = WIN_HEIGHT / 2 - pcSize[1] / 2 + pcEdge;
+				pcPetPosX[j] = WIN_WIDHT / 2 - pcSize[0] / 2 + (j * sizeX) + pcEdge + 120;
+				pcPetPosY[j] = WIN_HEIGHT / 2 - pcSize[1] / 2 + pcEdge + 20;
 			}
 			else
 			{
-				pcPetPosX[j] = WIN_WIDHT / 2 - pcSize[0] / 2 + ((j - MAX_PCPET_NUM / 2) * sizeX) + pcEdge;
-				pcPetPosY[j] = WIN_HEIGHT / 2 - pcSize[1] / 2 + sizeY + pcEdge;
+				pcPetPosX[j] = WIN_WIDHT / 2 - pcSize[0] / 2 + ((j - MAX_PCPET_NUM / 2) * sizeX) + pcEdge + 120;
+				pcPetPosY[j] = WIN_HEIGHT / 2 - pcSize[1] / 2 + sizeY + pcEdge + 20;
 			}
 			DrawGraph(pcPetPosX[j], pcPetPosY[j], pcPetGh[j], TRUE);
 		}
 		for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
 		{
-			playerOrderPetPosX[i] = WIN_WIDHT / 2 - pcSize[0] / 2 + (i * sizeX / 2) + pcEdge;
-			playerOrderPetPosY[i] = WIN_HEIGHT / 2 - pcSize[1] / 2 + (sizeY * 2) + pcEdge;
+			playerOrderPetPosX[i] = WIN_WIDHT / 2 - pcSize[0] / 2 + (i * sizeX / 2) + pcEdge + 40;
+			playerOrderPetPosY[i] = WIN_HEIGHT / 2 - pcSize[1] / 2 + (sizeY * 2) + pcEdge + 20;
 
 			DrawGraph(playerOrderPetPosX[i], playerOrderPetPosY[i], pcOrderGh[i], TRUE);
 		}
 		//ゲージ
-		gaugePosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge;
-		gaugePosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 + 10;
+		gaugePosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge + 20;
+		gaugePosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - CAR_SIZE_Y / 2 + 15;
 
 		DrawExtendGraph(gaugePosX, gaugePosY, gaugePosX + gaugelength, gaugePosY + GAUGE_SIZE_Y, gaugeGh, TRUE);
 
 		//トラック
-		carPosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge - GAUGE_SIZE_Y;
-		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - GAUGE_SIZE_Y;
+		carPosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge - GAUGE_SIZE_Y + 30;
+		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - CAR_SIZE_Y /2 - GAUGE_SIZE_Y;
 
 		DrawExtendGraph(carPosX + carMoveLength, carPosY, carPosX + CAR_SIZE_X + carMoveLength, carPosY + CAR_SIZE_Y, carGh, TRUE);
 
 		//注文ボタン
-		pickUpPosX = WIN_WIDHT / 2 + pcSize[0] / 2 - PICKUP_SIZE_X - pcEdge;
-		pickUpPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 - PICKUP_SIZE_Y - pcEdge;
+		pickUpPosX = WIN_WIDHT / 2 + pcSize[0] / 2 - PICKUP_SIZE_X - pcEdge - 25;
+		pickUpPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 - PICKUP_SIZE_Y - pcEdge - 25;
 
 		DrawGraph(pickUpPosX, pickUpPosY, pickUpGh, TRUE);
 	}
