@@ -804,6 +804,7 @@ void Scene::playTransaction() {
 	}
 	else {
 		start->Update();
+		timer->Start();
 	}
 	// •`‰æˆ—
 	playDraw();

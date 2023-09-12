@@ -2,8 +2,7 @@
 #include<time.h>
 void Timer::Initialize()
 {
-	start = (double)time(NULL);
-	start = clock() / CLOCKS_PER_SEC;
+	Start();
 	total = 0.0;
 	total2 = 0.0;
 	SetTime = 600;
@@ -46,4 +45,10 @@ void Timer::Draw()
 	DrawRectExtendGraph(2 * 28 + 588, y1, 28 + 2 * 28 + 588, y2, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);
 	DrawRectExtendGraph(3 * 28 + 588, y1, 28 + 3 * 28 + 588, y2, 110 * sec1, 0, 110, 150, timeGraph[3], TRUE);
 	DrawExtendGraph(616, y1, 644, y2, colonGraph, TRUE);
+}
+
+void Timer::Start()
+{
+	start = (double)time(NULL);
+	start = clock() / CLOCKS_PER_SEC;
 }
