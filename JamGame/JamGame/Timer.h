@@ -6,7 +6,7 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
-	void Start();
+	void Start();//start•Ï”ê—p‰Šú‰»
 	//getter
 	double GetDt() { return dt; }
 	double GetDt2() { return dt2; }
