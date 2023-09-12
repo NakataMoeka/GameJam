@@ -6,6 +6,8 @@
 #include"Title.h"
 #include"Result.h"
 #include"Human.h"
+#include"SceneChange.h"
+#include"Start.h"
 class Scene
 {
 private:
@@ -154,7 +156,12 @@ private:
 	Human* human;
 
 	Result* result;
-
+	SceneChange* sceneChange;
+	bool scTTFlag = false;
+	bool scTLFlag = false;
+	bool scGFlag = false;
+	bool scRFlag = false;
+	Start* start;
 	int sc;//ÉXÉRÉA
 	int scoreCount = 0;
 	int maxTime = 3;
