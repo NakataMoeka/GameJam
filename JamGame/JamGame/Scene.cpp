@@ -746,7 +746,7 @@ void Scene::playDraw()
 	int clockSize[2] = { 240, 86 };
 	DrawExtendGraph(WIN_WIDHT / 2 - clockSize[0] / 2, 10, WIN_WIDHT / 2 - clockSize[0] / 2 + clockSize[0], 10 + clockSize[1], clockGh, true);
 	//‘Þ‹ÎŽžŠÔ
-	DrawGraph(0, 0, out, true);
+	DrawGraph(backPos[0], 0, out, true);
 	//ƒ^ƒCƒv
 	int typeSize = 64;
 	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2 - typeSize - 20, 40, typeGh[type], true);
