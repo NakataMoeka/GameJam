@@ -619,32 +619,66 @@ void Scene::tutorialTransaction()
 		case HAVE:
 			isDraw[0][0] = false;
 
-			if (playerBottle[0][0] != 0)
+		if (playerBottle[0][0] != 0)
+		{
+			tutorial = HAVEOK;
+		}
+		break;
+	case HAVEOK:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			tutorial = REPLENISH;
+		}
+		break;
+	case REPLENISH:
+		if (isDraw[0][0])
+		{
+			tutorial = REPLENISHOK;
+		}
+		break;
+	case REPLENISHOK:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			tutorial = ORDER;
+		}
+		break;
+	case ORDER:
+		//発注ボタンを押したら次のcaseへ
+		if (orderFlag)
+		{
+			tutorial = ORDERMENU;
+		}
+		break;
+	case ORDERMENU:
+		//ファンタぶどう？を選んだら次のcaseへ
+		for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
+		{
+			if (pcOrderGh[i] == pcPetGh[0])
 			{
-				tutorial = HAVEOK;
+				tutorial = CHOOSE;
 			}
-			break;
-		case HAVEOK:
+		}
+		break;
+	case CHOOSE:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			isDraw_tutorial = false;
+		}
+		//注文ボタンを押したら次のcaseへ
+		if (gaugeMoveFlag)
+		{
+			tutorial = GAGEMOVE;
+		}
+		break;
+	case GAGEMOVE:
+		//発注画面でゲージが注文ボタンに触れたら発注完了
+		if (orderFlag && !gaugeMoveFlag)
+		{
+			isDraw_tutorial = true;
 			if (MouseInputOld != 1 && MouseInput == 1)
 			{
-				tutorial = REPLENISH;
+				tutorial = ORDEREND;
 			}
-			break;
-		case REPLENISH:
-			if (isDraw[0][0])
-			{
-				tutorial = REPLENISHOK;
-			}
-			break;
-		case REPLENISHOK:
-			if (MouseInputOld != 1 && MouseInput == 1)
-			{
-				tutorial = ORDER;
-			}
-			break;
-		case ORDER:
-			//発注ボタンを押したら次のcaseへ
-			if (orderFlag)
 		}
 		break;
 	case ORDEREND:
@@ -703,76 +737,12 @@ void Scene::tutorialTransaction()
 	{
 		for (int j = 0; j < MAXPET_X; j++) {
 			if (isDraw[i][j] == false)
->>>>>>> master
 			{
-				tutorial = ORDERMENU;
+				sellPosX[i][j] = posX[i][j];
+				sellPosY[i][j] = posY[i][j];
 			}
-			break;
-		case ORDERMENU:
-			//ファンタぶどう？を選んだら次のcaseへ
-			for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
-			{
-				if (pcOrderGh[i] == pcPetGh[0])
-				{
-					tutorial = CHOOSE;
-				}
-			}
-			break;
-		case CHOOSE:
-			if (MouseInputOld != 1 && MouseInput == 1)
-			{
-				isDraw_tutorial = false;
-			}
-			//注文ボタンを押したら次のcaseへ
-			if (gaugeMoveFlag)
-			{
-				tutorial = GAGEMOVE;
-			}
-			break;
-		case GAGEMOVE:
-			//発注画面でゲージが注文ボタンに触れたら発注完了
-			if (orderFlag && !gaugeMoveFlag)
-			{
-				isDraw_tutorial = true;
-				if (MouseInputOld != 1 && MouseInput == 1)
-				{
-					tutorial = ORDEREND;
-				}
-			}
-			break;
-		case ORDEREND:
-			//補充棚のところに行かせて数を確認させたら終了
-			if (!orderFlag && backPos[0] == -1280)
-			{
-				tutorial = END;
-			}
-			break;
-		case END:
-			if (MouseInputOld != 1 && MouseInput == 1)
-			{
-				start->Init();
-				timer->Initialize();
-				sNum = GAME;
-			}
-			break;
-		default:
-			break;
 		}
 	}
-		//背景移動
-		BackMove();
-		//売画像位置
-		//売のマークの位置を決める
-		for (int i = 0; i < MAXPET_Y; i++)
-		{
-			for (int j = 0; j < MAXPET_X; j++) {
-				if (isDraw[i][j] == false)
-				{
-					sellPosX[i][j] = posX[i][j];
-					sellPosY[i][j] = posY[i][j];
-				}
-			}
-		}
 
 		// 描画処理
 		playDraw();
