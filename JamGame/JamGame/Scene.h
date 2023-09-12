@@ -155,6 +155,10 @@ private:
 
 	Result* result;
 	SceneChange* sceneChange;
+	bool scTTFlag = false;
+	bool scTLFlag = false;
+	bool scGFlag = false;
+	bool scRFlag = false;
 	Start* start;
 	int sc;//ÉXÉRÉA
 	int scoreCount = 0;

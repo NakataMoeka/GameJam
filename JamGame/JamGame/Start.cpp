@@ -20,10 +20,10 @@ void Start::Update()
 	if (dt == 0) {
 		startFlag = true;
 	}
-	sec = ((int)dt % 60)%10;
+	sec = ((int)dt % 60) % 10;
 }
 
 void Start::Draw()
 {
-	DrawRectExtendGraph(28 + 560, 50, 28 +28 + 560, 88, 110 * sec, 0, 110, 150, countGraph, TRUE);
+	DrawRectExtendGraph(28 + 560, 50 + 300, 28 + 28 + 560, 88 + 300, 110 * sec, 0, 110, 150, countGraph, TRUE);
 }

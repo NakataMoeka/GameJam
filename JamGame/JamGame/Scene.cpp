@@ -63,6 +63,7 @@ void Scene::init() {
 	title = new Title();
 	result = new Result();
 	sceneChange = new SceneChange();
+	start = new Start();
 	title->Init();
 	//人間
 	human = new Human();
@@ -94,7 +95,6 @@ void Scene::Update()
 	MouseInput = GetMouseInput();
 	GetMousePoint(&MousePosX, &MousePosY);
 	if (sNum == TITLE) {
-		//sceneChange->SetFedeIn(false);
 		titleTransaction();
 		if (CheckSoundMem(sound) == 0)
 		{
@@ -107,13 +107,12 @@ void Scene::Update()
 				PlaySoundMem(se, DX_PLAYTYPE_NORMAL, TRUE);
 			}
 			StopSoundMem(sound);
-			timer->Initialize();
 			score->Initialize();
 			human->Init();
 			sc = 0;
 			scoreCount = 0;
 			hitBottles->Init();
-
+			start->Init();
 			for (int i = 0; i < MAXPET_Y; i++)
 			{
 				for (int j = 0; j < MAXPET_X; j++) {
@@ -137,14 +136,18 @@ void Scene::Update()
 				shose[i] = LoadSoundMem("Resources/Sound/革靴で歩く.mp3");
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
-			sceneChange->Init();
-			
+			scTTFlag = true;
 		}
+		if (scTTFlag == true) {
+			sceneChange->SetFedeOut(true);
+			if (sceneChange->GetFadeIn() == true) {
 
-		if (sceneChange->GetFadeIn() == true) {
-
-			sNum = TUTORIAL;
-			tutorial = START;
+				/*sNum = TUTORIAL;
+				tutorial = START;*/
+				scRFlag = false;
+				timer->Initialize();
+				sNum = GAME;
+			}
 		}
 	}
 	else if (sNum == TUTORIAL)
@@ -153,27 +156,37 @@ void Scene::Update()
 		Collision();
 	}
 	else if (sNum == GAME) {
+
 		playTransaction();
 		Collision();
 
 		if (timer->GetDt() >= 600) {
-			result->Init();
-			sceneChange->Init();
+			scGFlag = true;
 		}
-		if (sceneChange->GetFadeIn() == true) {
-			sNum = RESULT;
+		if (scGFlag == true) {
+			sceneChange->SetFedeOut(true);
+			if (sceneChange->GetFadeIn() == true) {
+				scTTFlag = false;
+				result->Init();
+				sNum = RESULT;
+			}
 		}
 	}
 	else if (sNum == RESULT) {
+
 		if (MouseInputOld != 1 && MouseInput == 1 && title->GetIsHit())
 		{
 			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
 			sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
-			title->Init();
-			sceneChange->Init();
+			scRFlag = true;
 		}
-		if (sceneChange->GetFadeIn() == true) {
-			sNum = TITLE;
+		if (scRFlag == true) {
+			sceneChange->SetFedeOut(true);
+			if (sceneChange->GetFadeIn() == true) {
+				title->Init();
+				scGFlag = false;
+				sNum = TITLE;
+			}
 		}
 		result->Update();
 		result->SetHightScore(score->GetHighetScore());
@@ -645,40 +658,40 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// 更新処理
-	if (sceneChange->GetFadeIn() == true) {
-		if (start->GetStartFlag() == true) {
-			switch (maxTime)
-			{
-			case 3:
-				type = USUALLY;
-				break;
-			case 2:
-				type = BUSY;
-				break;
-			case 4:
-				type = SLOW;
-				break;
-			default:
-				break;
-			}
-			//背景移動
-			BackMove();
-			//消滅処理
-			DisappearPet();
-			//人間処理
-			human->Update(maxTime, timer);
-			for (int i = 0; i < 4; i++) {
-				if (human->GetComing(i)) {
-					if (CheckSoundMem(shose[i]) == 0)
-					{
-						PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
-					}
+	if (sceneChange->GetFadeIn() == false) {
+		//if (start->GetStartFlag() == true) {
+		switch (maxTime)
+		{
+		case 3:
+			type = USUALLY;
+			break;
+		case 2:
+			type = BUSY;
+			break;
+		case 4:
+			type = SLOW;
+			break;
+		default:
+			break;
+		}
+		//背景移動
+		BackMove();
+		//消滅処理
+		DisappearPet();
+		//人間処理
+		human->Update(maxTime, timer);
+		for (int i = 0; i < 4; i++) {
+			if (human->GetComing(i)) {
+				if (CheckSoundMem(shose[i]) == 0)
+				{
+					PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
 				}
 			}
-			timer->Update();
-			score->Update();
 		}
-		start->Update();
+		timer->Update();
+		score->Update();
+		//}
+		//start->Update();
 	}
 	// 描画処理
 	playDraw();
@@ -711,7 +724,7 @@ void Scene::Draw()
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
-		start->Draw();
+		//start->Draw();
 	}
 	else if (sNum == RESULT) {
 		result->Draw();

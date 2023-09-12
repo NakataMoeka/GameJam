@@ -6,7 +6,7 @@ public:
 	void Init();
 	void Update();
 	void Draw();
-	bool GetStartFlag() { startFlag; }
+	bool GetStartFlag() { return startFlag; }
 private:
 	int countGraph;
 	int GoGraph;
