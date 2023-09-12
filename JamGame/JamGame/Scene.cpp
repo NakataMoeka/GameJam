@@ -53,7 +53,13 @@ void Scene::init() {
 	tutorialGh[HAVEOK] = LoadGraph("Resources/tutorial/have_ok.png");
 	tutorialGh[REPLENISH] = LoadGraph("Resources/tutorial/replenish.png");
 	tutorialGh[REPLENISHOK] = LoadGraph("Resources/tutorial/replenish_ok.png");
-	tutorialGh[ORDER] = LoadGraph("Resources/tutorial/order_tutorial.png");
+	tutorialGh[ORDER] = LoadGraph("Resources/tutorial/order.png");
+	tutorialGh[ORDERMENU] = LoadGraph("Resources/tutorial/ordermenu.png");
+	tutorialGh[CHOOSE] = LoadGraph("Resources/tutorial/choose.png");
+	tutorialGh[GAGEMOVE] = LoadGraph("Resources/tutorial/gamemove.png");
+	tutorialGh[ORDEREND] = LoadGraph("Resources/tutorial/orderend.png");
+	tutorialGh[END] = LoadGraph("Resources/tutorial/end.png");
+
 
 	timer = new Timer();
 	score = new Score();
@@ -143,6 +149,7 @@ void Scene::Update()
 	else if (sNum == TUTORIAL)
 	{
 		tutorialTransaction();
+		timer->Initialize();
 		Collision();
 	}
 	else if (sNum == GAME) {
@@ -582,6 +589,10 @@ void Scene::tutorialTransaction()
 		}
 		break;
 	case CHOOSE:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			isDraw_tutorial = false;
+		}
 		//注文ボタンを押したら次のcaseへ
 		if (gaugeMoveFlag)
 		{
@@ -592,7 +603,11 @@ void Scene::tutorialTransaction()
 		//発注画面でゲージが注文ボタンに触れたら発注完了
 		if (orderFlag && !gaugeMoveFlag)
 		{
-			tutorial = ORDEREND;
+			isDraw_tutorial = true;
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				tutorial = ORDEREND;
+			}
 		}
 		break;
 	case ORDEREND:
@@ -603,6 +618,10 @@ void Scene::tutorialTransaction()
 		}
 		break;
 	case END:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			sNum = GAME;
+		}
 		break;
 	default:
 		break;
@@ -624,11 +643,15 @@ void Scene::tutorialTransaction()
 
 	// 描画処理
 	playDraw();
-	DrawGraph(0, 0, tutorialGh[tutorial], true);
-	//クリック
-	if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == END)
+
+	if (isDraw_tutorial)
 	{
-		DrawGraph(0, 0, clickGh, true);
+		DrawGraph(0, 0, tutorialGh[tutorial], true);
+		//クリック
+		if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
+		{
+			DrawGraph(0, 0, clickGh, true);
+		}
 	}
 }
 

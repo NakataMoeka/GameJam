@@ -145,6 +145,8 @@ private:
 	//発注
 	int OrderType;
 	int OrderNum;
+	//チュートリアル
+	bool isDraw_tutorial = true;
 
 	Title* title;
 	Timer* timer;
