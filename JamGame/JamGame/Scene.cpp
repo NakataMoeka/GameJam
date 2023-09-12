@@ -122,7 +122,6 @@ void Scene::Update()
 			sc = 0;
 			scoreCount = 0;
 			hitBottles->Init();
-			start->Init();
 			for (int i = 0; i < MAXPET_Y; i++)
 			{
 				for (int j = 0; j < MAXPET_X; j++) {
@@ -167,6 +166,7 @@ void Scene::Update()
 		{
 			sNum = GAME;
 			tutorial = START;
+			start->Init();
 			timer->Initialize();
 		}
 	}
@@ -472,7 +472,7 @@ void Scene::DisappearPet()
 		scoreCount = 0;
 	}
 	if (scoreCount == 1) {
-		
+
 	}
 	if (isDis)
 	{
@@ -569,129 +569,133 @@ void Scene::titleTransaction()
 
 void Scene::tutorialTransaction()
 {
-	// 更新処理
-	switch (tutorial)
-	{
-	case START:
-		if (MouseInputOld != 1 && MouseInput == 1)
+	if (sceneChange->GetFadeIn() == false) {
+		// 更新処理
+		switch (tutorial)
 		{
-			tutorial = HAVE;
-		}
-		break;
-	case HAVE:
-		isDraw[0][0] = false;
-
-		if (playerBottle[0][0] != 0)
-		{
-			tutorial = HAVEOK;
-		}
-		break;
-	case HAVEOK:
-		if (MouseInputOld != 1 && MouseInput == 1)
-		{
-			tutorial = REPLENISH;
-		}
-		break;
-	case REPLENISH:
-		if (isDraw[0][0])
-		{
-			tutorial = REPLENISHOK;
-		}
-		break;
-	case REPLENISHOK:
-		if (MouseInputOld != 1 && MouseInput == 1)
-		{
-			tutorial = ORDER;
-		}
-		break;
-	case ORDER:
-		//発注ボタンを押したら次のcaseへ
-		if (orderFlag)
-		{
-			tutorial = ORDERMENU;
-		}
-		break;
-	case ORDERMENU:
-		//ファンタぶどう？を選んだら次のcaseへ
-		for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
-		{
-			if (pcOrderGh[i] == pcPetGh[0])
-			{
-				tutorial = CHOOSE;
-			}
-		}
-		break;
-	case CHOOSE:
-		if (MouseInputOld != 1 && MouseInput == 1)
-		{
-			isDraw_tutorial = false;
-		}
-		//注文ボタンを押したら次のcaseへ
-		if (gaugeMoveFlag)
-		{
-			tutorial = GAGEMOVE;
-		}
-		break;
-	case GAGEMOVE:
-		//発注画面でゲージが注文ボタンに触れたら発注完了
-		if (orderFlag && !gaugeMoveFlag)
-		{
-			isDraw_tutorial = true;
+		case START:
 			if (MouseInputOld != 1 && MouseInput == 1)
 			{
-				tutorial = ORDEREND;
+				tutorial = HAVE;
 			}
-		}
-		break;
-	case ORDEREND:
-		//補充棚のところに行かせて数を確認させたら終了
-		if (!orderFlag && backPos[0] == -1280)
-		{
-			tutorial = END;
-		}
-		break;
-	case END:
-		if (MouseInputOld != 1 && MouseInput == 1)
-		{
-			timer->Initialize();
-			sNum = GAME;
-		}
-		break;
-	default:
-		break;
-	}
-	//背景移動
-	BackMove();
-	//売画像位置
-	//売のマークの位置を決める
-	for (int i = 0; i < MAXPET_Y; i++)
-	{
-		for (int j = 0; j < MAXPET_X; j++) {
-			if (isDraw[i][j] == false)
+			break;
+		case HAVE:
+			isDraw[0][0] = false;
+
+			if (playerBottle[0][0] != 0)
 			{
-				sellPosX[i][j] = posX[i][j];
-				sellPosY[i][j] = posY[i][j];
+				tutorial = HAVEOK;
+			}
+			break;
+		case HAVEOK:
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				tutorial = REPLENISH;
+			}
+			break;
+		case REPLENISH:
+			if (isDraw[0][0])
+			{
+				tutorial = REPLENISHOK;
+			}
+			break;
+		case REPLENISHOK:
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				tutorial = ORDER;
+			}
+			break;
+		case ORDER:
+			//発注ボタンを押したら次のcaseへ
+			if (orderFlag)
+			{
+				tutorial = ORDERMENU;
+			}
+			break;
+		case ORDERMENU:
+			//ファンタぶどう？を選んだら次のcaseへ
+			for (int i = 0; i < ORDER_MAX_NUM * ORDER_MAX_TYPE; i++)
+			{
+				if (pcOrderGh[i] == pcPetGh[0])
+				{
+					tutorial = CHOOSE;
+				}
+			}
+			break;
+		case CHOOSE:
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				isDraw_tutorial = false;
+			}
+			//注文ボタンを押したら次のcaseへ
+			if (gaugeMoveFlag)
+			{
+				tutorial = GAGEMOVE;
+			}
+			break;
+		case GAGEMOVE:
+			//発注画面でゲージが注文ボタンに触れたら発注完了
+			if (orderFlag && !gaugeMoveFlag)
+			{
+				isDraw_tutorial = true;
+				if (MouseInputOld != 1 && MouseInput == 1)
+				{
+					tutorial = ORDEREND;
+				}
+			}
+			break;
+		case ORDEREND:
+			//補充棚のところに行かせて数を確認させたら終了
+			if (!orderFlag && backPos[0] == -1280)
+			{
+				tutorial = END;
+			}
+			break;
+		case END:
+			if (MouseInputOld != 1 && MouseInput == 1)
+			{
+				start->Init();
+				timer->Initialize();
+				sNum = GAME;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+		//背景移動
+		BackMove();
+		//売画像位置
+		//売のマークの位置を決める
+		for (int i = 0; i < MAXPET_Y; i++)
+		{
+			for (int j = 0; j < MAXPET_X; j++) {
+				if (isDraw[i][j] == false)
+				{
+					sellPosX[i][j] = posX[i][j];
+					sellPosY[i][j] = posY[i][j];
+				}
 			}
 		}
-	}
 
-	// 描画処理
-	playDraw();
+		// 描画処理
+		playDraw();
 
-	if (isDraw_tutorial)
-	{
-		DrawGraph(0, 0, tutorialGh[tutorial], true);
-		//クリック
-		if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
+		if (isDraw_tutorial)
 		{
-			DrawGraph(0, 0, clickGh, true);
+			DrawGraph(0, 0, tutorialGh[tutorial], true);
+			//クリック
+			if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
+			{
+				DrawGraph(0, 0, clickGh, true);
+			}
 		}
-	}
+	
 }
 
 void Scene::playTransaction() {
 	// 更新処理
-
+	if (start->GetStartFlag() == true) {
 		switch (maxTime)
 		{
 		case 3:
@@ -722,6 +726,8 @@ void Scene::playTransaction() {
 		}
 		timer->Update();
 		score->Update();
+	}
+	start->Update();
 	// 描画処理
 	playDraw();
 }
@@ -753,7 +759,9 @@ void Scene::Draw()
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
-		//start->Draw();
+		if (start->GetStartFlag() == false) {
+			start->Draw();
+		}
 	}
 	else if (sNum == RESULT) {
 		result->Draw();
@@ -914,7 +922,7 @@ void Scene::playDraw()
 
 		//トラック
 		carPosX = WIN_WIDHT / 2 - pcSize[0] / 2 + pcEdge - GAUGE_SIZE_Y + 30;
-		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - CAR_SIZE_Y /2 - GAUGE_SIZE_Y;
+		carPosY = WIN_HEIGHT / 2 + pcSize[1] / 2 + GAUGE_SIZE_Y - pcEdge * 2 - CAR_SIZE_Y / 2 - GAUGE_SIZE_Y;
 
 		DrawExtendGraph(carPosX + carMoveLength, carPosY, carPosX + CAR_SIZE_X + carMoveLength, carPosY + CAR_SIZE_Y, carGh, TRUE);
 
