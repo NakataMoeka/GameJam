@@ -2,6 +2,7 @@
 #include<time.h>
 void Start::Init()
 {
+
 	GoGraph = LoadGraph("Resources/start_work.png");
 	start = (double)time(NULL);
 	start = clock() / CLOCKS_PER_SEC;

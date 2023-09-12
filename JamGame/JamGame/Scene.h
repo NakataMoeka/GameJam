@@ -209,6 +209,7 @@ private:
 
 	int se;
 	int sound;
+	int BGM;
 	int shose[4];
 public:
 	enum SceneNum { TITLE, TUTORIAL, GAME, RESULT };
