@@ -7,7 +7,7 @@ void Title::Init()
 	hitGh[1] = LoadGraph("Resources/title_2.png");
 	barcodeReader = LoadGraph("Resources/barcode_reader.png");
 	code = LoadGraph("Resources/code.png");
-	
+	startGh = LoadGraph("Resources/start.png");
 }
 
 void Title::Update()
@@ -29,14 +29,16 @@ void Title::Update()
 
 void Title::Draw()
 {
-	DrawGraph(0, 0, titleGh, true);
+	
 
 	if (isHit)
 	{
+		DrawGraph(0, 0, startGh, true);
 		DrawGraph(0, 0, hitGh[0], true);
 	}
 	else
 	{
+		DrawGraph(0, 0, titleGh, true);
 		DrawGraph(0, 0, hitGh[1], true);
 	}
 

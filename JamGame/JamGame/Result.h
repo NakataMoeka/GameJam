@@ -19,6 +19,8 @@ private:
 	int PC;
 	int sc;
 	int hSc;
+	int endGh;
+	int scoreFontGh;
 
 	int barcodeReader;
 	int code;
