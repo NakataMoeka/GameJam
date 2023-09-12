@@ -98,7 +98,7 @@ private:
 	//発注画面
 	float pcPosX;
 	float pcPosY;
-	int pcSize[2] = { 1000,540 };
+	int pcSize[2] = { 1100,594 };
 	const int pcEdge = 50;
 	//発注画面のボトル
 	float pcPetPosX[MAX_PCPET_NUM];
@@ -128,12 +128,12 @@ private:
 	//トラックの位置
 	float carPosX;
 	float carPosY;
-	static const int CAR_SIZE_X = 64;
-	static const int CAR_SIZE_Y = 32;
+	static const int CAR_SIZE_X = 128;
+	static const int CAR_SIZE_Y = 64;
 	float carMoveLength;
 
 	//枠
-	int boxPos[2] = { 850, -20 };
+	int boxPos[2] = { 830, -50 };
 	static const int WAIT_MOVE_NUM = 2;
 
 	//タイプ
@@ -188,6 +188,8 @@ private:
 	static const int MAXTUTORIAL = 11;
 	int tutorialGh[MAXTUTORIAL];
 	int clickGh;
+	int repCountGh[8];
+	int out;
 	// Animation Variable
 
 	//プレイヤーがペットボトルを持っている情報

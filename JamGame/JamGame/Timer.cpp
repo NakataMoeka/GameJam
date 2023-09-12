@@ -38,9 +38,12 @@ void Timer::Update()
 void Timer::Draw()
 {
 	//DrawFormatString(500, 0, GetColor(0, 0, 0), "%d", (int)dt);
-	DrawRectExtendGraph(0 * 28 + 560, 50, 28 + 0 * 28 + 560, 88, 110 * min2, 0, 110, 150, timeGraph[0], TRUE);
-	DrawRectExtendGraph(1 * 28 + 560, 50, 28 + 1 * 28 + 560, 88, 110 * min1, 0, 110, 150, timeGraph[1], TRUE);
-	DrawRectExtendGraph(2 * 28 + 588, 50, 28 + 2 * 28 + 588, 88, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);
-	DrawRectExtendGraph(3 * 28 + 588, 50, 28 + 3 * 28 + 588, 88, 110 * sec1, 0, 110, 150, timeGraph[3], TRUE);
-	DrawExtendGraph(616, 50, 644, 88, colonGraph, TRUE);
+	int size = 33;
+	int y1 = 35;
+	int y2 = y1 + size;
+	DrawRectExtendGraph(0 * 28 + 560, y1, 28 + 0 * 28 + 560, y2, 110 * min2, 0, 110, 150, timeGraph[0], TRUE);
+	DrawRectExtendGraph(1 * 28 + 560, y1, 28 + 1 * 28 + 560, y2, 110 * min1, 0, 110, 150, timeGraph[1], TRUE);
+	DrawRectExtendGraph(2 * 28 + 588, y1, 28 + 2 * 28 + 588, y2, 110 * sec2, 0, 110, 150, timeGraph[2], TRUE);
+	DrawRectExtendGraph(3 * 28 + 588, y1, 28 + 3 * 28 + 588, y2, 110 * sec1, 0, 110, 150, timeGraph[3], TRUE);
+	DrawExtendGraph(616, y1, 644, y2, colonGraph, TRUE);
 }
