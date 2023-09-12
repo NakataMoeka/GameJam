@@ -7,6 +7,7 @@
 #include"Result.h"
 #include"Human.h"
 #include"SceneChange.h"
+#include"Start.h"
 class Scene
 {
 private:
@@ -154,7 +155,7 @@ private:
 
 	Result* result;
 	SceneChange* sceneChange;
-
+	Start* start;
 	int sc;//ÉXÉRÉA
 	int scoreCount = 0;
 	int maxTime = 3;

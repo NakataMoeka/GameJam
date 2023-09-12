@@ -137,11 +137,11 @@ void Scene::Update()
 				shose[i] = LoadSoundMem("Resources/Sound/革靴で歩く.mp3");
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
-			//sceneChange->Init();
-			//if (sceneChange->GetFadeIn() == true) {
-				//sNum = GAME;
-			//}
-			//sNum = TUTORIAL;
+			sceneChange->Init();
+			
+		}
+
+		if (sceneChange->GetFadeIn() == true) {
 
 			sNum = TUTORIAL;
 			tutorial = START;
@@ -158,10 +158,10 @@ void Scene::Update()
 
 		if (timer->GetDt() >= 600) {
 			result->Init();
-			//sceneChange->Init();
-			//if (sceneChange->GetFadeIn() == true) {
-				sNum = RESULT;
-			//}
+			sceneChange->Init();
+		}
+		if (sceneChange->GetFadeIn() == true) {
+			sNum = RESULT;
 		}
 	}
 	else if (sNum == RESULT) {
@@ -170,10 +170,10 @@ void Scene::Update()
 			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
 			sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
 			title->Init();
-			//sceneChange->Init();
-			//if (sceneChange->GetFadeIn() == true) {
-				sNum = TITLE;
-			//}
+			sceneChange->Init();
+		}
+		if (sceneChange->GetFadeIn() == true) {
+			sNum = TITLE;
 		}
 		result->Update();
 		result->SetHightScore(score->GetHighetScore());
@@ -645,37 +645,40 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// 更新処理
-	if (sceneChange->GetLight() >= 255 && sceneChange->GetFadeIn() == true) {
-		switch (maxTime)
-		{
-		case 3:
-			type = USUALLY;
-			break;
-		case 2:
-			type = BUSY;
-			break;
-		case 4:
-			type = SLOW;
-			break;
-		default:
-			break;
-		}
-		//背景移動
-		BackMove();
-		//消滅処理
-		DisappearPet();
-		//人間処理
-		human->Update(maxTime, timer);
-		for (int i = 0; i < 4; i++) {
-			if (human->GetComing(i)) {
-				if (CheckSoundMem(shose[i]) == 0)
-				{
-					PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
+	if (sceneChange->GetFadeIn() == true) {
+		if (start->GetStartFlag() == true) {
+			switch (maxTime)
+			{
+			case 3:
+				type = USUALLY;
+				break;
+			case 2:
+				type = BUSY;
+				break;
+			case 4:
+				type = SLOW;
+				break;
+			default:
+				break;
+			}
+			//背景移動
+			BackMove();
+			//消滅処理
+			DisappearPet();
+			//人間処理
+			human->Update(maxTime, timer);
+			for (int i = 0; i < 4; i++) {
+				if (human->GetComing(i)) {
+					if (CheckSoundMem(shose[i]) == 0)
+					{
+						PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
+					}
 				}
 			}
+			timer->Update();
+			score->Update();
 		}
-		timer->Update();
-		score->Update();
+		start->Update();
 	}
 	// 描画処理
 	playDraw();
@@ -708,6 +711,7 @@ void Scene::Draw()
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
+		start->Draw();
 	}
 	else if (sNum == RESULT) {
 		result->Draw();
