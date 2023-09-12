@@ -13,13 +13,12 @@ void Start::Init()
 }
 void Start::Update()
 {
-	//5秒間スタート時の画像表示
 	if (dt > 0) {
 		end = clock() / CLOCKS_PER_SEC;
 		total = end - start;
 		dt = SetTime - total;
 	}
-	if (dt == 0) {
+	if (dt <= 0) {
 		startFlag = true;
 	}
 	sec = ((int)dt % 60) % 10;
