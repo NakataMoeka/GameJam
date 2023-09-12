@@ -141,7 +141,7 @@ void Scene::Update()
 				havePlayerBottleGh[i] = 0;
 			}
 			srand((unsigned int)time(NULL));
-			minNum = rand() % 6;
+			minNum = rand() % 6 + 1;
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
