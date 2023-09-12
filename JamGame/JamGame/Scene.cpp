@@ -152,11 +152,11 @@ void Scene::Update()
 			sceneChange->SetFedeOut(true);
 			if (sceneChange->GetFadeIn() == true) {
 
-				/*sNum = TUTORIAL;
-				tutorial = START;*/
+				sNum = TUTORIAL;
+				tutorial = START;
 				scRFlag = false;
 				timer->Initialize();
-				sNum = GAME;
+				//sNum = GAME;
 			}
 		}
 	}
