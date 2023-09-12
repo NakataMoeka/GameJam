@@ -81,7 +81,7 @@ private:
 	const float maxflame = 1.0f;
 	const float PI = 3.141592f;
 	float difference = 0;
-	float backFlame = 0;
+	float backFlame = 1.0f;
 	float speed = 0.2f;
 	//•`‰æ
 	bool isDraw[MAXPET_Y][MAXPET_X];
