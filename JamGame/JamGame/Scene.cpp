@@ -65,6 +65,8 @@ void Scene::init() {
 	out = LoadGraph("Resources/clocking_out.png");
 	//仕事開始
 	start_workGh = LoadGraph("Resources/start_work.png");
+	//右クリック
+	rightClickGh = LoadGraph("Resources/tutorial/rightClick.png");
 
 	timer = new Timer();
 	score = new Score();
@@ -163,7 +165,7 @@ void Scene::Update()
 	{
 		tutorialTransaction();
 		Collision();
-		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		if ((MouseInputOld & MOUSE_INPUT_RIGHT) != 0 && (MouseInput & MOUSE_INPUT_RIGHT) != 0)
 		{
 			sNum = GAME;
 			tutorial = START;
@@ -243,7 +245,7 @@ void Scene::Collision()
 	MousePre = Mouse;
 	Mouse = GetMouseInput();
 
-	if (CheckHitKey(KEY_INPUT_R))
+	if ((MouseInputOld & MOUSE_INPUT_RIGHT) != 0 && (MouseInput & MOUSE_INPUT_RIGHT) != 0)
 	{
 		playerHaveBottle = 0;
 		for (int i = 0; i < haveBottleNum; i++)
@@ -751,6 +753,7 @@ void Scene::tutorialTransaction()
 	if (isDraw_tutorial)
 	{
 		DrawGraph(0, 0, tutorialGh[tutorial], true);
+		DrawGraph(0, 0, rightClickGh, true);
 		//クリック
 		if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
 		{
@@ -946,7 +949,7 @@ void Scene::playDraw()
 	{
 		int sX = 32;
 		int sY = 64;
-		DrawExtendGraph(boxPos[0] + (i * sizeX) + 20, boxPos[1] + 60, boxPos[0] + (i * sizeX) + sX + 20, boxPos[1] + sY + 60, havePlayerBottleGh[i], TRUE);
+		DrawExtendGraph(boxPos[0] + (i * sizeX) + 20, boxPos[1] + 40, boxPos[0] + (i * sizeX) + sX + 20, boxPos[1] + sY + 40, havePlayerBottleGh[i], TRUE);
 	}
 
 	//注文画面じゃなくてもゲージは動かす
