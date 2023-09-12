@@ -764,7 +764,7 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// XVˆ—
-
+	if (start->GetStartFlag() == true) {
 		if (CheckSoundMem(BGM) == 0)
 		{
 			PlaySoundMem(BGM, DX_PLAYTYPE_BACK, TRUE);
@@ -799,13 +799,12 @@ void Scene::playTransaction() {
 			}
 		}
 		score->Update();
-		if (start->GetStartFlag() == true) {
 			timer->Update();
 	}
 	else {
-		start->Update();
 		timer->Start();
 	}
+		start->Update();
 	// •`‰æˆ—
 	playDraw();
 }
