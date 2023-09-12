@@ -218,6 +218,7 @@ void Scene::Update()
 		Collision();
 
 		if (timer->GetDt() >= 600) {
+			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
 			scGFlag = true;
 		}
 		if (scGFlag == true) {
@@ -231,8 +232,12 @@ void Scene::Update()
 	}
 	else if (sNum == RESULT) {
 
-		if (MouseInputOld != 1 && MouseInput == 1 && title->GetIsHit())
+		if (MouseInputOld != 1 && MouseInput == 1 && result->GetIsHit())
 		{
+			if (CheckSoundMem(se) == 0)
+			{
+				PlaySoundMem(se, DX_PLAYTYPE_BACK, TRUE);
+			}
 			se = LoadSoundMem("Resources/Sound/バーコードリーダー.mp3");
 			sound = LoadSoundMem("Resources/Sound/コンビニ入店メロディ.mp3");
 			scRFlag = true;

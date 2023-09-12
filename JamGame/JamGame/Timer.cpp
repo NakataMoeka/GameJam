@@ -6,7 +6,7 @@ void Timer::Initialize()
 	total = 0.0;
 	total2 = 0.0;
 	SetTime = 600;
-	tTime = 300;
+	tTime = 590;
 	dt = tTime;
 	dt2 = SetTime;
 	for (int i = 0; i < 4; i++)
