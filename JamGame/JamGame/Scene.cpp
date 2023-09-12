@@ -125,7 +125,6 @@ void Scene::Update()
 			sc = 0;
 			scoreCount = 0;
 			hitBottles->Init();
-			start->Init();
 			for (int i = 0; i < MAXPET_Y; i++)
 			{
 				for (int j = 0; j < MAXPET_X; j++) {
@@ -154,7 +153,7 @@ void Scene::Update()
 		if (scTTFlag == true) {
 			sceneChange->SetFedeOut(true);
 			if (sceneChange->GetFadeIn() == true) {
-
+				start->Init();
 				sNum = TUTORIAL;
 				tutorial = START;
 				scRFlag = false;
@@ -693,6 +692,7 @@ void Scene::tutorialTransaction()
 	case END:
 		if (MouseInputOld != 1 && MouseInput == 1)
 		{
+			start->Init();
 			timer->Initialize();
 			sNum = GAME;
 			timer->Initialize();
@@ -763,37 +763,41 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// XVˆ—
-
-	switch (maxTime)
-	{
-	case 3:
-		type = USUALLY;
-		break;
-	case 2:
-		type = BUSY;
-		break;
-	case 4:
-		type = SLOW;
-		break;
-	default:
-		break;
-	}
-	//”wŒiˆÚ“®
-	BackMove();
-	//Á–Åˆ—
-	DisappearPet();
-	//lŠÔˆ—
-	human->Update(maxTime, timer);
-	for (int i = 0; i < 4; i++) {
-		if (human->GetComing(i)) {
-			if (CheckSoundMem(shose[i]) == 0)
-			{
-				PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
+	if (start->GetStartFlag() == true) {
+		switch (maxTime)
+		{
+		case 3:
+			type = USUALLY;
+			break;
+		case 2:
+			type = BUSY;
+			break;
+		case 4:
+			type = SLOW;
+			break;
+		default:
+			break;
+		}
+		//”wŒiˆÚ“®
+		BackMove();
+		//Á–Åˆ—
+		DisappearPet();
+		//lŠÔˆ—
+		human->Update(maxTime, timer);
+		for (int i = 0; i < 4; i++) {
+			if (human->GetComing(i)) {
+				if (CheckSoundMem(shose[i]) == 0)
+				{
+					PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
+				}
 			}
 		}
+		timer->Update();
+		score->Update();
 	}
-	timer->Update();
-	score->Update();
+	else {
+		start->Update();
+	}
 	// •`‰æˆ—
 	playDraw();
 }
@@ -825,7 +829,9 @@ void Scene::Draw()
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
-		//start->Draw();
+		if (start->GetStartFlag() == false) {
+			start->Draw();
+		}
 	}
 	else if (sNum == RESULT) {
 		result->Draw();

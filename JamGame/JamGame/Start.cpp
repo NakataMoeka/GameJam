@@ -2,11 +2,11 @@
 #include<time.h>
 void Start::Init()
 {
-	countGraph = LoadGraph("Resources/Num.png");
+	GoGraph = LoadGraph("Resources/start_work.png");
 	start = (double)time(NULL);
 	start = clock() / CLOCKS_PER_SEC;
 	total = 0.0;
-	SetTime = 3;
+	SetTime = 5;
 	dt = SetTime;
 	startFlag = false;
 }
@@ -25,5 +25,5 @@ void Start::Update()
 
 void Start::Draw()
 {
-	DrawRectExtendGraph(46 + 560, 200 + 100, 46 + 46 + 560, 302 + 100, 110 * sec, 0, 110, 150, countGraph, TRUE);
+	DrawGraph(0, 0, GoGraph, TRUE);
 }
