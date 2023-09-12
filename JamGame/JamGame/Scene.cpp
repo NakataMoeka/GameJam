@@ -765,7 +765,8 @@ void Scene::tutorialTransaction()
 
 void Scene::playTransaction() {
 	// 更新処理
-	if (start->GetStartFlag() == true) {
+	if (start->GetStartFlag() == true)
+	{
 		if (CheckSoundMem(BGM) == 0)
 		{
 			PlaySoundMem(BGM, DX_PLAYTYPE_BACK, TRUE);
@@ -804,6 +805,17 @@ void Scene::playTransaction() {
 	}
 	else {
 		timer->Start();
+		for (int i = 0; i < MAXPET_Y; i++)
+		{
+			for (int j = 0; j < MAXPET_X; j++) {
+				//ペットボトル描画フラグ
+				isDraw[i][j] = true;
+				//プレイヤーがペットボトルを持っている情報
+				playerBottle[i][j] = 0;
+				//補充棚の数
+				repCount[i][j] = MAX_REPLENISH;
+			}
+		}
 	}
 		start->Update();
 	// 描画処理

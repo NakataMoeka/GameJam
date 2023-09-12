@@ -18,7 +18,7 @@ void Timer::Initialize()
 
 void Timer::Update()
 {
-	if (dt < 600 && dt2>0) {
+	if (dt < 600 && dt2 > 0) {
 		end = clock() / CLOCKS_PER_SEC;
 		total = end - start;
 		total *= 2;
