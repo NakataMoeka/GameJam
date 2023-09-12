@@ -122,6 +122,7 @@ void Scene::Update()
 			sc = 0;
 			scoreCount = 0;
 			hitBottles->Init();
+			start->Init();
 			for (int i = 0; i < MAXPET_Y; i++)
 			{
 				for (int j = 0; j < MAXPET_X; j++) {
@@ -166,7 +167,6 @@ void Scene::Update()
 		{
 			sNum = GAME;
 			tutorial = START;
-			start->Init();
 			timer->Initialize();
 			score->Initialize();
 			human->Init();
@@ -606,18 +606,17 @@ void Scene::titleTransaction()
 
 void Scene::tutorialTransaction()
 {
-	if (sceneChange->GetFadeIn() == false) {
-		// XVˆ—
-		switch (tutorial)
+	// XVˆ—
+	switch (tutorial)
+	{
+	case START:
+		if (MouseInputOld != 1 && MouseInput == 1)
 		{
-		case START:
-			if (MouseInputOld != 1 && MouseInput == 1)
-			{
-				tutorial = HAVE;
-			}
-			break;
-		case HAVE:
-			isDraw[0][0] = false;
+			tutorial = HAVE;
+		}
+		break;
+	case HAVE:
+		isDraw[0][0] = false;
 
 		if (playerBottle[0][0] != 0)
 		{
@@ -723,7 +722,7 @@ void Scene::tutorialTransaction()
 				shose[i] = LoadSoundMem("Resources/Sound/ŠvŒC‚Å•à‚­.mp3");
 			}
 			shose[3] = LoadSoundMem("Resources/Sound/ƒnƒCƒq[ƒ‹‚Å•à‚­.mp3");
-			
+
 		}
 		break;
 	default:
@@ -744,56 +743,53 @@ void Scene::tutorialTransaction()
 		}
 	}
 
-		// •`‰æˆ—
-		playDraw();
+	// •`‰æˆ—
+	playDraw();
 
-		if (isDraw_tutorial)
+	if (isDraw_tutorial)
+	{
+		DrawGraph(0, 0, tutorialGh[tutorial], true);
+		//ƒNƒŠƒbƒN
+		if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
 		{
-			DrawGraph(0, 0, tutorialGh[tutorial], true);
-			//ƒNƒŠƒbƒN
-			if (tutorial == START || tutorial == HAVEOK || tutorial == REPLENISHOK || tutorial == CHOOSE || tutorial == GAGEMOVE || tutorial == END)
-			{
-				DrawGraph(0, 0, clickGh, true);
-			}
+			DrawGraph(0, 0, clickGh, true);
 		}
-	
+	}
 }
 
 void Scene::playTransaction() {
 	// XVˆ—
-	if (start->GetStartFlag() == true) {
-		switch (maxTime)
-		{
-		case 3:
-			type = USUALLY;
-			break;
-		case 2:
-			type = BUSY;
-			break;
-		case 4:
-			type = SLOW;
-			break;
-		default:
-			break;
-		}
-		//”wŒiˆÚ“®
-		BackMove();
-		//Á–Åˆ—
-		DisappearPet();
-		//lŠÔˆ—
-		human->Update(maxTime, timer);
-		for (int i = 0; i < 4; i++) {
-			if (human->GetComing(i)) {
-				if (CheckSoundMem(shose[i]) == 0)
-				{
-					PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
-				}
+
+	switch (maxTime)
+	{
+	case 3:
+		type = USUALLY;
+		break;
+	case 2:
+		type = BUSY;
+		break;
+	case 4:
+		type = SLOW;
+		break;
+	default:
+		break;
+	}
+	//”wŒiˆÚ“®
+	BackMove();
+	//Á–Åˆ—
+	DisappearPet();
+	//lŠÔˆ—
+	human->Update(maxTime, timer);
+	for (int i = 0; i < 4; i++) {
+		if (human->GetComing(i)) {
+			if (CheckSoundMem(shose[i]) == 0)
+			{
+				PlaySoundMem(shose[i], DX_PLAYTYPE_BACK, TRUE);
 			}
 		}
-		timer->Update();
-		score->Update();
 	}
-	start->Update();
+	timer->Update();
+	score->Update();
 	// •`‰æˆ—
 	playDraw();
 }
@@ -825,9 +821,7 @@ void Scene::Draw()
 		timer->Draw();
 		score->Draw();
 		hitBottles->Draw();
-		if (start->GetStartFlag() == false) {
-			start->Draw();
-		}
+		//start->Draw();
 	}
 	else if (sNum == RESULT) {
 		result->Draw();
@@ -1009,4 +1003,3 @@ float Scene::Ease(float start, float end, float flame)
 	position = difference * etime + start;
 	return position;
 }
-
