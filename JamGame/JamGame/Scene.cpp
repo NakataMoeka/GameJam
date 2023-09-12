@@ -168,6 +168,35 @@ void Scene::Update()
 			tutorial = START;
 			start->Init();
 			timer->Initialize();
+			score->Initialize();
+			human->Init();
+			sc = 0;
+			scoreCount = 0;
+			hitBottles->Init();
+
+			for (int i = 0; i < MAXPET_Y; i++)
+			{
+				for (int j = 0; j < MAXPET_X; j++) {
+					//ペットボトル描画フラグ
+					isDraw[i][j] = true;
+					//プレイヤーがペットボトルを持っている情報
+					playerBottle[i][j] = 0;
+					//補充棚の数
+					repCount[i][j] = MAX_REPLENISH;
+				}
+			}
+			for (int i = 0; i < haveBottleNum; i++)
+			{
+				havePlayerBottleGh[i] = 0;
+			}
+			srand((unsigned int)time(NULL));
+			minNum = rand() % 6;
+			playerHaveBottle = 0;
+
+			for (int i = 0; i < 3; i++) {
+				shose[i] = LoadSoundMem("Resources/Sound/革靴で歩く.mp3");
+			}
+			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
 		}
 	}
 	else if (sNum == GAME) {
@@ -296,14 +325,22 @@ void Scene::Collision()
 				{
 					if (MouseInputOld != 1 && MouseInput == 1 && (playerHaveBottle < haveBottleNum))
 					{
-						playerBottle[i][j]++;
-						repCount[i][j]--;
-						//補充棚から持ってきたボトル
-						playerHaveBottle++;
+						if (repCount[i][j] != 0)
+						{
+							playerBottle[i][j]++;
+							repCount[i][j]--;
+							//補充棚から持ってきたボトル
+							playerHaveBottle++;
+						}
 						havePlayerBottleGh[playerHaveBottle - 1] = repPetGh[(j + (i * MAXREP_X))];
 					}
 					else
 					{
+					}
+
+					if (repCount[i][j] <= 0)
+					{
+						repCount[i][j] = 0;
 					}
 				}
 			}
@@ -608,6 +645,65 @@ void Scene::tutorialTransaction()
 		case ORDER:
 			//発注ボタンを押したら次のcaseへ
 			if (orderFlag)
+		}
+		break;
+	case ORDEREND:
+		//補充棚のところに行かせて数を確認させたら終了
+		if (!orderFlag && backPos[0] == -1280)
+		{
+			tutorial = END;
+		}
+		break;
+	case END:
+		if (MouseInputOld != 1 && MouseInput == 1)
+		{
+			timer->Initialize();
+			sNum = GAME;
+			timer->Initialize();
+			score->Initialize();
+			human->Init();
+			sc = 0;
+			scoreCount = 0;
+			hitBottles->Init();
+
+			for (int i = 0; i < MAXPET_Y; i++)
+			{
+				for (int j = 0; j < MAXPET_X; j++) {
+					//ペットボトル描画フラグ
+					isDraw[i][j] = true;
+					//プレイヤーがペットボトルを持っている情報
+					playerBottle[i][j] = 0;
+					//補充棚の数
+					repCount[i][j] = MAX_REPLENISH;
+				}
+			}
+			for (int i = 0; i < haveBottleNum; i++)
+			{
+				havePlayerBottleGh[i] = 0;
+			}
+			srand((unsigned int)time(NULL));
+			minNum = rand() % 6;
+			playerHaveBottle = 0;
+
+			for (int i = 0; i < 3; i++) {
+				shose[i] = LoadSoundMem("Resources/Sound/革靴で歩く.mp3");
+			}
+			shose[3] = LoadSoundMem("Resources/Sound/ハイヒールで歩く.mp3");
+			
+		}
+		break;
+	default:
+		break;
+	}
+	//背景移動
+	BackMove();
+	//売画像位置
+	//売のマークの位置を決める
+	for (int i = 0; i < MAXPET_Y; i++)
+	{
+		for (int j = 0; j < MAXPET_X; j++) {
+			if (isDraw[i][j] == false)
+>>>>>>> master
 			{
 				tutorial = ORDERMENU;
 			}

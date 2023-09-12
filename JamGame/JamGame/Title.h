@@ -11,6 +11,7 @@ private:
 	int hitGh[2];
 	int barcodeReader;
 	int code;
+	int startGh;
 	
 	//À•W
 	float barcodeX = 1280 / 2 - 150;

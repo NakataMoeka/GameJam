@@ -10,6 +10,8 @@ void Result::Init()
 	PC = LoadGraph("Resources/Score.png");
 	barcodeReader = LoadGraph("Resources/barcode_reader.png");
 	code = LoadGraph("Resources/code.png");
+	endGh = LoadGraph("Resources/end.png");
+	scoreFontGh = LoadGraph("Resources/scoreFont.png");
 }
 
 void Result::Update()
@@ -49,12 +51,23 @@ void Result::Update()
 
 void Result::Draw()
 {
-	//DrawFormatString(720, 100, GetColor(0, 0, 0), "Result");
-	DrawGraph(0, 0, PC, TRUE);
+	if (isHit)
+	{
+		DrawGraph(0, 0, endGh, TRUE);
+		DrawGraph(0, 0, scoreFontGh, true);
+	}
+	else
+	{
+		DrawGraph(0, 0, PC, TRUE);
+	}
+	
 	for (int i = 0; i < 8; i++)
 	{
-		DrawRectExtendGraph(i * 28 + 540, 50 + 100, 28 + i * 28 + 540, 88 + 100, 110 * scoreNum[i], 0, 110, 150, scoreGraph[i], TRUE);
-		DrawRectExtendGraph(i * 28 + 540, 50 + 200, 28 + i * 28 + 540, 88 + 200, 110 * hightScoreNum[i], 0, 110, 150, hightScoreGraph[i], TRUE);
+		int sY = 33;
+		int y1 = 50;
+		int y2 = y1 + sY;
+		DrawRectExtendGraph(i * 28 + 540, y1 + 60, 28 + i * 28 + 540, y2 + 60, 110 * scoreNum[i], 0, 110, 150, scoreGraph[i], TRUE);
+		DrawRectExtendGraph(i * 28 + 540, 50 + 140, 28 + i * 28 + 540, 88 + 140, 110 * hightScoreNum[i], 0, 110, 150, hightScoreGraph[i], TRUE);
 	}
 
 	DrawGraph(MousePosX - 100, MousePosY - 25, barcodeReader, true);
