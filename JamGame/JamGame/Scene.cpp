@@ -140,6 +140,9 @@ void Scene::Update()
 			{
 				havePlayerBottleGh[i] = 0;
 			}
+
+			srand((unsigned int)time(NULL));
+			minNum = (rand() % 5) + 1;
 			playerHaveBottle = 0;
 
 			for (int i = 0; i < 3; i++) {
@@ -208,7 +211,7 @@ void Scene::Update()
 		if (sum < 1)
 		{
 			srand((unsigned)time(NULL));
-			minRand = (rand() % 4) + 1;
+			minRand = (rand() % 5) + 1;
 		}
 		minNum = minRand;
 		playTransaction();
@@ -882,7 +885,7 @@ void Scene::playDraw()
 	DrawGraph(backPos[0], 0, out, true);
 	//タイプ
 	int typeSize = 64;
-	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2 - typeSize - 20, 40, typeGh[type], true);
+	DrawGraph(WIN_WIDHT / 2 - clockSize[0] / 2 - typeSize - 20, 25, typeGh[type], true);
 	//枠
 	DrawGraph(boxPos[0], boxPos[1], boxGh, true);
 	//発注ボタン
